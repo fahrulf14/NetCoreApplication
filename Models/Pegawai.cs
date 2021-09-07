@@ -7,11 +7,6 @@ namespace SIP.Models
 {
     public partial class Pegawai
     {
-        public Pegawai()
-        {
-            TandaTangan = new HashSet<TandaTangan>();
-        }
-
         [Key]
         public Guid IdPegawai { get; set; }
         [StringLength(50)]
@@ -30,7 +25,5 @@ namespace SIP.Models
         [ForeignKey(nameof(IdJabatan))]
         [InverseProperty(nameof(RefJabatan.Pegawai))]
         public virtual RefJabatan IdJabatanNavigation { get; set; }
-        [InverseProperty("IdPegawaiNavigation")]
-        public virtual ICollection<TandaTangan> TandaTangan { get; set; }
     }
 }

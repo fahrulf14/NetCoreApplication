@@ -33,24 +33,6 @@ namespace SIP.Components
                 HttpContext.Session.SetString("Jabatan", pegawai.IdJabatanNavigation.Jabatan);
             }
 
-            if (HttpContext.Session.GetString("Pemda") == null || HttpContext.Session.GetString("NamaPemda") == null)
-            {
-                var pemda = _context.Pemda.Include(d => d.IndKabKota).Include(d => d.IndKecamatan).FirstOrDefault();
-                var Pemda = pemda.IndKabKota.KabKota.Replace("Kab. ", "").Replace("Kota ", "");
-                var NamaPemda = "PEMERINTAH " + (pemda.IndKabKota.KabKota.Contains("Kab") ? "KABUPATEN " : "KOTA ") + pemda.IndKabKota.KabKota.Replace("Kab. ", "").Replace("Kota ", "").ToUpper();
-                var Opd = pemda.NamaOpd.ToUpper();
-                var Alamat = pemda.Alamat + " Telp. " + pemda.Telp;
-                var IdKabKotaId = pemda.IndKabKotaId;
-                var Kecamatan = pemda.IndKecamatan.Kecamatan;
-
-                HttpContext.Session.SetString("Pemda", Pemda);
-                HttpContext.Session.SetString("NamaPemda", NamaPemda);
-                HttpContext.Session.SetString("Opd", Opd);
-                HttpContext.Session.SetString("Alamat", Alamat);
-                HttpContext.Session.SetInt32("IdKabKotaId", IdKabKotaId.Value);
-                HttpContext.Session.SetString("Kecamatan", Kecamatan);
-            }
-
             var model = _context.Menu.Where(d => d.FlagAktif).OrderBy(d => d.NoUrut).ToList();
 
             var menu = _context.Menu.Where(d => d.Controller == controller && d.ActionName == action).FirstOrDefault();

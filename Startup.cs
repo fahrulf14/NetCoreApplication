@@ -43,13 +43,6 @@ namespace SIP
 
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
-                //.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
-
-            var cultureInfo = new CultureInfo("id-ID");
-            cultureInfo.NumberFormat.CurrencySymbol = "Rp. ";
-
-            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             services.AddMvc()
                 .AddNewtonsoftJson();

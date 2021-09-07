@@ -79,11 +79,6 @@ namespace SIP.Areas.Identity.Pages.Account
 
         public class PegawaiModel
         {
-            public PegawaiModel()
-            {
-                TandaTangan = new HashSet<TandaTangan>();
-            }
-
             public string Nama { get; set; }
             [StringLength(20)]
             public string Nick { get; set; }
@@ -98,8 +93,6 @@ namespace SIP.Areas.Identity.Pages.Account
             [ForeignKey(nameof(IdJabatan))]
             [InverseProperty(nameof(RefJabatan.Pegawai))]
             public virtual RefJabatan IdJabatanNavigation { get; set; }
-            [InverseProperty("IdPegawaiNavigation")]
-            public virtual ICollection<TandaTangan> TandaTangan { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)

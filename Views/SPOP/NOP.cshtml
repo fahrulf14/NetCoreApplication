@@ -1,0 +1,110 @@
+﻿@model SIP.Models.Spop
+
+@{
+    ViewBag.Title = "Edit NOP";
+    ViewBag.SubHeaderTitle = "SPOP";
+    ViewBag.S1 = "Edit Nomor Objek Pajak";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<form asp-action="NOP">
+    <div class="row justify-content-center">
+        <div class="col-lg-4">
+            <!--begin::Portlet-->
+            <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            @ViewBag.S1
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-group">
+                            <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <input type="hidden" asp-for="IdSpop" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="alert alert-outline-dark alert-bold" role="alert">
+                                <div class="alert-text">
+                                    <h5 class="alert-heading kt-align-center">@ViewBag.NOP<span class="kt-font-success">000</span>-<span class="kt-font-warning">0000</span>.<span class="kt-font-info">0</span></h5>
+                                    <p>Masukkan <span class="kt-font-success">Nomor Blok</span>, <span class="kt-font-warning">Nomor Objek</span> dan <span class="kt-font-info">Kode NOP</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 form-group">
+                            <label asp-for="Nop" class="control-label"></label>
+                            <input asp-for="Nop" class="form-control" autocomplete="off" oninput="CekNop()" required />
+                            <span asp-validation-for="Nop" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-12 form-group">
+                            <div class="kt-form__actions kt-align-right">
+                                <a asp-action="SPOP" asp-controller="PBB" asp-route-id="@Model.IdSubjek" class="btn btn-secondary">Kembali</a>
+                                <button type="submit" id="SubmitBtn" class="btn btn-brand">Simpan</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+
+        var Inputmask = {
+            init: function () {
+                $("#Nop").inputmask({
+                    mask: "99.99.999.999.999-9999.9",
+                    placeholder: ""
+                })
+            }
+        };
+        jQuery(document).ready(function () {
+            Inputmask.init()
+        });
+
+        var nop = "@ViewBag.NOP";
+
+        if ($("#Nop").val() == "") {
+            $("#Nop").val(nop);
+        }
+
+        function CekNop() {
+            var Nop = $("#Nop").val();
+            if (Nop.length < 17) {
+                $("#Nop").val(nop);
+            }
+            else if (Nop.length == 24) {
+                GetNop(Nop);
+            }
+        };
+
+        function GetNop(id) {
+            $.ajax({
+                type: 'POST',
+                url: '/AjaxData/CekNop',
+                dataType: 'json',
+                data: { id },
+                success: function (data) {
+                    if (data == "") {
+                        $("#SubmitBtn").removeAttr("disabled");
+                    }
+                    else {
+                        toastr.error("NOP Sudah Terdaftar!");
+                        $("button").attr("disabled", "");
+                    }
+                },
+            });
+        };
+
+    </script>
+}

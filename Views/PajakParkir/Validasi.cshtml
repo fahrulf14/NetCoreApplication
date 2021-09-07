@@ -1,0 +1,255 @@
+﻿@model SIP.Models.PParkir
+
+@{
+    ViewBag.S1 = "Validasi";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-3">
+        <!--begin::Portlet-->
+        <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+            <div class="kt-portlet__head kt-ribbon @ViewBag.State kt-ribbon--left kt-ribbon--round">
+                <div class="kt-ribbon__target" style="top: 10px; right: -2px;">@ViewBag.Status</div>
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        @ViewBag.Title
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="kt-widget kt-widget--user-profile-2">
+                    <div class="kt-widget__body">
+                        <div class="kt-widget__item kt-padding-t-0">
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Jenis Pajak</span>
+                                <span class="kt-widget__data kt-align-right">@Model.IdSptpdNavigation.IdCoaNavigation.Uraian</span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">No. @(Model.IdSptpdNavigation.Jabatan ? "Nota" : "SPTPD")</span>
+                                <span class="kt-widget__data kt-align-right">@Model.IdSptpdNavigation.NoSptpd</span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Tanggal:</span>
+                                <span class="kt-widget__data kt-align-right">@string.Format("{0:dd MMMM yyyy}", Model.IdSptpdNavigation.Tanggal)</span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Masa Pajak:</span>
+                                <span class="kt-widget__data kt-align-right">
+                                    @string.Format("{0:MMMM}", Model.IdSptpdNavigation.MasaPajak1)
+                                    <small>(@string.Format("{0:dd MMM yyyy}", Model.IdSptpdNavigation.MasaPajak1) - @string.Format("{0:dd MMM yyyy}", Model.IdSptpdNavigation.MasaPajak2))</small>
+                                </span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label"></span>
+                                <span class="kt-widget__data kt-align-right">
+                                    @if (Model.IdSptpdNavigation.FlagValidasi)
+                                    {
+                                        <span><span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">Valid</span></span>
+                                    }
+                                    else
+                                    {
+                                        <span><span class="kt-badge kt-badge--danger kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-danger">Belum Valid</span></span>
+                                    }
+                                </span>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm"></div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Sistem Pungutan:</span>
+                                <span class="kt-widget__data kt-align-right">@Model.Sistem</span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Rekap Karcis:</span>
+                                <span class="kt-widget__data kt-align-right">@(Model.RekapKarcis ? "Ya" : "Tidak")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::Portlet-->
+    </div>
+    <div class="col-lg-7">
+        <!--begin::Portlet-->
+        <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Perhitungan Pajak
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row justify-content-around">
+                    <div class="col-md-5">
+                        <div class="kt-widget kt-widget--user-profile-2">
+                            <div class="kt-widget__body">
+                                <div class="kt-widget__section kt-padding-t-0 kt-padding-b-0">
+                                    <h5 class="kt-font-bold">Parkir Mobil</h5>
+                                </div>
+                                <div class="kt-widget__item">
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Kapasitas</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.KapasitasMobil</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Jumlah Parkir</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.JumlahMobil</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Jumlah Pendapatan</span>
+                                        <span class="kt-widget__data kt-align-right">Rp. @string.Format("{0:N0}", Model.TotalMobil)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="kt-widget kt-widget--user-profile-2">
+                            <div class="kt-widget__body">
+                                <div class="kt-widget__section kt-padding-t-0 kt-padding-b-0">
+                                    <h5 class="kt-font-bold">Tarif Parkir Mobil</h5>
+                                </div>
+                                <div class="kt-widget__item">
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">1 Jam Pertama</span>
+                                        <span class="kt-widget__data kt-align-right">Rp. @string.Format("{0:N0}", Model.MobilJam)</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">1 Jam Berikutnya</span>
+                                        <span class="kt-widget__data kt-align-right">Rp. @string.Format("{0:N0}", Model.MobilNext)</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Maksimal</span>
+                                        <span class="kt-widget__data kt-align-right">Rp. @string.Format("{0:N0}", Model.MobilNext)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-separator kt-separator--space-sm "></div>
+                <div class="row justify-content-around">
+                    <div class="col-md-5">
+                        <div class="kt-widget kt-widget--user-profile-2">
+                            <div class="kt-widget__body">
+                                <div class="kt-widget__section kt-padding-b-0">
+                                    <h5 class="kt-font-bold">Parkir Motor</h5>
+                                </div>
+                                <div class="kt-widget__item">
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Kapasitas</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.KapasitasMotor</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Jumlah Parkir</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.JumlahMotor</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Jumlah Pendapatan</span>
+                                        <span class="kt-widget__data kt-align-right">Rp. @string.Format("{0:N0}", Model.TotalMotor)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="kt-widget kt-widget--user-profile-2">
+                            <div class="kt-widget__body">
+                                <div class="kt-widget__section kt-padding-b-0">
+                                    <h5 class="kt-font-bold">Tarif Parkir Motor</h5>
+                                </div>
+                                <div class="kt-widget__item">
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">1 Jam Pertama</span>
+                                        <span class="kt-widget__data kt-align-right">Rp. @string.Format("{0:N0}", Model.MotorJam)</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">1 Jam Berikutnya</span>
+                                        <span class="kt-widget__data kt-align-right">Rp. @string.Format("{0:N0}", Model.MotorNext)</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Maksimal</span>
+                                        <span class="kt-widget__data kt-align-right">Rp. @string.Format("{0:N0}", Model.MotorNext)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-separator kt-separator--space-sm "></div>
+                <div class="row justify-content-center kt-margin-t-15">
+                    <div class="col-lg-3">
+                        <div class="kt-widget12">
+                            <div class="kt-widget12__content">
+                                <div class="kt-widget12__item kt-margin-b-10">
+                                    <div class="kt-widget12__info">
+                                        <span class="kt-widget12__desc">Dasar Pengenaan</span>
+                                        <span class="kt-widget12__value">Rp. @string.Format("{0:N0}", Model.Dpp ?? 0)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="kt-widget12">
+                            <div class="kt-widget12__content">
+                                <div class="kt-widget12__item kt-margin-b-10">
+                                    <div class="kt-widget12__info">
+                                        <span class="kt-widget12__desc">Tarif Pajak</span>
+                                        <span class="kt-widget12__value">@string.Format("{0:N2}", Model.IdSptpdNavigation.IdTarifNavigation.Tarif ?? 0)%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="kt-widget12">
+                            <div class="kt-widget12__content">
+                                <div class="kt-widget12__item kt-margin-b-10">
+                                    <div class="kt-widget12__info">
+                                        <span class="kt-widget12__desc">Pajak Terhutang</span>
+                                        <span class="kt-widget12__value">Rp. @string.Format("{0:N0}", Model.PajakTerhutang ?? 0)</span>
+                                        <span class="kt-widget12__desc" style="font-style:italic" id="terbilang"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__foot">
+                <div class="kt-form__actions kt-align-right">
+                    <form asp-action="Validasi">
+                        <input type="hidden" asp-for="IdSptpd" />
+                        <a href="/SPTPD/@Model.IdSptpd" class="btn btn-secondary">Kembali</a>
+                        @if (Model.IdSptpdNavigation.FlagValidasi)
+                        {
+                            <input type="submit" value="Batalkan Validasi" class="btn btn-danger" />
+                        }
+                        else
+                        {
+                            <input type="submit" value="Validasi" class="btn btn-success" />
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--end::Portlet-->
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/terbilang.js"></script>
+    <script>
+        function rupiah(a, currency) {
+            return currency + a.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+        }
+
+        document.getElementById("terbilang").innerHTML = (terbilang(@Math.Floor(Model.PajakTerhutang ?? 0))) + "rupiah";
+
+
+    </script>
+}

@@ -1,0 +1,233 @@
+﻿@model IEnumerable<SIP.Models.PReklame>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Judul)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Teks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlamatPasang)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KelasJalan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatusReklame)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JenisReklame)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Produk)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rokok)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Letak)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.P1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.P2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.P3)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.P4)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.L1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.L2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.L3)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.L4)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Luas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tinggi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JumlahHari)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JumlahDetik)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Jumlah)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TglPasang1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TglPasang2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nsr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NilaiKontrak)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dpp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PajakTerhutang)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Eu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdSptpdNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IndKabKota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IndKecamatan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IndKelurahan)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Judul)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlamatPasang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KelasJalan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusReklame)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JenisReklame)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Produk)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rokok)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Letak)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.P1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.P2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.P3)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.P4)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.L1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.L2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.L3)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.L4)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Luas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tinggi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JumlahHari)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JumlahDetik)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Jumlah)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TglPasang1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TglPasang2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nsr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NilaiKontrak)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dpp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PajakTerhutang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Eu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdSptpdNavigation.IdSptpd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IndKabKota.IndKabKotaId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IndKecamatan.IndKecamatanId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IndKelurahan.IndKelurahanId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdReklame">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdReklame">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdReklame">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,308 @@
+﻿@model SIP.Models.Sppt
+
+@{
+    Layout = null;
+
+    var i = 0;
+    var j = ViewBag.Jumlah;
+}
+
+<html lang="id">
+
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/css/print-style.css" rel="stylesheet" />
+    <link href="~/css/reporting/sppt.css" rel="stylesheet" />
+    <style>
+        .join {
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+
+<body style="font-family: open sans, tahoma, sans-serif; margin: 0; background-color:#b2b2b2; -webkit-print-color-adjust: exact">
+    <div style="width: 100%;" class="break">
+        <div align="center">
+            <div style="box-shadow:10px;">
+                <table width="100%" cellspacing="0" cellpadding="0" style="width: 800px; padding: 20px 30px; color: #343030; background-color:#FFF;">
+                    <tr>
+                        <td>
+                            <table width="100%" cellspacing="0" cellpadding="0" style="padding-bottom: 20px;">
+                                <tr>
+                                    <td style="width: 65%; vertical-align: top;">
+                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td style="font-size: 12px;">
+                                                    <span style="font-weight: 600">@Context.Session.GetString("NamaPemda")</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size: 12px;">
+                                                    <span style="font-weight: 600">@Context.Session.GetString("Opd")</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="width: 35%; vertical-align: top;">
+                                        <table width="100%" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td style="font-size: 10px;" align="center">
+                                                    <span style="font-weight: 600">SPPT PBB</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-size: 10px;" align="center">
+                                                    <span style="font-weight: 600">BUKAN MERUPAKAN BUKTI KEPEMILIKAN HAK</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="100%" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td width="20%"></td>
+                                    <td width="60%" style="font-size: 16px;" align="center">
+                                        <span style="font-weight: 600">SURAT PEMBERITAHUAN PAJAK TERHUTANG</span>
+                                    </td>
+                                    <td width="20%" style="font-size: 13px;">
+                                        <span style="font-weight: 600">AKUN: </span><span class="vis-print" style="font-weight: 600">@Model.IdSpopNavigation.IdCoaNavigation.Kdcoa</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-size: 16px;" align="center">
+                                        <span style="font-weight: 600; margin-left:140px;">PAJAK BUMI DAN BANGUNAN TAHUN</span>
+                                    </td>
+                                    <td style="font-size: 16px;">
+                                        <span style="font-weight: 600">@Model.Tahun</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="font-size: 13px;">
+                                        <span style="font-weight: 600">NOP: </span><span class="vis-print" style="font-weight: 600">@Model.IdSpopNavigation.Nop</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="join" width="100%" style="margin-top: 5px; text-transform: uppercase;">
+                                <tr class="tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td class="tb-atas" width="50%" align="center" style="padding-top:2px;">LETAK OBJEK PAJAK</td>
+                                    <td class="tb-atas" width="50%" align="center" style="padding-top:2px;">NAMA DAN ALAMAT WAJIB PAJAK</td>
+                                </tr>
+                                <tr class="tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td><span class="vis-print">@Model.IdSpopNavigation.NamaJalan</span></td>
+                                    <td><span class="vis-print">@Model.IdSpopNavigation.IdSubjekNavigation.Nama</span></td>
+                                </tr>
+                                <tr class="tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td><span class="vis-print">RT. @Model.IdSpopNavigation.Rt RW. @Model.IdSpopNavigation.Rw</span></td>
+                                    <td><span class="vis-print">@Model.IdSpopNavigation.IdSubjekNavigation.Alamat</span></td>
+                                </tr>
+                                <tr class="tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td><span class="vis-print">@Model.IdSpopNavigation.IndKelurahan.Kelurahan</span></td>
+                                    <td><span class="vis-print">RT. @Model.IdSpopNavigation.IdSubjekNavigation.Rtrw.Substring(0, 2) RW. @Model.IdSpopNavigation.IdSubjekNavigation.Rtrw.Substring(3, 2)</span></td>
+                                </tr>
+                                <tr class="tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td><span class="vis-print">@Model.IdSpopNavigation.IndKecamatan.Kecamatan</span></td>
+                                    <td><span class="vis-print">@Model.IdSpopNavigation.IdSubjekNavigation.IndKelurahan.Kelurahan</span></td>
+                                </tr>
+                                <tr class="tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td>
+                                        @if (Model.IdSpopNavigation.IndKabKota.KabKota.Contains("Kota"))
+                                        {
+                                            <span class="vis-print">@Model.IdSpopNavigation.IndKabKota.KabKota.Remove(0, 5)</span>
+                                        }
+                                        else if (Model.IdSpopNavigation.IndKabKota.KabKota.Contains("Kab."))
+                                        {
+                                            <span class="vis-print">@Model.IdSpopNavigation.IndKabKota.KabKota.Remove(0, 5)</span>
+                                        }
+                                    </td>
+                                    <td><span class="vis-print">@Model.IdSpopNavigation.IdSubjekNavigation.IndKecamatan.Kecamatan</span></td>
+                                </tr>
+                                <tr class="tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td style="padding-top: 3px;"></td>
+                                    <td style="padding-top: 3px; padding-bottom:5px;">NPWPD: <span class="vis-print">@Model.IdSpopNavigation.IdSubjekNavigation.Npwrd</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="join">
+                                <tr class="tb-border--all tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td width="19%" align="center"><span>OBJEK PAJAK</span></td>
+                                    <td width="16%" align="center"><span>LUAS M2</span></td>
+                                    <td width="5%" align="center"><span>KELAS</span></td>
+                                    <td width="30%" align="center"><span>NJOP PER M2 (Rp)</span></td>
+                                    <td width="30%" align="center"><span>TOTAL NJOP (Rp)</span></td>
+                                </tr>
+                                <tr class="tb-border tb-padding--top" style="font-size: 14px; font-weight: 300;">
+                                    <td align="left"><span>BUMI</span></td>
+                                    <td align="center"><span>@String.Format("{0:N2}", Model.IdSpopNavigation.LuasTanah ?? 0)</span></td>
+                                    <td align="center"><span>@Model.IdSpopNavigation.Zona</span></td>
+                                    <td align="right"><span>@String.Format("{0:C0}", Model.Njopbumi ?? 0)</span></td>
+                                    <td align="right"><span>@String.Format("{0:C0}", Model.TotalBumi ?? 0)</span></td>
+                                </tr>
+                                <tr class="tb-border tb-border--bottom-three tb-padding--bottom" style="font-size: 14px; font-weight: 300;">
+                                    <td align="left"><span>BANGUNAN</span></td>
+                                    <td align="center"><span>@String.Format("{0:N2}", Model.IdSpopNavigation.Lspop.FirstOrDefault().Luas ?? 0)</span></td>
+                                    <td align="center"><span>@Model.IdSpopNavigation.Lspop.FirstOrDefault().Zona</span></td>
+                                    <td align="right"><span>@String.Format("{0:C0}", Model.Njopbangunan ?? 0)</span></td>
+                                    <td align="right"><span>@String.Format("{0:C0}", Model.TotalBangunan ?? 0)</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="join" width="100%">
+                                <tr class="tb-border--both">
+                                    <td width="35%" style="padding: 2px 0px 2px 12px; font-weight: bold; font-size: 13px;"><span>NJOP Sebagai dasar pengenaan PBB</span></td>
+                                    <td width="5%" style="padding-left: 0px; font-weight: bold; font-size: 13px;"><span>=</span></td>
+                                    <td width="15%" align="center"></td>
+                                    <td width="20%" align="center"></td>
+                                    <td width="25%" align="right" style="font-size: 14px;"><span class="vis-print">@String.Format("{0:C0}", Model.DasarPengenaan ?? 0)</span></td>
+                                </tr>
+                                <tr class="tb-border--both">
+                                    <td style="padding: 2px 0px 2px 12px; font-size: 13px;"><span>NJOPTKP (NJOP Tidak Kena Pajak)</span></td>
+                                    <td style="padding-left: 0px; font-weight: bold; font-size: 13px;"><span>=</span></td>
+                                    <td align="center"></td>
+                                    <td align="center"></td>
+                                    <td align="right" style="font-size: 14px;"><span class="vis-print">@String.Format("{0:C0}", Model.Njoptkp ?? 0)</span></td>
+                                </tr>
+                                <tr class="tb-border--both">
+                                    <td style="padding: 2px 0px 2px 12px; font-size: 13px;"><span>NJOP untuk Perhitungan PBB</span></td>
+                                    <td style="padding-left: 0px; font-weight: bold; font-size: 13px;"><span>=</span></td>
+                                    <td align="center"></td>
+                                    <td align="center"></td>
+                                    <td align="right" style="font-size: 14px;"><span class="vis-print">@String.Format("{0:C0}", Model.Njophitung ?? 0)</span></td>
+                                </tr>
+                                <tr class="tb-border--both">
+                                    <td style="padding: 2px 0px 2px 12px; font-size: 13px;"><span>NJKP (Nilai Jual Kena Pajak)</span></td>
+                                    <td style="padding-left: 0px; font-weight: bold; font-size: 13px;"><span>=</span></td>
+                                    <td align="center"></td>
+                                    <td align="center"></td>
+                                    <td align="right" style="font-size: 14px;"><span class="vis-print"></span></td>
+                                </tr>
+                                <tr class="tb-border--both">
+                                    <td style="padding: 2px 0px 20px 12px; font-size: 13px;"><span>PBB yang Terhutang</span></td>
+                                    <td style="padding-left: 0px; padding-bottom:20px; font-weight: bold; font-size: 13px;"><span>=</span></td>
+                                    <td align="center" style="font-size: 14px; padding-bottom:20px;"><span class="vis-print">@String.Format("{0:N2}", Model.IdTarifNavigation.Tarif ?? 0)%  x</span></td>
+                                    <td align="center" style="font-size: 14px; padding-bottom:20px;"><span class="vis-print">@String.Format("{0:C0}", Model.Njophitung ?? 0)</span></td>
+                                    <td align="right" style="font-size: 14px; padding-bottom:20px;"><span class="vis-print">@String.Format("{0:C0}", Model.Terhutang ?? 0)</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="join" width="100%">
+                                <tr class="tb-border--both tb-border--top-three">
+                                    <td width="70%" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span>PAJAK BUMI DAN BANGUNAN YANG HARUS DIBAYAR (Rp)</span></td>
+                                    <td width="30%" style="font-size: 14px;" align="right"><span class="vis-print">@String.Format("{0:C0}", Model.Terhutang ?? 0)</span></td>
+                                </tr>
+                                <tr class="tb-border--both tb-border--bottom-three">
+                                    <td colspan="2" style="padding: 9px 30px; font-size: 14px;"><span style="text-transform:uppercase;" id="terbilang"></span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="join" width="100%">
+                                <tr class="tb-padding--top-three" style="font-size: 14px;">
+                                    <td width="25%" class="tb-kiri" style="padding: 0px 12px;"><span>TGL. JATUH TEMPO :</span></td>
+                                    <td width="25%" align="left" class="tb-kanan tb-no--padding" style="padding: 0px 12px;"><span style="text-transform:uppercase;">@String.Format("{0:dd MMM yyyy}", Model.JatuhTempo)</span></td>
+                                    <td width="50%" align="center" style="padding: 0px 12px;"><span style="text-transform:uppercase;">@Context.Session.GetString("Pemda"), @String.Format("{0:dd MMM yyyy}", Model.Tanggal)</span></td>
+                                </tr>
+                                <tr class="tb-padding--both" style="font-size: 14px;">
+                                    <td align="left" class="tb-kiri" style="padding: 0px 12px;"><span>TEMPAT PEMBAYARAN :</span></td>
+                                    <td class="tb-kanan"></td>
+                                    <td align="center"><span>@ViewBag.Jabatan</span></td>
+                                </tr>
+                                <tr class="tb-border--left" style="font-size: 14px; height:45px;">
+                                    <td class="tb-kanan tb-bawah" rowspan="4" colspan="2" valign="top" style="padding: 0px 12px;">
+                                        @foreach (var item in ViewBag.Bank)
+                                        {
+                                            i += 1;
+                                            if (i == j)
+                                            {
+                                                <span>@item</span>
+                                            }
+                                            else
+                                            {
+                                                <span>@item, </span>
+                                            }
+                                        }
+                                    </td>
+                                    <td align="center"><span></span></td>
+                                </tr>
+                                <tr class="tb-border--left">
+                                    <td align="center"><span></span></td>
+                                </tr>
+                                <tr class="tb-border--left" style="font-size: 14px;">
+                                    <td align="center"><span>@ViewBag.TTD</span></td>
+                                </tr>
+                                <tr class="tb-border--left" style="font-size: 14px;">
+                                    <td align="center"><span>NIP. @ViewBag.NIP</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:32px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="join" width="100%">
+                                <tr class="tb-border--top-three" style="font-size: 14px;">
+                                    <td width="20%" class="tb-kiri" style="padding: 10px 12px 2px 12px;"><span>NAMA WP</span></td>
+                                    <td width="45%" style="padding: 10px 12px 2px 12px;">: <span>@Model.IdSpopNavigation.IdSubjekNavigation.Nama.ToUpper()</span></td>
+                                    <td width="15%" class="tb-kiri" style="padding: 10px 12px 2px 12px;"><span>Diterima tgl</span></td>
+                                    <td width="20%" style="padding: 10px 12px 2px 0px;">:</td>
+                                </tr>
+                                <tr class="tb-border--both" style="font-size: 14px;">
+                                    <td class="tb-kiri" style="padding: 1px 12px 2px 12px;"><span>Letak Objek Pajak</span></td>
+                                    <td style="padding: 1px 12px 2px 12px;">: Kecamatan <span class="vis-print">@Model.IdSpopNavigation.IndKecamatan.Kecamatan.ToUpper()</span></td>
+                                    <td class="tb-kiri" style="padding: 1px 0px 2px 12px;"><span>Tanda Tangan</span></td>
+                                    <td style="padding: 1px 12px 2px 0px;">:</td>
+                                </tr>
+                                <tr class="tb-border--both" style="font-size: 14px;">
+                                    <td class="tb-kiri" style="padding: 1px 12px 2px 12px;"><span></span></td>
+                                    <td style="padding: 1px 12px 2px 22px;">Desa/Kelurahan <span class="vis-print">@Model.IdSpopNavigation.IndKelurahan.Kelurahan.ToUpper()</span></td>
+                                    <td class="tb-kiri" style="padding: 1px 12px 2px 12px;"></td>
+                                    <td style="padding: 1px 12px 2px 0px;"></td>
+                                </tr>
+                                <tr class="tb-border--both" style="font-size: 14px;">
+                                    <td class="tb-kiri" style="padding: 1px 12px 2px 12px;"><span>NOP</span></td>
+                                    <td style="padding: 1px 12px 2px 12px;">: <span class="vis-print">@Model.IdSpopNavigation.Nop</span></td>
+                                    <td class="tb-kiri" style="padding: 1px 0px 2px 0px;" colspan="2" align="center">(<span style="font-size:10px">.....................................................................</span>)</td>
+                                </tr>
+                                <tr class="tb-border--bottom-three" style="font-size: 14px;">
+                                    <td class="tb-kiri" style="padding: 1px 12px 10px 12px;"><span>SPPT Tahun/Rp.</span></td>
+                                    <td style="padding: 1px 12px 10px 12px;">: <span class="vis-print">@Model.Tahun / @String.Format("{0:C0}", Model.Terhutang ?? 0)</span></td>
+                                    <td class="tb-kiri" style="padding: 1px 0px 10px 0px;" colspan="2" align="center"><span>Nama Terang</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/js/terbilang.js"></script>
+<script>
+    var hutang = @Math.Floor(Model.Terhutang ?? 0);
+    document.getElementById("terbilang").innerHTML = (terbilang(hutang)) + "rupiah";
+
+</script>

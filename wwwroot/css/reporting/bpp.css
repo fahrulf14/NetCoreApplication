@@ -1,0 +1,27 @@
+﻿@media print {
+    a {
+        text-decoration: none!important;
+    }
+
+    .space {
+        margin: 0 0;
+    }
+
+    tbody {
+        table-layout : fixed;
+        padding-top : 5cm;
+    }
+
+    .report {
+        width: 310mm;
+    }
+
+    .sub-report {
+        width: 225mm;
+    }
+}
+
+@Page {
+    size: 330mm 210mm;
+    margin: 20mm 10mm 10mm 10mm;
+}

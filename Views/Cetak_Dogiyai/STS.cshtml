@@ -1,0 +1,322 @@
+﻿@model SIP.Models.Sts
+
+@{
+    Layout = null;
+    var height = 750;
+    var no = 0;
+}
+
+    <html lang="id">
+
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title>
+        <link href="~/css/print-style.css" rel="stylesheet" />
+        <link href="~/css/paper/F4.css" rel="stylesheet" />
+        <style>
+            .tb-square {
+                border: solid 1px #000000;
+                height: 19px;
+                width: 20px;
+                text-align: center;
+            }
+
+            .tb-data {
+                height: 30px;
+            }
+        </style>
+        <!--begin::Favicon -->
+        <link rel="apple-touch-icon" sizes="180x180" href="~/media/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="~/media/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="~/media/favicon/favicon-16x16.png">
+        <link rel="shortcut icon" href="~/media/favicon/favicon.ico">
+        <meta name="msapplication-TileColor" content="#2d89ef">
+        <meta name="msapplication-config" content="~/media/favicon/browserconfig.xml">
+        <meta name="theme-color" content="#ffffff">
+        <!--end::Favicon -->
+    </head>
+
+    <body>
+        <div style="width: 100%;">
+            <div align="center">
+                <div class="F4 break">
+                    <table width="100%" cellspacing="0" cellpadding="0" style="width: 800px; padding: 20px 30px 5px; color: #343030;">
+                        <tr>
+                            <td><img class="logo-new" src="~/media/logos/logo.png" /></td>
+                        </tr>
+                        <tr style="font-size: 14px">
+                            <td align="right"><span class="inv-print">@Model.NoSts</span></td>
+                        </tr>
+                    </table>
+                    <table width="100%" cellspacing="0" cellpadding="0" style="width: 750px; color: #343030; border: 1px solid #000">
+                        <tr>
+                            <td width="5%"></td>
+                            <td width="55%" class="tb-kanan">
+                                <table width="100%">
+                                    <tr>
+                                        <td align="center" style="font-size: 17px; font-weight:600; padding-top: 5px"><span style="text-transform:uppercase;">@ViewBag.Title2</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="font-size: 17px; font-weight:600"><span style="text-transform:uppercase;">@ViewBag.Title1</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="font-size: 14px; "><span>@Context.Session.GetString("Opd")</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="font-size: 14px; padding-bottom: 5px"><span>@Context.Session.GetString("Alamat")</span></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td width="40%">
+                                <table width="100%">
+                                    <tr>
+                                        <td align="center" style="font-weight: 600; font-size: 18px; padding-top: 5px"><span style="text-transform:uppercase;">STS</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="font-size: 14px;"><span style="text-transform:uppercase;">(SURAT TANDA SETORAN)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-bottom: 5px">
+                                            <table>
+                                                <tr style="font-size:14px">
+                                                    <td style="padding-left: 60px">Tanggal</td>
+                                                    <td>: @string.Format("{0:dd MMMM yyyy}", Model.Tanggal)</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="font-regular" width="100%" cellspacing="0" cellpadding="0" style="width: 750px">
+                        <tr>
+                            <td>
+                                <table class="join table-borderless" width="100%" style="font-size: 14px; font-weight: 300;">
+                                    <tr>
+                                        <td colspan="2" style="padding-bottom: 15px; padding-top: 15px">Kepala Kas @ViewBag.NamaPemda pada @Model.IdBankNavigation.IdRefNavigation.NamaBank Cabang @Model.IdBankNavigation.Cabang</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <table cellspacing="0" cellpadding="0">
+                                                <tr class="font-regular">
+                                                    <td align="left" style="padding-right: 385px">Harap menerima uang sebesar</td>
+                                                    <td align="right" style="height: 30px; vertical-align: middle; background-color: darkgrey; width: 130px; padding: 0 20px">
+                                                        <span class="tb-atas tb-kanan tb-bawah tb-kiri">@string.Format("{0:C0}", Model.JumlahSetoran)</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 10px"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Terbilang </td>
+                                        <td align="right">
+                                            <table class="font-regular">
+                                                <tr>
+                                                    <td style="height: 30px; width: 600px; padding-left: 10px; vertical-align:middle" class="tb-atas tb-kanan tb-bawah tb-kiri tb-detail" id="terbilang1"></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="padding-bottom: 15px; padding-top: 15px">
+                                            Jumlah tersebut kami masukkan dalam Rekening @Model.IdBankNavigation.NamaRek @ViewBag.NamaPemda @Model.IdBankNavigation.IdRefNavigation.NamaBank Cabang @Model.IdBankNavigation.Cabang <br />
+                                            dengan nomor rekening @Model.IdBankNavigation.NoRek pada tanggal @string.Format("{0:dd MMMM yyyy}", Model.Tanggal)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="padding-bottom: 10px;">
+                                            Dengan rincian sebagai berikut:
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="join font-regular" width="100%" border="0" style="margin-top: 5px;" id="tbl_detail">
+                                    <tr class="tb-border--all tb-border tb-padding--top-bottom">
+                                        <td width="3%" align="center"><span>No</span></td>
+                                        <td width="19%" align="center"><span>Kode Rekening</span></td>
+                                        <td width="55%" align="center"><span>Uraian</span></td>
+                                        <td width="23%" align="center" colspan="2"><span>Jumlah</span></td>
+                                    </tr>
+                                    @foreach (var item in (List<SIP.ViewModels.STSDetail>)ViewBag.Detail)
+                                    {
+                                        height -= 30;
+                                        <tr class="tb-border tb-border--both tb-padding--top-bottom">
+                                            <td class="tb-data"><span>@(no += 1)</span></td>
+                                            <td class="tb-data" align="center"><span>@item.KdCoa.Substring(0, 1).@item.KdCoa.Substring(1, 1).@item.KdCoa.Substring(2, 1).@item.KdCoa.Substring(3, 2).@item.KdCoa.Substring(5, 2)</span></td>
+                                            <td class="tb-data"><span>@item.Uraian</span></td>
+                                            <td class="tb-data" style="border-right-style:hidden; padding: 0 10px">Rp.</td>
+                                            <td class="tb-data" align="right"><span>@String.Format("{0:N0}", item.Jumlah)</span></td>
+                                        </tr>
+                                    }
+                                    <tr class="tb-border tb-border--both tb-padding--top-bottom">
+                                        <td style="height: @(height)px"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                    <tr class="tb-padding--top-bottom tb-border--all">
+                                        <td align="center" colspan="3"><span class="m--font-bolder">Jumlah :</span></td>
+                                        <td style="border-right-style:hidden; padding: 0 10px">Rp.</td>
+                                        <td align="right"><span class="m--font-bolder">@String.Format("{0:N0}", Model.JumlahSetoran)</span></td>
+                                    </tr>
+                                    <tr class="tb-padding--top-bottom">
+                                        <td align="center" colspan="6" class="tb-border--all"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">Halaman 1 dari 2</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="F4 break">
+                    <table width="100%" cellspacing="0" cellpadding="0" style="width: 800px; padding: 20px 30px 5px; color: #343030;">
+                        <tr>
+                            <td><img class="logo-new" src="~/media/logos/logo.png" /></td>
+                        </tr>
+                        <tr style="font-size: 14px">
+                            <td align="right"><span class="inv-print">@Model.NoSts</span></td>
+                        </tr>
+                    </table>
+                    <table width="100%" cellspacing="0" cellpadding="0" style="width: 750px; color: #343030; border: 1px solid #000">
+                        <tr>
+                            <td width="5%"></td>
+                            <td width="55%" class="tb-kanan">
+                                <table width="100%">
+                                    <tr>
+                                        <td align="center" style="font-size: 17px; font-weight:600; padding-top: 5px"><span style="text-transform:uppercase;">@ViewBag.Title2</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="font-size: 17px; font-weight:600"><span style="text-transform:uppercase;">@ViewBag.Title1</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="font-size: 14px; "><span>@Context.Session.GetString("Opd")</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="font-size: 14px; padding-bottom: 5px"><span>@Context.Session.GetString("Alamat")</span></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td width="40%">
+                                <table width="100%">
+                                    <tr>
+                                        <td align="center" style="font-weight: 600; font-size: 18px; padding-top: 5px"><span style="text-transform:uppercase;">STS</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="font-size: 14px;"><span style="text-transform:uppercase;">(SURAT TANDA SETORAN)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-bottom: 5px">
+                                            <table>
+                                                <tr style="font-size:14px">
+                                                    <td style="padding-left: 60px">Tanggal</td>
+                                                    <td>: @string.Format("{0:dd MMMM yyyy}", Model.Tanggal)</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="font-regular" width="100%" cellspacing="0" cellpadding="0" style="width: 750px">
+                        <tr>
+                            <td>
+                                <table class="join table-borderless" width="100%" style="font-size: 14px; font-weight: 300;">
+                                    <tr>
+                                        <td colspan="2" style="padding-bottom: 15px; padding-top: 15px">Kepala Kas @ViewBag.NamaPemda pada @Model.IdBankNavigation.IdRefNavigation.NamaBank Cabang @Model.IdBankNavigation.Cabang</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <table cellspacing="0" cellpadding="0">
+                                                <tr class="font-regular">
+                                                    <td align="left" style="padding-right: 385px">Harap menerima uang sebesar</td>
+                                                    <td align="right" style="height: 30px; vertical-align: middle; background-color: darkgrey; width: 130px; padding: 0 20px">
+                                                        <span class="tb-atas tb-kanan tb-bawah tb-kiri">@string.Format("{0:C0}", Model.JumlahSetoran)</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 10px"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Terbilang </td>
+                                        <td align="right">
+                                            <table class="font-regular">
+                                                <tr>
+                                                    <td style="height: 30px; width: 600px; padding-left: 10px; vertical-align:middle" class="tb-atas tb-kanan tb-bawah tb-kiri tb-detail" id="terbilang2"></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="padding-bottom: 15px; padding-top: 15px">
+                                            Jumlah tersebut kami masukkan dalam Rekening @Model.IdBankNavigation.NamaRek @ViewBag.NamaPemda @Model.IdBankNavigation.IdRefNavigation.NamaBank Cabang @Model.IdBankNavigation.Cabang <br />
+                                            dengan nomor rekening @Model.IdBankNavigation.NoRek pada tanggal @string.Format("{0:dd MMMM yyyy}", Model.Tanggal)
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="join font-regular" width="100%">
+                                    <tr>
+                                        <td align="center" style="padding-top: 30px"></td>
+                                        <td align="center" style="padding-top: 30px">Telah diterima di</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="50%" align="center"><span>@Context.Session.GetString("Kecamatan"),  @String.Format("{0:dd MMMM yyyy}", Model.Tanggal)</span></td>
+                                        <td width="50%" align="center"><span>@Context.Session.GetString("Kecamatan"), ...............................</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center"><span>@ViewBag.Jabatan</span></td>
+                                        <td align="center"></td>
+                                    </tr>
+                                    <tr class="tb-height--ttd">
+                                        <td align="center"></td>
+                                        <td align="center"></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="text-decoration: underline">@ViewBag.TTD</td>
+                                        <td align="center">(.................................)</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">NIP @ViewBag.NIP</td>
+                                        <td align="center"></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" style="height:32px;"><span></span></td>
+                                        <td align="center"></td>
+                                    </tr>
+                                </table>
+                            
+                        </tr>
+                        <tr>
+                            <td style="height: 620px"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Halaman 2 dari 2</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
+
+<script src="~/js/terbilang.js"></script>
+<script>
+    document.getElementById("terbilang1").innerHTML = "\t" + (terbilang(@Math.Floor(Model.JumlahSetoran ?? 0))) + "rupiah";
+    document.getElementById("terbilang2").innerHTML = "\t" + (terbilang(@Math.Floor(Model.JumlahSetoran ?? 0))) + "rupiah";
+</script>

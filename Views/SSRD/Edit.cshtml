@@ -1,0 +1,51 @@
+﻿@model SIP.Models.Ssrd
+
+@{
+    ViewBag.Title = "Edit SSRD";
+    ViewBag.SubHeaderTitle = "SSRD";
+    ViewBag.S1 = "Edit Data";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-3">
+        @await Component.InvokeAsync("DetailSkrd", new { id = Model.IdSkrd })
+    </div>
+    <div class="col-lg-7">
+        <form asp-action="Edit">
+            <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            @ViewBag.Title
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <input type="hidden" asp-for="IdSsrd" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <label asp-for="Tanggal" class="control-label required"></label>
+                            <input asp-for="Tanggal" class="form-control datefield" type="text" asp-format="{0:dd-MM-yyyy}" value="@string.Format("{0:dd-MM-yyyy}", DateTime.Now)" autocomplete="off" required />
+                            <span asp-validation-for="Tanggal" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label asp-for="IdSetoran" class="control-label">Jenis</label>
+                            <select asp-for="IdSetoran" class="form-control kt-selectpicker" title="Pilih Jenis Setoran..." required asp-items="ViewBag.IdSetoran"></select>
+                            <span asp-validation-for="IdSetoran" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__foot">
+                    <div class="kt-form__actions kt-align-right">
+                        <a href="/SSRD/@Model.IdSubjek" class="btn btn-secondary">Kembali</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+﻿@model SIP.Models.RefHotel
+
+<form asp-action="Create">
+    <div class="modal-header">
+        <h5 class="modal-title" id="ModalTitle">Tambah Data Referensi Hotel</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="la la-remove"></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" asp-for="FlagAktif" value="true" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="Uraian" class="control-label"></label>
+                <input asp-for="Uraian" class="form-control" required autofocus />
+                <span asp-validation-for="Uraian" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="Jenis" class="control-label">Jenis</label>
+                <select asp-for="Jenis" class="form-control kt-selectpicker" title="Pilih Jenis..." asp-items="ViewBag.Layanan" required></select>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" value="Simpan" class="btn btn-success" />
+    </div>
+</form>

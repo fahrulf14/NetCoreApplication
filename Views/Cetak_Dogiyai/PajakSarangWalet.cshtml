@@ -1,0 +1,254 @@
+﻿@model SIP.Models.PWalet
+
+@{
+    Layout = null;
+}
+
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="~/css/print-style.css" rel="stylesheet" />
+    <link href="~/css/paper/Legal.css" rel="stylesheet" />
+    <style>
+        .join {
+            border-collapse: collapse;
+        }
+    </style>
+    <!--begin::Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/media/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/media/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/media/favicon/favicon-16x16.png">
+    <link rel="shortcut icon" href="~/media/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="msapplication-config" content="~/media/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!--end::Favicon -->
+</head>
+
+<body>
+    <div style="width: 100%;" class="break">
+        <div align="center">
+            <div class="A4">
+                <table width="100%" cellspacing="0" cellpadding="0" class="report">
+                    <tr>
+                        <td><img class="logo" src="~/media/logos/logo.png" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="table-borderless" width="100%" style="margin-top: 5px; font-size: 18px;">
+                                <tr class="header">
+                                    <td align="center" style="font-weight: 600"><span style="text-transform:uppercase;">@Context.Session.GetString("NamaPemda")</span></td>
+                                </tr>
+                                <tr class="header">
+                                    <td align="center" valign="top" style="font-weight: 600">@Context.Session.GetString("Opd")</td>
+                                </tr>
+                                <tr class="header">
+                                    <td align="center" valign="top" style=font-size: 16px;">@Context.Session.GetString("Alamat")</td>
+                                </tr>
+                                <tr>
+                                    <td height="10px"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="join" width="100%" style="margin-top: 5px;">
+                                <tr class="tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td class="tb-atas" width="50%" align="center" style="padding-top:2px;"><span style="font-weight: 600">SURAT PEMBERITAHUAN PAJAK DAERAH (SPTPD)</span></td>
+                                    <td class="tb-atas" width="50%" align="center" style="padding-top:2px;"></td>
+                                </tr>
+                                <tr class="tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td><span class="vis-print"></span></td>
+                                    <td><span class="vis-print"></span></td>
+                                </tr>
+                                <tr class="tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td width="19%" align="center"><span style="font-weight: 600">PAJAK SARANG BURUNG WALET</span></td>
+                                    <td width="19%" align="center"><span class="vis-print"></span>Kepada</td>
+                                </tr>
+                                <tr class="tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td align="center"><span class="vis-print">@Model.IdSptpdNavigation.NoSptpd</span></td>
+                                    <td width="19%" align="center"><span>Yth. KEPALA @Context.Session.GetString("Opd")</span></td>
+                                </tr>
+                                <tr class="tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td align="center"><span class="vis-print">Masa Pajak : @String.Format("{0:MMMM}", Model.IdSptpdNavigation.MasaPajak1)</span></td>
+                                    <td width="19%" align="center"><span>Di @Context.Session.GetString("Pemda")</span></td>
+                                </tr>
+                                <tr class="tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td align="center"><span class="vis-print">Tahun Pajak : @String.Format("{0:yyyy}", Model.IdSptpdNavigation.MasaPajak1)</span></td>
+                                    <td width="19%" align="center"><span></span></td>
+                                </tr>
+                                <tr class="tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td style="padding-top: 3px;"></td>
+                                    <td style="padding-top: 3px; padding-bottom:5px;"><span class="vis-print"></span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="join" width="100%">
+                                <tr class="tb-border--both tb-border--top-three">
+                                    <td width="70%" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span style="font-weight: 600">I. Identitas Wajib Pajak</span></td>
+                                    <td width="30%" style="font-size: 14px;" align="right"><span class="vis-print"></span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="join" width="100%">
+                                <tr class="tb-border--both tb-border--top-three">
+                                    <td width="25%" style="padding: 2px 0px 2px 28px; font-size: 13px;"><span>Nama Wajib Pajak</span></td>
+                                    <td width="25%" style="padding: 0px; font-size: 13px;"><span>: @Model.IdSptpdNavigation.IdSubjekNavigation.Nama</span></td>
+                                    <td width="10%" style="padding: 2px 0px 2px 5px; font-size: 13px;" align="center"></td>
+                                    <td width="10%" style="padding: 2px 0px 2px 5px; font-size: 13px;" align="center"></td>
+                                    <td width="30%" style="font-size: 14px;"><span class="vis-print"></span></td>
+                                </tr>
+                                <tr class="tb-border--both">
+                                    <td style="padding: 2px 0px 2px 28px; font-size: 13px;"><span>Alamat</span></td>
+                                    <td style="padding: 0px; font-size: 13px;"><span>: @Model.IdSptpdNavigation.IdSubjekNavigation.Alamat</span></td>
+                                    <td style="padding: 2px 0px 2px 5px; font-size: 13px;"><span>RT. @Model.IdSptpdNavigation.IdSubjekNavigation.Rtrw.Substring(0, 2)</span></td>
+                                    <td style="padding: 2px 0px 2px 5px; font-size: 13px;"><span>RW. @Model.IdSptpdNavigation.IdSubjekNavigation.Rtrw.Substring(3, 2)</span></td>
+                                    <td style="font-size: 14px;"><span class="vis-print">Kode Pos : @Model.IdSptpdNavigation.IdSubjekNavigation.KodePos</span></td>
+                                </tr>
+                                <tr class="tb-border--both">
+                                    <td style="padding: 2px 0px 2px 28px; font-size: 13px;"><span>Nama Usaha</span></td>
+                                    <td style="padding: 0px; font-size: 13px;"><span>: @Model.IdSptpdNavigation.IdUsahaNavigation.NamaUsaha</span></td>
+                                    <td align="center"></td>
+                                    <td align="center"></td>
+                                    <td align="right" style="font-size: 14px;"><span class="vis-print"></span></td>
+                                </tr>
+                                <tr class="tb-border--both">
+                                    <td style="padding: 2px 0px 2px 28px; font-size: 13px;"><span>Alamat Usaha</span></td>
+                                    <td style="padding: 0px; font-size: 13px;"><span>: @Model.IdSptpdNavigation.IdUsahaNavigation.AlamatUsaha</span></td>
+                                    <td align="center"></td>
+                                    <td align="center"></td>
+                                    <td align="right" style="font-size: 14px;"><span class="vis-print"></span></td>
+                                </tr>
+                                <tr class="tb-border--both">
+                                    <td style="padding: 2px 0px 2px 28px; font-size: 13px;"><span>NPWPD</span></td>
+                                    <td style="padding: 0px; font-size: 13px;"><span>: @Model.IdSptpdNavigation.IdSubjekNavigation.Npwpd</span></td>
+                                    <td align="center"></td>
+                                    <td align="center"></td>
+                                    <td align="right" style="font-size: 14px;"><span class="vis-print"></span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="join" width="100%">
+                                <tr class="tb-border--both tb-border--top-three">
+                                    <td width="70%" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span style="font-weight: 600"> II. Diisi Oleh Pengusaha </span></td>
+                                    <td width="30%" style="font-size: 14px;" align="right"><span class="vis-print"></span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <table class="join" width="100%" style="font-size: 14px; font-weight: 300;">
+                                <tr class="tb-border--both tb-border--top-three" style="font-size: 14px; font-weight: 300;">
+                                    <td width="25%" style="padding: 2px 0px 2px 30px; font-size: 13px;"><span>a. Jenis</span></td>
+                                    <td width="30%" style="padding: 0px; font-size: 13px;"><span>: @Model.IdSptpdNavigation.IdCoaNavigation.Uraian</span></td>
+                                    <td width="15%" style="padding: 2px 0px 2px 5px; font-size: 13px;"></td>
+                                    <td width="15%" style="padding: 2px 0px 2px 5px; font-size: 13px;" align="center"></td>
+                                    <td width="30%" style="font-size: 14px;"><span class="vis-print"></span></td>
+                                </tr>
+                                <tr class="tb-border--both tb-border--top-three" style="font-size: 14px; font-weight: 300;">
+                                    <td width="25%" style="padding: 2px 0px 2px 30px; font-size: 13px;"><span>b. Volume Pengabilan</span></td>
+                                    <td width="30%" style="padding: 0px; font-size: 13px;"><span>: @Model.Volume Kg</span></td>
+                                    <td width="15%" style="padding: 2px 0px 2px 5px; font-size: 13px;"></td>
+                                    <td width="15%" style="padding: 2px 0px 2px 5px; font-size: 13px;" align="center"></td>
+                                    <td width="30%" style="font-size: 14px;"><span class="vis-print"></span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="join" width="100%">
+                                <tr class="tb-border--all tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td width="60%" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span><b>1). Data Penjualan</b></span></td>
+                                    <td width="20%" align="center"><span>Dalam Rupiah</span></td>
+                                </tr>
+                                <tr class="tb-border tb-border--both" style="font-size: 14px; font-weight: 300;">
+                                    <td style="padding: 2px 0px 2px 30px; font-size: 13px;"><span>a). Harga Pasar</span></td>
+                                    <td width="20%" align="right"><span>@String.Format("{0:C0}", Model.HargaPasar)</span></td>
+                                </tr>
+                                <tr class="tb-border tb-border--both" style="font-size: 14px; font-weight: 300;">
+                                    <td style="padding: 2px 0px 2px 30px; font-size: 13px;"><span>b). Harga Jual</span></td>
+                                    <td width="20%" align="right"><span>@String.Format("{0:C0}", Model.HargaJual)</span></td>
+                                </tr>
+                                <tr class="tb-border tb-border--both" style="font-size: 14px; font-weight: 300;">
+                                    <td width="60%" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span style="font-weight: 600">2).Dasar Pengenaan Pajak (DPP)</span></td>
+                                    <td width="20%" align="right">@String.Format("{0:C0}", Model.Dpp)<span></span></td>
+                                </tr>
+                                <tr class="tb-border--all tb-border" style="font-size: 14px; font-weight: 300;">
+                                    <td width="60%" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span style="font-weight: 600">3). Pajak Terhutang @Model.IdSptpdNavigation.IdTarifNavigation.Tarif % x DPP)</span></td>
+                                    <td width="20%" align="right"><span>@String.Format("{0:C0}", Model.PajakTerhutang)</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="join" width="100%">
+                                <tr class="tb-border">
+                                    <td width="60%" align="justify" colspan="4" style="font-weight: 300;">
+                                        <span align="center" style="font-size: 13px; font-weight: 300; padding-bottom: 10px">
+                                            Formulir ini diisi dengan sebenar-benarnya dan apabila terdapat ketidakbenaran
+                                            dalam memenuhi kewajiban pengisian SPTPD ini, saya bersedia dikenakan sanksi sesuai dengan
+                                            Peraturan Daerah yang berlaku.
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        <td style="height:32px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="join" width="100%">
+                                <tr class="tb-border--both">
+                                    <td width="50%" align="center" style="height:20px;" font-size: 13px;"><span></span></td>
+                                    <td width="50%" align="center" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span></span></td>
+                                </tr>
+                                <tr class="tb-border--both">
+                                    <td align="center" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span>Diterima oleh Petugas,</span></td>
+                                    <td align="center" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span>@Context.Session.GetString("Pemda"),  @String.Format("{0:dd MMMM yyyy}", Model.IdSptpdNavigation.Tanggal)</span></td>
+                                </tr>
+                                <tr class="tb-border--both">
+                                    <td align="center" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span>Tanggal @String.Format("{0:dd MMM yyyy}", Model.IdSptpdNavigation.TanggalKonfirmasi)</span></td>
+                                    <td align="center" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span>Wajib Pajak</span></td>
+                                </tr>
+                                <tr class="tb-border--both tb-height--ttd">
+                                    <td align="center" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span></span></td>
+                                    <td align="center" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span></span></td>
+                                </tr>
+                                <tr class="tb-border--both">
+                                    <td align="center" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span>@ViewBag.TTD</span></td>
+                                    <td align="center" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span>@Model.IdSptpdNavigation.IdSubjekNavigation.Nama</span></td>
+                                </tr>
+                                <tr class="tb-border--both">
+                                    <td align="center" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span>NIP @ViewBag.NIP</span></td>
+                                    <td align="center" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span></span></td>
+                                </tr>
+                                <tr class="tb-border--bottom-three">
+                                    <td align="center" font-size: 13px;"><span></span></td>
+                                    <td align="center" style="padding: 2px 0px 2px 12px; font-size: 13px;"><span></span></td>
+                                </tr>
+                            </table>
+                        <td style="height:32px;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

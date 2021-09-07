@@ -1,0 +1,60 @@
+﻿@model IEnumerable<SIP.Models.RefRetribusi>
+
+@{
+    ViewBag.Title = "Retribusi";
+    ViewBag.SubHeaderTitle = "Pendataan";
+    ViewBag.S1 = "Retribusi";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-6 col-xl-4">
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                        <div class="kt-portlet__head kt-portlet__head--noborder">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title">
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="kt-portlet__body kt-padding-t-0">
+                            <div class="kt-widget kt-widget--user-profile-2">
+                                <div class="kt-widget__head">
+                                    <div class="kt-widget__media">
+                                        <div class="kt-widget__pic @(item.Jenis == "Jasa Umum" ? "kt-widget__pic--warning kt-font-warning" : item.Jenis == "Jasa Usaha" ? "kt-widget__pic--success kt-font-success" : "kt-widget__pic--info kt-font-info") kt-font-boldest">
+                                            <i class="@item.Icon fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="kt-widget__info">
+                                        <span class="kt-widget__username">
+                                            @item.Uraian
+                                        </span>
+                                        <span class="kt-widget__desc">
+                                            @item.Jenis
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="kt-widget__footer">
+                                    @if (item.Dok == "SKRD")
+                                    {
+                                        <a href="/SKRD/@item.IdCoa" class="btn btn-label-warning btn-lg btn-upper">SKRD</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/SSRDR/@item.IdCoa" class="btn btn-label-success btn-lg btn-upper">SSRDR</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>

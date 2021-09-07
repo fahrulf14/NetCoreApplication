@@ -1,0 +1,14 @@
+﻿@media print {
+    .space {
+        margin: 0 0;
+    }
+
+    .npwpd {
+        width: 50mm;
+    }
+}
+
+@Page {
+    size: 95mm 58mm;
+    margin: 0 0 0 0;
+}

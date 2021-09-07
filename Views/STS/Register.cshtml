@@ -1,0 +1,115 @@
+﻿@model SIP.ViewModels.PeriodeLra
+
+@{
+    ViewBag.Title = "Register STS";
+    ViewBag.SubHeaderTitle = "Laporan";
+    ViewBag.S1 = "Register STS";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+    <div class="row justify-content-center">
+        <div class="col-lg-4">
+            <!--begin::Portlet-->
+            <div class="kt-portlet kt-portlet--tabs" data-ktportlet="true" id="kt_portlet_tools_1">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            Periode
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <ul class="nav nav-tabs nav-tabs-bold nav-tabs-line nav-tabs-line-right nav-tabs-line-brand" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#Tanggal" role="tab">
+                                    Tanggal
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#Bulan" role="tab">
+                                    Bulan
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#Tahun" role="tab">
+                                    Tahun
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="Tanggal">
+                            <form asp-action="Tanggal" asp-route-jenis="@ViewBag.Jenis">
+                                <div class="form-group">
+                                    <label asp-for="Tanggal1" class="control-label">Tanggal</label>
+                                    <div class="input-group">
+                                        <input asp-for="Tanggal1" class="form-control datefield" type="text" asp-format="{0:dd-MM-yyyy}" autocomplete="off" required />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                                        </div>
+                                        <input asp-for="Tanggal2" class="form-control datefield" type="text" asp-format="{0:dd-MM-yyyy}" autocomplete="off" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="kt-form__actions kt-align-center">
+                                        <button type="submit" class="btn btn-success">Proses</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="Bulan">
+                            <form asp-action="Bulanan" asp-route-jenis="@ViewBag.Jenis">
+                                <div class="row">
+                                    <div class="col-md-8 form-group">
+                                        <label asp-for="Bulan" class="control-label"></label>
+                                        <select asp-for="Bulan" class="form-control kt-selectpicker" asp-items="ViewBag.Bulan" required></select>
+                                        <span asp-validation-for="Bulan" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label asp-for="TahunBulan" class="control-label">Tahun</label>
+                                        <input asp-for="TahunBulan" class="form-control tahun" type="text" asp-format="{0:yyyy}" autocomplete="off" required />
+                                        <span asp-validation-for="TahunBulan" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-12 form-group">
+                                        <div class="kt-form__actions kt-align-center">
+                                            <button type="submit" class="btn btn-success">Proses</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane" id="Tahun">
+                            <form asp-action="Tahunan" asp-route-jenis="@ViewBag.Jenis">
+                                <div class="form-group">
+                                    <label asp-for="Tahun" class="control-label"></label>
+                                    <input asp-for="Tahun" class="form-control tahun" type="text" asp-format="{0:yyyy}" autocomplete="off" required />
+                                    <span asp-validation-for="Tahun" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <div class="kt-form__actions kt-align-center">
+                                        <button type="submit" class="btn btn-success">Proses</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+        </div>
+    </div>
+
+@section Scripts {
+    <script>
+        $(".tahun").datepicker({
+            format: "yyyy",
+            viewMode: "years",
+            minViewMode: "years",
+            autoclose: true
+        });
+
+    </script>
+}

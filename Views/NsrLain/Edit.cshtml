@@ -1,0 +1,59 @@
+﻿@model SIP.Models.NsrLain
+
+<form asp-action="Create">
+    <div class="modal-header">
+        <h5 class="modal-title" id="ModalTitle">Tambah Data NSR Lain</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="la la-remove"></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" asp-for="IdNsr">
+        <input type="hidden" asp-for="FlagAktif" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="Jenis" class="control-label">Jenis</label>
+                <select asp-for="Jenis" class="form-control" asp-items="ViewBag.Jenis"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label asp-for="Ukuran" class="control-label"></label>
+                <input asp-for="Ukuran" class="form-control" required />
+                <span asp-validation-for="Ukuran" class="text-danger"></span>
+            </div>
+            <div class="col-md-8 form-group">
+                <label asp-for="SatuanUkuran" class="control-label">Satuan Ukuran</label>
+                <input asp-for="SatuanUkuran" class="form-control" required />
+                <span asp-validation-for="SatuanUkuran" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label asp-for="Waktu" class="control-label"></label>
+                <input asp-for="Waktu" class="form-control" required />
+                <span asp-validation-for="Waktu" class="text-danger"></span>
+            </div>
+            <div class="col-md-8 form-group">
+                <label asp-for="SatuanWaktu" class="control-label">Satuan Waktu</label>
+                <input asp-for="SatuanWaktu" class="form-control" required />
+                <span asp-validation-for="SatuanWaktu" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="Nsr" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                    <input asp-for="Nsr" class="form-control rupiah" value="@string.Format("{0:N0}", Model.Nsr)" autocomplete="off" required />
+                </div>
+                <span asp-validation-for="Nsr" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" value="Simpan" class="btn btn-success" />
+    </div>
+</form>

@@ -1,0 +1,226 @@
+﻿@model SIP.Models.Stts
+
+@{
+    ViewBag.Title = "Detail STTS";
+    ViewBag.SubHeaderTitle = "STTS - PBB";
+    ViewBag.S1 = "Detail";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-3">
+        <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+            <div class="kt-portlet__head kt-ribbon @ViewBag.State kt-ribbon--left kt-ribbon--round">
+                <div class="kt-ribbon__target" style="top: 10px; right: -2px;">@ViewBag.Status</div>
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Detail Objek Pajak
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="portlet_tab_subjek">
+                        <div class="kt-widget kt-widget--user-profile-2">
+                            <div class="kt-widget__body">
+                                <div class="kt-widget__item">
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Nama:</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.IdSpptNavigation.IdSpopNavigation.IdSubjekNavigation.Nama</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">NPWPD:</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.IdSpptNavigation.IdSpopNavigation.IdSubjekNavigation.Npwpd</span>
+                                    </div>
+                                    @if (Model.IdSpptNavigation.IdSpopNavigation.IdSubjekNavigation.IdBadanHukum != null)
+                                    {
+                                        <div class="kt-widget__contact">
+                                            <span class="kt-widget__label">NPWP:</span>
+                                            <span class="kt-widget__data kt-align-right">@Model.IdSpptNavigation.IdSpopNavigation.IdSubjekNavigation.Npwp</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="kt-widget__contact">
+                                            <span class="kt-widget__label">NIK:</span>
+                                            <span class="kt-widget__data kt-align-right">@Model.IdSpptNavigation.IdSpopNavigation.IdSubjekNavigation.Nik</span>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="kt-separator kt-separator--space-sm kt-separator--border-dashed"></div>
+                                <div class="kt-widget__item">
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">NOP:</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.IdSpptNavigation.IdSpopNavigation.Nop</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Letak:</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.IdSpptNavigation.IdSpopNavigation.NamaJalan No. @Model.IdSpptNavigation.IdSpopNavigation.BlokKavNo</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label"></span>
+                                        <span class="kt-widget__data kt-align-right">RT. @Model.IdSpptNavigation.IdSpopNavigation.Rt RW. @Model.IdSpptNavigation.IdSpopNavigation.Rw</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label"></span>
+                                        <span class="kt-widget__data kt-align-right">Kec. @Model.IdSpptNavigation.IdSpopNavigation.IndKecamatan.Kecamatan</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label"></span>
+                                        <span class="kt-widget__data kt-align-right">Kel. @Model.IdSpptNavigation.IdSpopNavigation.IndKelurahan.Kelurahan</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Luas Tanah</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.IdSpptNavigation.IdSpopNavigation.LuasTanah M<sup>2</sup></span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">NJOP</span>
+                                        <span class="kt-widget__data kt-align-right">@string.Format("{0:C0}", Model.IdSpptNavigation.IdSpopNavigation.Njop)</span>
+                                    </div>
+                                    @foreach (var lspop in (List<Lspop>)ViewBag.Lspop)
+                                    {
+                                        <div class="kt-widget__contact">
+                                            <span class="kt-widget__label">Luas Bangunan</span>
+                                            <span class="kt-widget__data kt-align-right">@lspop.Luas M<sup>2</sup></span>
+                                        </div>
+                                        <div class="kt-widget__contact">
+                                            <span class="kt-widget__label">NJOP</span>
+                                            <span class="kt-widget__data kt-align-right">@string.Format("{0:C0}", lspop.Njop)</span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <!--begin::Portlet-->
+        <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Detail STTS
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row justify-content-around">
+                    <div class="col-md-5">
+                        <div class="kt-widget kt-widget--user-profile-2">
+                            <div class="kt-widget__body">
+                                <div class="kt-widget__item kt-padding-t-0">
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">NJOP Dasar</span>
+                                        <span class="kt-widget__data kt-align-left">@string.Format("{0:C0}", Model.IdSpptNavigation.TotalBumi + Model.IdSpptNavigation.TotalBangunan)</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">NJOPTKP</span>
+                                        <span class="kt-widget__data kt-align-left">@string.Format("{0:C0}", Model.IdSpptNavigation.Njoptkp ?? 0)</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">NJOP Hitung</span>
+                                        <span class="kt-widget__data kt-align-left">@string.Format("{0:C0}", Model.IdSpptNavigation.Njophitung)</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Tarif</span>
+                                        <span class="kt-widget__data kt-align-left">@string.Format("{0:N2}", Model.IdSpptNavigation.IdTarifNavigation.Tarif) %</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="kt-widget kt-widget--user-profile-2">
+                            <div class="kt-widget__body">
+                                <div class="kt-widget__item kt-padding-t-0">
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Terhutang</span>
+                                        <span class="kt-widget__data kt-align-right">@string.Format("{0:C0}", Model.IdSpptNavigation.Terhutang)</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label"></span>
+                                        <span class="kt-widget__data kt-align-right" id="terbilang"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-separator kt-separator--sm"></div>
+                <div class="row justify-content-around kt-margin-t-10">
+                    <div class="col-md-5">
+                        <div class="kt-widget kt-widget--user-profile-2">
+                            <div class="kt-widget__body">
+                                <div class="kt-widget__item kt-padding-t-0">
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Tanggal Bayar</span>
+                                        <span class="kt-widget__data kt-align-right">@String.Format("{0:dd MMMM yyyy}", Model.TanggalBayar)</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Jenis Setoran</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.IdSetoranNavigation.Jenis</span>
+                                    </div>
+                                    @if (Model.IdBank != null)
+                                    {
+                                        <div class="kt-widget__contact">
+                                            <span class="kt-widget__label">Bank Setoran</span>
+                                            <span class="kt-widget__data kt-align-right">@Model.IdBankNavigation.IdRefNavigation.NamaBank</span>
+                                        </div>
+                                    }
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="kt-widget kt-widget--user-profile-2">
+                            <div class="kt-widget__body">
+                                <div class="kt-widget__item kt-padding-t-0">
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Pokok Pajak</span>
+                                        <span class="kt-widget__data kt-align-right">@string.Format("{0:C0}", Model.IdSpptNavigation.Terhutang) </span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Denda</span>
+                                        <span class="kt-widget__data kt-align-right">@string.Format("{0:C0}", Model.Denda) </span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Total Bayar</span>
+                                        <span class="kt-widget__data kt-align-right">@string.Format("{0:C0}", Model.TotalBayar)</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label"></span>
+                                        <span class="kt-widget__data kt-align-right" id="total"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__foot">
+                <div class="kt-form__actions kt-align-right">
+                    <a asp-action="STTS" asp-controller="PBB" asp-route-id="@Model.IdSpptNavigation.IdSpopNavigation.IdSubjek" class="btn btn-secondary">Kembali</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="~/js/terbilang.js"></script>
+    <script>
+        var hutang = "@((int)Model.IdSpptNavigation.Terhutang)"
+        document.getElementById("terbilang").innerHTML = (terbilang(hutang));
+
+        var total = "@((int)Model.TotalBayar)"
+        document.getElementById("total").innerHTML = (terbilang(total));
+    </script>
+}

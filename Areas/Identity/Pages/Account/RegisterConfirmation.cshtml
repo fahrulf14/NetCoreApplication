@@ -1,0 +1,33 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewBag.Title = "Register Confirmation";
+    ViewBag.SubHeaderTitle = "Register Confirmation";
+    ViewBag.S1 = "";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+    Layout = "";
+}
+<div class="modal-header">
+    <h5 class="modal-title" id="ModalTitle">@ViewBag.Title</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true" class="la la-remove"></span>
+    </button>
+</div>
+<div class="modal-body">
+    @{
+        if (@Model.DisplayConfirmAccountLink)
+        {
+            <p>
+                <a id="confirm-link" class="btn btn-success btn-block" href="@Model.EmailConfirmationUrl">Confirm Email</a>
+            </p>
+        }
+        else
+        {
+            <p>
+                Please check your email to confirm your account.
+            </p>
+        }
+    }
+</div>

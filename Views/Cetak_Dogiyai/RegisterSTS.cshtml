@@ -1,0 +1,231 @@
+﻿@model IEnumerable<SIP.ViewModels.RegisterSTS>
+
+@{
+    Layout = null;
+    var no = 0;
+    var row = 0;
+    var page = 1;
+}
+
+    <html lang="id">
+
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title>
+        <link href="~/css/print-style.css" rel="stylesheet" />
+        <link href="~/css/reporting/bpp.css" rel="stylesheet" />
+        <style>
+            .join {
+                border-collapse: collapse;
+            }
+        </style>
+        <!--begin::Favicon -->
+        <link rel="apple-touch-icon" sizes="180x180" href="~/media/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="~/media/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="~/media/favicon/favicon-16x16.png">
+        <link rel="shortcut icon" href="~/media/favicon/favicon.ico">
+        <meta name="msapplication-TileColor" content="#2d89ef">
+        <meta name="msapplication-config" content="~/media/favicon/browserconfig.xml">
+        <meta name="theme-color" content="#ffffff">
+        <!--end::Favicon -->
+    </head>
+
+
+    <body style="font-family: open sans, tahoma, sans-serif; margin: 0; background-color:#c2c2c2; -webkit-print-color-adjust: exact">
+        <div style="width: 100%;">
+            <div align="center">
+                <div style="box-shadow:10px;">
+                    <table width="100%" cellspacing="0" cellpadding="0" style="width: 1300px; padding: 20px 30px; color: #343030; background-color:#FFF;">
+                        <tr>
+                            <td><img class="logo" src="~/media/logos/logo.png" /></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="table-borderless" width="100%" style="margin-top: 5px; font-size: 18px;">
+                                    <tr class="header">
+                                        <td align="center" style="font-weight: 600"><span style="text-transform:uppercase;">@Context.Session.GetString("NamaPemda")</span></td>
+                                    </tr>
+                                    <tr class="header">
+                                        <td align="center" valign="top" style="font-weight: 600">@Context.Session.GetString("Opd")</td>
+                                    </tr>
+                                    <tr class="header">
+                                        <td align="center" valign="top" style=font-size: 16px;">@Context.Session.GetString("Alamat")</td>
+                                    </tr>
+                                    <tr>
+                                        <td height="10px" class="tb-border--bottom"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-top:10px; font-size: 16px;" align="center">
+                                            <strong>REGISTER STS</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 16px;" align="center">
+                                            <strong>TAHUN ANGGARAN @ViewBag.Tahun</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-bottom:10px; font-size: 14px;" align="center">
+                                            Tanggal : @string.Format("{0:dd MMMM yyyy}", ViewBag.Tanggal1) s/d @string.Format("{0:dd MMMM yyyy}", ViewBag.Tanggal2)
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="join" width="100%" id="bpp">
+                                    <tr class="tb-border--all tb-border tb-min-border" style="font-size: 14px; font-weight: 300;">
+                                        <td rowspan="3" align="center"><span><small>No</small></span></td>
+                                        <td rowspan="3" align="center"><span><small>Tanggal STS</small></span></td>
+                                        <td colspan="6" align="center"><span><small>Penerimaan</small></span></td>
+                                        <td colspan="2" align="center"><span><small>Setoran</small></span></td>
+                                        <td rowspan="3" align="center"><span><small>Uraian</small></span></td>
+                                    </tr>
+                                    <tr class="tb-border--all tb-border tb-min-border" style="font-size: 14px; font-weight: 300;">
+                                        <td rowspan="2" align="center"><span><small>No. Surat</small></span></td>
+                                        <td rowspan="2" align="center"><span><small>No. Setoran</small></span></td>
+                                        <td rowspan="2" align="center"><span><small>No. STS</small></span></td>
+                                        <td rowspan="2" align="center"><span><small>Jenis Pajak/Retribusi</small></span></td>
+                                        <td colspan="2" align="center"><span><small>Wajib Pajak/Retribusi</small></span></td>
+                                        <td rowspan="2" align="center"><span><small>Tanggal Setor</small></span></td>
+                                        <td rowspan="2" align="center"><span><small>Jumlah Setor</small></span></td>
+                                    </tr>
+                                    <tr class="tb-border--all tb-border tb-min-border" style="font-size: 14px; font-weight: 300;">
+                                        <td align="center"><span><small>Pemilik</small></span></td>
+                                        <td align="center"><span><small>Usaha</small></span></td>
+                                    </tr>
+                                    @foreach (var core in Model.OrderBy(d => d.Tanggal))
+                                    {
+                                        if (no == 21)
+                                        {
+                                            <tr class="tb-border--all tb-border tb-min-border break" style="font-size: 14px; font-weight: 300;">
+                                                <td align="center"><span><small>@(no += 1)</small></span></td>
+                                                <td align="center"><span><small>@String.Format("{0:dd MMM yyyy}", core.Tanggal)</small></span></td>
+                                                <td align="center"><span><small>@core.NomorSurat</small></span></td>
+                                                <td align="center"><span><small>@core.NomorSetoran</small></span></td>
+                                                <td align="center"><span><small>@core.Sts</small></span></td>
+                                                <td align="center"><span><small>@core.Uraian</small></span></td>
+                                                <td align="center"><span><small>@core.NamaWp</small></span></td>
+                                                <td align="center"><span><small>@core.NamaUsaha</small></span></td>
+                                                @if (core.Valid != null)
+                                                {
+                                                    <td align="center"><span><small>@String.Format("{0:dd MMM yyyy}", core.Valid)</small></span></td>
+                                                    <td align="right"><span><small>@String.Format("{0:N0}", core.Jumlah)</small></span></td>
+                                                }
+                                                else
+                                                {
+                                                    <td align="center"><span><small>-</small></span></td>
+                                                    <td align="right"><span><small>@String.Format("{0:N0}", core.Jumlah)</small></span></td>
+                                                }
+                                                <td align="center"><span><small>@core.Keterangan</small></span></td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            row += 1;
+                                            <tr class="tb-border--all tb-border tb-min-border" style="font-size: 14px; font-weight: 300;">
+                                                <td align="center"><span><small>@(no += 1)</small></span></td>
+                                                <td align="center"><span><small>@String.Format("{0:dd MMM yyyy}", core.Tanggal)</small></span></td>
+                                                <td align="center"><span><small>@core.NomorSurat</small></span></td>
+                                                <td align="center"><span><small>@core.NomorSetoran</small></span></td>
+                                                <td align="center"><span><small>@core.Sts</small></span></td>
+                                                <td align="center"><span><small>@core.Uraian</small></span></td>
+                                                <td align="center"><span><small>@core.NamaWp</small></span></td>
+                                                <td align="center"><span><small>@core.NamaUsaha</small></span></td>
+                                                @if (core.Valid != null)
+                                                {
+                                                    <td align="center"><span><small>@String.Format("{0:dd MMM yyyy}", core.Valid)</small></span></td>
+                                                    <td align="right"><span><small>@String.Format("{0:N0}", core.Jumlah)</small></span></td>
+                                                }
+                                                else
+                                                {
+                                                    <td align="center"><span><small>-</small></span></td>
+                                                    <td align="right"><span><small>@String.Format("{0:N0}", core.Jumlah)</small></span></td>
+                                                }
+                                                <td align="center"><span><small>@core.Keterangan</small></span></td>
+                                            </tr>
+                                        }
+                                        if (no == 22 || row == 30)
+                                        {
+                                            row = 0;
+                                            <tr class="break">
+                                                <td class="break" colspan="11" style="height: 30px; border: none"></td>
+                                            </tr>
+                                            <tr class="break">
+                                                <td class="break" align="right" colspan="11" style="height: 30px; border: none; font-size: 13px">Halaman @(page += 1)</td>
+                                            </tr>
+                                            <tr class="tb-border--all tb-border tb-min-border break" style="font-size: 14px; font-weight: 300; page-break-after: always; page-break-inside: avoid;">
+                                                <td rowspan="3" align="center"><span><small>No</small></span></td>
+                                                <td rowspan="3" align="center"><span><small>Tanggal STS</small></span></td>
+                                                <td colspan="6" align="center"><span><small>Penerimaan</small></span></td>
+                                                <td colspan="2" align="center"><span><small>Setoran</small></span></td>
+                                                <td rowspan="3" align="center"><span><small>Uraian</small></span></td>
+                                            </tr>
+                                            <tr class="tb-border--all tb-border tb-min-border" style="font-size: 14px; font-weight: 300;">
+                                                <td rowspan="2" align="center"><span><small>No. Surat</small></span></td>
+                                                <td rowspan="2" align="center"><span><small>No. Setoran</small></span></td>
+                                                <td rowspan="2" align="center"><span><small>No. STS</small></span></td>
+                                                <td rowspan="2" align="center"><span><small>Jenis Pajak/Retribusi</small></span></td>
+                                                <td colspan="2" align="center"><span><small>Wajib Pajak/Retribusi</small></span></td>
+                                                <td rowspan="2" align="center"><span><small>Tanggal Setor</small></span></td>
+                                                <td rowspan="2" align="center"><span><small>Jumlah Setor</small></span></td>
+                                            </tr>
+                                            <tr class="tb-border--all tb-border tb-min-border" style="font-size: 14px; font-weight: 300;">
+                                                <td align="center"><span><small>Pemilik</small></span></td>
+                                                <td align="center"><span><small>Usaha</small></span></td>
+                                            </tr>
+                                        }
+                                    }
+                                    <tr class="tb-min-border" style="font-size: 14px; font-weight: 300;">
+                                        <td align="center" colspan="8"></td>
+                                        <td align="center" class="tb-kiri tb-bawah tb-kanan"><span><small>Jumlah</small></span></td>
+                                        <td align="right" class="tb-bawah tb-kanan"><span><small>@String.Format("{0:N0}", ViewBag.Total)</small></span></td>
+                                        <td align="center" class="tb-bawah tb-kanan"><span></span></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="100%" class="join break">
+                                    <tr>
+                                        <td colspan="2" style="padding-top: 20px;"></td>
+                                    </tr>
+                                    <tr style="font-size: 13px">
+                                        <td width="80%"></td>
+                                        <td align="center" width="20%">@Context.Session.GetString("Kecamatan"), @string.Format("{0:dd MMMM yyyy}", DateTime.Now)</td>
+                                    </tr>
+                                    <tr style="font-size: 13px">
+                                        <td></td>
+                                        <td align="center">@ViewBag.Jabatan</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="height: 60px;"></td>
+                                    </tr>
+                                    <tr style="font-size: 13px">
+                                        <td></td>
+                                        <td align="center" style="text-decoration: underline;">@ViewBag.TTD</td>
+                                    </tr>
+                                    <tr style="font-size: 13px">
+                                        <td></td>
+                                        <td align="center">NIP. @ViewBag.NIP</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
+
+
+<script src="~/js/terbilang.js"></script>
+<script>
+    function rupiah(a, currency) {
+        return currency + a.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+    }
+
+</script>

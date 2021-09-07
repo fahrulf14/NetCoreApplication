@@ -1,0 +1,48 @@
+﻿@model SIP.Models.RefHargaPasar
+
+<form asp-action="Edit">
+    <div class="modal-header">
+        <h5 class="modal-title" id="ModalTitle">Ubah Data Harga Pasar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="la la-remove"></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" asp-for="IdHarga" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="IdCoa" class="control-label required">Jenis</label>
+                <select asp-for="IdCoa" class="form-control kt-selectpicker" required title="Pilih Jenis Mineral..." data-live-search="true" asp-items="ViewBag.IdCoa"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="Harga" class="control-label required"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                    <input asp-for="Harga" class="form-control rupiah" autocomplete="off" required value="@String.Format("{0:N0}", Model.Harga)" />
+                </div>
+                <span asp-validation-for="Harga" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="FlagAktif" class="control-label">Status</label>
+            </div>
+            <div class="col-md-12">
+                <div class="kt-checkbox-inline">
+                    <label class="kt-checkbox">
+                        <input class="check" asp-for="FlagAktif" /> <p id="@Html.DisplayNameFor(model => model.FlagAktif)_Status">@(Model.FlagAktif ? "Aktif" : "Tidak Aktif")</p>
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" value="Simpan" class="btn btn-success" />
+    </div>
+</form>

@@ -1,0 +1,24 @@
+﻿@model SIP.Models.AspNetRoles
+
+<form asp-action="Create">
+    <div class="modal-header">
+        <h5 class="modal-title" id="ModalTitle">Tambah User Role</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="la la-remove"></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="frow">
+            <div class="col-md-12 orm-group">
+                <label asp-for="Name" class="control-label required">Nama</label>
+                <input asp-for="Name" class="form-control" required autofocus />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" value="Simpan" class="btn btn-success" />
+    </div>
+</form>

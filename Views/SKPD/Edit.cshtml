@@ -1,0 +1,71 @@
+﻿@model SIP.Models.Skpdkb
+
+@{
+    ViewBag.Title = "Edit SKPDKB";
+    ViewBag.SubHeaderTitle = "SKPDKB";
+    ViewBag.S1 = "Edit Data";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-3">
+        @await Component.InvokeAsync("DetailSptpd", new { id = Model.IdSptpd })
+    </div>
+    <div class="col-lg-7">
+        <form asp-action="Edit">
+            <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            @ViewBag.Title
+                        </h3>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <input type="hidden" asp-for="IdSkpdkb" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <label asp-for="Tanggal" class="control-label required"></label>
+                            <input asp-for="Tanggal" class="form-control datefield" type="text" asp-format="{0:dd-MM-yyyy}" autocomplete="off" required />
+                            <span asp-validation-for="Tanggal" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label asp-for="KompKelebihan" class="control-label">Kompensasi Kelebihan</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="KompKelebihan" class="form-control rupiah" value="@string.Format("{0:N0}", Model.KompKelebihan)" autocomplete="off" />
+                            </div>
+                            <span asp-validation-for="KompKelebihan" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label asp-for="Lainnya" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="Lainnya" class="form-control rupiah" value="@string.Format("{0:N0}", Model.Lainnya)" autocomplete="off" />
+                            </div>
+                            <span asp-validation-for="Lainnya" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__foot">
+                    <div class="kt-form__actions kt-align-right">
+                        <a asp-action="SKPDKB" asp-controller="Pendataan" asp-route-id="@Model.IdSptpd" class="btn btn-secondary">Kembali</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/rupiah.mask.js"></script>
+    <script>
+
+    </script>
+}

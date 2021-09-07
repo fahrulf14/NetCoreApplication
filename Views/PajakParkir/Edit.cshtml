@@ -1,0 +1,187 @@
+﻿@model SIP.Models.PParkir
+
+@{
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<form id="sptpd" asp-action="SPTPD"></form>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!--begin::Portlet-->
+        <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        @ViewBag.Title
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-group">
+                        <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <input type="hidden" asp-for="IdSptpd" form="sptpd" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @await Component.InvokeAsync("FormSPTPD", new { id = Model.IdSptpd })
+                <div class="row kt-margin-t-10 kt-padding-b-0">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <label asp-for="Sistem" class="control-label required">Sistem Pungutan</label>
+                                <select asp-for="Sistem" class="form-control kt-selectpicker" title="Pilih Data..." asp-items="ViewBag.Sistem" form="sptpd"></select>
+                                <span asp-validation-for="Sistem" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label class="control-label">Data Pendukung</label>
+                                <div class="kt-checkbox-inline">
+                                    <label class="kt-checkbox">
+                                        <input asp-for="RekapKarcis" form="sptpd" /> Rekap Karcis
+                                        <span></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-separator kt-separator--space-sm"></div>
+                <div class="row kt-margin-t-10">
+                    <div class="col-lg-12">
+                        <div class="kt-section kt-section--first">
+                            <h3 class="kt-section__title">Omzet Parkir Mobil:</h3>
+                            <div class="kt-section__body">
+                                <input type="hidden" asp-for="IdParkir" form="sptpd" />
+                                <div class="row">
+                                    <div class="col-md-3 form-group">
+                                        <label asp-for="KapasitasMobil" class="control-label">Kapasitas Mobil</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="la la-automobile"></i></span></div>
+                                            <input asp-for="KapasitasMobil" class="form-control" min="0" autocomplete="off" form="sptpd" />
+                                        </div>
+                                        <span asp-validation-for="KapasitasMobil" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label asp-for="JumlahMobil" class="control-label">Jumlah Parkir</label>
+                                        <input asp-for="JumlahMobil" class="form-control" min="0" autocomplete="off" form="sptpd" />
+                                        <span asp-validation-for="JumlahMobil" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label asp-for="TotalMobil" class="control-label">Total Pembayaran</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                            <input asp-for="TotalMobil" class="form-control rupiah" value="@String.Format("{0:N0}", Model.TotalMobil)" autocomplete="off" form="sptpd" />
+                                        </div>
+                                        <span asp-validation-for="TotalMobil" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 form-group">
+                                        <label asp-for="MobilJam" class="control-label">Tarif 1 Jam Pertama</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                            <input asp-for="MobilJam" class="form-control rupiah" value="@String.Format("{0:N0}", Model.MobilJam)" autocomplete="off" form="sptpd" />
+                                        </div>
+                                        <span asp-validation-for="MobilJam" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label asp-for="MobilNext" class="control-label">Tarif 1 Jam Berikutnya</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                            <input asp-for="MobilNext" class="form-control rupiah" value="@String.Format("{0:N0}", Model.MobilNext)" autocomplete="off" form="sptpd" />
+                                        </div>
+                                        <span asp-validation-for="MobilNext" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label asp-for="MobilMax" class="control-label">Tarif Maksimal</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                            <input asp-for="MobilMax" class="form-control rupiah" value="@String.Format("{0:N0}", Model.MobilMax)" autocomplete="off" form="sptpd" />
+                                        </div>
+                                        <span asp-validation-for="MobilMax" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm"></div>
+                            <h3 class="kt-section__title kt-margin-t-15">Omzet Parkir Motor:</h3>
+                            <div class="kt-section__body">
+                                <div class="row">
+                                    <div class="col-md-3 form-group">
+                                        <label asp-for="KapasitasMotor" class="control-label">Kapasitas Motor</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="la la-motorcycle"></i></span></div>
+                                            <input asp-for="KapasitasMotor" class="form-control" min="0" autocomplete="off" form="sptpd" />
+                                        </div> 
+                                        <span asp-validation-for="KapasitasMotor" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label asp-for="JumlahMotor" class="control-label">Jumlah Parkir</label>
+                                        <input asp-for="JumlahMotor" class="form-control" min="0" autocomplete="off" form="sptpd" />
+                                        <span asp-validation-for="JumlahMotor" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label asp-for="TotalMotor" class="control-label">Total Pembayaran</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                            <input asp-for="TotalMotor" class="form-control rupiah" value="@String.Format("{0:N0}", Model.TotalMotor)" autocomplete="off" form="sptpd" />
+                                        </div>
+                                        <span asp-validation-for="TotalMotor" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 form-group">
+                                        <label asp-for="MotorJam" class="control-label">Tarif 1 Jam Pertama</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                            <input asp-for="MotorJam" class="form-control rupiah" value="@String.Format("{0:N0}", Model.MotorJam)" autocomplete="off" form="sptpd" />
+                                        </div>
+                                        <span asp-validation-for="MotorJam" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label asp-for="MotorNext" class="control-label">Tarif 1 Jam Berikutnya</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                            <input asp-for="MotorNext" class="form-control rupiah" value="@String.Format("{0:N0}", Model.MotorNext)" autocomplete="off" form="sptpd" />
+                                        </div>
+                                        <span asp-validation-for="MotorNext" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label asp-for="MotorMax" class="control-label">Tarif Maksimal</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                            <input asp-for="MotorMax" class="form-control rupiah" value="@String.Format("{0:N0}", Model.MotorMax)" autocomplete="off" form="sptpd" />
+                                        </div>
+                                        <span asp-validation-for="MotorMax" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__foot">
+                <div class="kt-form__actions kt-align-right">
+                    <a href="/SPTPD/@Model.IdSptpd" class="btn btn-secondary">Kembali</a>
+                    <button type="submit" class="btn btn-primary" form="sptpd">Simpan</button>
+                </div>
+            </div>
+        </div>
+        <!--end::Portlet-->
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/spt.js"></script>
+    <script src="~/js/rupiah.mask.js"></script>
+    <script>
+        function rupiah(a, currency) {
+            return currency + a.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+        }
+
+      
+
+    </script>
+}

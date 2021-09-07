@@ -1,0 +1,54 @@
+﻿@model SIP.Models.Pegawai
+
+<form asp-action="Edit">
+    <div class="modal-header">
+        <h5 class="modal-title" id="ModalTitle">Ubah Data Pegawai</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="la la-remove"></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" asp-for="IdPegawai" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="Nama" class="control-label"></label>
+                <input asp-for="Nama" class="form-control" required />
+                <span asp-validation-for="Nama" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label asp-for="Nick" class="control-label">Nama Panggilan</label>
+                <input asp-for="Nick" class="form-control" required />
+                <span asp-validation-for="Nick" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 form-group">
+                <label asp-for="Nip" class="control-label">NIP</label>
+                <input asp-for="Nip" class="form-control" required />
+                <span asp-validation-for="Nip" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="IdJabatan" class="control-label">Jabatan</label>
+                <select asp-for="IdJabatan" class="form-control kt-selectpicker" title="Pilih Jabatan..." required asp-items="ViewBag.IdJabatan"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="Active" class="control-label">Status</label>
+                <div class="kt-checkbox-inline">
+                    <label class="kt-checkbox">
+                        <input class="check" asp-for="Active" /> <p id="@Html.DisplayNameFor(model => model.Active)_Status">@(Model.Active ? "Aktif" : "Tidak Aktif")</p>
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" value="Simpan" class="btn btn-success" />
+    </div>
+</form>

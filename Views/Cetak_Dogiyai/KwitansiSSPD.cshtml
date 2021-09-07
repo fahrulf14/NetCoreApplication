@@ -1,0 +1,171 @@
+﻿@model SIP.ViewModels.CetakKwitansi
+
+@{
+    Layout = null;
+}
+
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="~/css/print-style.css" rel="stylesheet" />
+    <link href="~/css/paper/A5.css" rel="stylesheet" />
+
+    <style>
+        .tb-square {
+            border: solid 1px #000000;
+            height: 19px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .tb-detail {
+            height: 40px;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        .tb-padding td {
+            padding: 2px 20px;
+            font-size: 14px;
+        }
+    </style>
+
+    <!--begin::Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/media/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/media/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/media/favicon/favicon-16x16.png">
+    <link rel="shortcut icon" href="~/media/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="msapplication-config" content="~/media/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!--end::Favicon -->
+</head>
+<body class="cetak">
+    <div style="width: 100%;">
+        <div align="center">
+            <div class="A5-Landscape">
+                <table width="100%" cellspacing="0" cellpadding="0" style="width: 750px; color: #343030;">
+                    <tr>
+                        <td>
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tr><td colspan="2" style="height: 50px"></td></tr>
+                                <tr>
+                                    <td><img src="~/media/logos/logo-bank-papua.png" width="240" /></td>
+                                    <td align="right" style="font-size: 17px; font-weight:600; padding-left: 20px"><span class="tb-square" style="padding: 8px 30px;">SERI K</span></td>
+                                </tr>
+                                <tr><td align="center" valign="middle" colspan="2" style="font-size: 22px; font-weight:600; padding-top: 15px; letter-spacing: 6px"><span style="border-bottom: solid #000;">KWITANSI</span></td></tr>
+                                <tr><td align="center" colspan="2" style="font-size: 14px; font-weight:600; padding-top: 15px; text-transform: uppercase"><span class="vis-print">SETORAN KASDA @ViewBag.NamaPemda</span></td></tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 25px">
+                            <table width="100%" class="font-regular" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td width="70%">Terima dari <span style="padding-left: 35px; font-weight: 600; text-transform: uppercase" class="vis-print">@Model.Nama / @Model.Usaha</span></td>
+                                    <td width="30%" align="center" style="font-weight: 600;" class="vis-print">Nomor Rekening</td>
+                                </tr>
+                                <tr>
+                                    <td><span style="padding-left: 110px; font-weight: 600; text-transform: uppercase" class="vis-print">@Model.Npwpd</span></td>
+                                    <td align="center" style="font-weight: 600;" class="vis-print">@ViewBag.Rekening</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 15px">
+                            <table width="100%" class="font-regular" cellpadding="0" cellspacing="0" style="line-height: 22px">
+                                <tr>
+                                    <td width="55%">Uraian :</td>
+                                    <td width="5%" align="left" style="font-weight: 600;"></td>
+                                    <td width="17%" align="right" style="font-weight: 600;"></td>
+                                    <td width="23%" align="right" style="font-weight: 600;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 600;"><span class="vis-print">@Model.Uraian</span></td>
+                                    <td align="left" style="font-weight: 600;">Rp:</td>
+                                    <td align="right" style="font-weight: 600;"><span class="vis-print">@string.Format("{0:N0}", Model.JumlahPokok)</span></td>
+                                    <td align="right" style="font-weight: 600;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 600;"><span class="vis-print">@(Model.KdCoa.Substring(0, 3) == "411" ? "Masa Pajak " : "Masa Retribusi ") @string.Format("{0:MMMM}", Model.Masa1) - @string.Format("{0:MMMM yyyy}", Model.Masa2)</span></td>
+                                    <td align="left" style="font-weight: 600;"></td>
+                                    <td align="right" style="font-weight: 600;"></td>
+                                    <td align="right" style="font-weight: 600;"></td>
+                                </tr>
+                                @if (Model.JumlahDenda != 0)
+                                {
+                                    <tr>
+                                        <td style="font-weight: 600;"><span class="vis-print">@Model.Denda</span></td>
+                                        <td align="left" style="font-weight: 600;">Rp:</td>
+                                        <td align="right" style="font-weight: 600;"><span class="vis-print">@string.Format("{0:N0}", Model.JumlahDenda)</span></td>
+                                        <td align="right" style="font-weight: 600;"></td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td style="font-weight: 600;"></td>
+                                        <td align="left" style="font-weight: 600;"></td>
+                                        <td align="right" style="font-weight: 600;"></td>
+                                        <td align="right" style="font-weight: 600;"></td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td colspan="4" style="height: 40px;"></td>
+                                </tr>
+                                <tr>
+                                    <td align="right" style="font-weight: 600; padding-right: 40px"><span class="vis-print">JUMLAH</span></td>
+                                    <td align="left" style="font-weight: 600;">Rp. </td>
+                                    <td align="right" style="font-weight: 600;"><span class="vis-print">@string.Format("{0:N0}", Model.Total)</span></td>
+                                    <td align="right" style="font-weight: 600;"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 35px">
+                            <table width="100%" class="font-regular cetak" cellpadding="0" cellspacing="0">
+                                <tr class="tb-padding">
+                                    <td width="125px" style="padding: 0 0">Terbilang Rupiah :</td>
+                                    <td style="font-weight: 600; border: 1px solid #000" class="tb-detail cetak"><span class="vis-print" id="terbilang"></span></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: 5px"></td>
+                                </tr>
+                                <tr class="tb-padding">
+                                    <td style="padding-right: 10px" align="right" class="vis-print">Catatan :</td>
+                                    <td style="font-weight: 600; border: 1px solid #000" class="tb-detail cetak"><span class="vis-print">Setoran Ini Sah Apabila Telah Divalidasi</span></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 10px">
+                            <table width="100%" class="font-regular" cellpadding="0" cellspacing="0">
+                                <tr style="font-size: 13px">
+                                    <td style="font-weight: 600" class="vis-print">Lembar 1 : Bank</td>
+                                    @*<td align="right" rowspan="3"><span style="border: 1px solid #000; font-size: 18px; font-weight: 600; padding: 6px 18px; letter-spacing: 5px" class="vis-print">SERI K</span></td>*@
+                                </tr>
+                                <tr style="font-size: 13px">
+                                    <td style="font-weight: 600" class="vis-print">Lembar 2 : Pajak & Retribusi</td>
+                                </tr>
+                                <tr style="font-size: 13px">
+                                    <td style="font-weight: 600" class="vis-print">Lembar 3 : Keuangan/Pembukuan</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/js/terbilang.js"></script>
+<script>
+        document.getElementById("terbilang").innerHTML = (terbilang(@Math.Floor(Model.Total ?? 0))) + "rupiah";
+</script>

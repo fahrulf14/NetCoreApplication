@@ -1,0 +1,320 @@
+﻿@model SIP.Models.DataSubjek
+
+@{
+    ViewBag.Title = "Data Kartu";
+    ViewBag.SubHeaderTitle = "Laporan";
+    ViewBag.S1 = "Kartu Data";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+    <div class="row justify-content-center">
+        <div class="col-lg-3 order-2">
+            @await Component.InvokeAsync("DetailSubjek", new { id = Model.IdSubjek, edit = false })
+        </div>
+        <div class="col-lg-8 order-1">
+            <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            @ViewBag.Title
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-group">
+                            <span style="overflow: visible; position: relative;">
+                                <span class="dropdown">
+                                    <a href="#" class="btn btn-sm m-btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="la la-download"></i> Export </a>
+                                    <span class="dropdown-menu dropdown-menu-right">
+                                        <button type="button" id="btn_copy" class="dropdown-item"><i class="la la-copy"></i> Copy</button>
+                                        <button type="button" id="btn_excel" class="dropdown-item"><i class="la la-file-excel-o"></i> Excel</button>
+                                        <button type="button" id="btn_csv" class="dropdown-item"><i class="la la-file-text-o"></i> CSV</button>
+                                        <button type="button" id="btn_pdf" class="dropdown-item"><i class="la la-file-pdf-o"></i> Pdf</button>
+                                    </span>
+                                </span>
+                            </span>
+                            <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="kt-form kt-form--label-right kt-margin-t-10 kt-margin-b-10 kt-margin-5-mobile">
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-2 col-1 kt-margin-b-10-mobile order-2 order-sm-1 length">
+                                        <div class="kt-form__group">
+                                            <select class="form-control kt-selectpicker" id="length">
+                                                <option value="10">10</option>
+                                                <option value="20">20</option>
+                                                <option value="30">30</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-auto order-3 order-sm-2 kt-margin-b-10-mobile">
+                                        <div class="kt-input-icon kt-input-icon--left">
+                                            <input type="text" class="form-control" placeholder="Search..." id="search">
+                                            <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                                <span><i class="la la-search"></i></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3 col-auto order-3 order-sm-2 kt-margin-b-10-mobile">
+                                        <div class="kt-form__group">
+                                            <select class="form-control kt-selectpicker" id="type" title="Status">
+                                                <option value=" ">Semua</option>
+                                                <option value="1">Lunas</option>
+                                                <option value="0">Belum Bayar</option>
+                                                <option value="4">SKPD</option>
+                                                <option value="5">SKPDKB</option>
+                                                <option value="6">SKPDKBT</option>
+                                                <option value="7">STPD</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-auto order-4 kt-margin-b-10-mobile">
+                                        <div class="kt-form-group">
+                                            <div class="input-group">
+                                                <input id="min" name="min" class="form-control datereport" type="text" asp-format="{0:MM-dd-yyyy}" autocomplete="off" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                                                </div>
+                                                <input id="max" name="max" class="form-control datereport" type="text" asp-format="{0:MM-dd-yyyy}" autocomplete="off" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover dt-custom" id="m_table">
+                        <thead>
+                            <tr>
+                                <th nowrap>No</th>
+                                <th>Nomor Surat</th>
+                                <th>Tanggal</th>
+                                <th>Jenis</th>
+                                <th>Masa Pajak</th>
+                                <th>Terhutang</th>
+                                <th>Status</th>
+                                <th>Kelola</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                            <tr>
+                                <th nowrap></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th>Total :</th>
+                                <th colspan="2" align="right"></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section Scripts {
+        <script>
+            var DatatablesAjaxServer = function () {
+
+            var tanggal = new Date(Date.now());
+            var export_filename = 'Data Kartu ' + "@Model.Npwpd" + '(' + tanggal.getDate() + "-" + tanggal.getMonth() + "-" + tanggal.getFullYear() + ")";
+            var initTable1 = function () {
+                var table = $('#m_table');
+                var subTotal;
+                table.DataTable({
+                    scrollY: '60vh',
+                    scrollX: true,
+                    scrollCollapse: true,
+                    searchDelay: 500,
+                    processing: true,
+                    serverSide: true,
+                    searching: true,
+                    bJQueryUI: true,
+                    bFilter: true,
+                    bSort: true,
+                    dom: "<'row'<'col-sm-12'tr>>\n\t\t\t<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                    "ajaxSource": "/Laporan/GetKartuData/" + "@Model.IdSubjek",
+                    buttons: [{
+                        extend: 'copy',
+                        footer: false,
+                        title: export_filename,
+                        exportOptions: { columns: [0, ':visible'] }
+                    }, {
+                        extend: 'excel',
+                        footer: false,
+                        title: export_filename,
+                        exportOptions: { columns: [0, ':visible'] }
+                    }, {
+                        extend: 'csv',
+                        footer: false,
+                        title: export_filename,
+                        exportOptions: { columns: [0, ':visible'] }
+
+                    }, {
+                        extend: 'pdf',
+                        footer: false,
+                        title: export_filename,
+                        exportOptions: { columns: [0, ':visible'] }
+                    }],
+                    "exportOptions": { columns: [0, ':visible'] },
+                    fnServerData: function (sSource, aoData, fnCallback) {
+                        aoData.push({ "name": "all", "value": true });
+                        aoData.push({ "name": "tipe", "value": $('#type').val() });
+                        aoData.push({ "name": "min", "value": $('#min').val() });
+                        aoData.push({ "name": "max", "value": $('#max').val() });
+                        $.getJSON(sSource, aoData, function (json) {
+                            subTotal = json.total;
+                            fnCallback(json)
+                        });
+                    },
+                    drawCallback: function (data, type, full, meta) {
+                        var api = this.api();
+                        $.ajaxSetup({ cache: false });
+                        $(api.column(5).footer()).html(
+                            subTotal
+                        );
+                    },
+                    columns: [
+                        { data: 'status' },
+                        { data: 'nomor' },
+                        { data: 'tanggal' },
+                        { data: 'coa' },
+                        { data: 'masa' },
+                        { data: 'hutang' },
+                        { data: 'status' },
+                        { data: 'link' },
+                    ],
+                    columnDefs: [
+                        {
+                            targets: 0,
+                            orderable: false,
+                            render: function (data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + 1;
+                            }
+                        }, {
+                            targets: -1,
+                            title: 'Kelola',
+                            data: 'link',
+                            orderable: false,
+                            render: function (data, type, full, meta) {
+                                return `<a target="_blank" href="` + data + `"   class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Detail"><i class="la la-arrow-circle-right"></i></a>`;
+                            },
+                        }, {
+                            targets: 6,
+                            render: function (data, type, full, meta) {
+                                var status = {
+                                    '0': {
+                                    'title': 'Belum Bayar',
+                                    'state': 'danger'
+                                },
+                                '1': {
+                                    'title': 'Lunas',
+                                    'state': 'success'
+                                },
+                                '2': {
+                                    'title': 'Kurang Bayar',
+                                    'state': 'warning'
+                                },
+                                '3': {
+                                    'title': 'Lebih Bayar',
+                                    'state': 'primary'
+                                },
+                                '4': {
+                                    'title': 'SKPD',
+                                    'state': 'info'
+                                },
+                                '5': {
+                                    'title': 'SKPDKB',
+                                    'state': 'info'
+                                },
+                                '6': {
+                                    'title': 'SKPDKBT',
+                                    'state': 'info'
+                                },
+                                '7': {
+                                    'title': 'STPD',
+                                    'state': 'info'
+                                }
+                                };
+                                if (typeof status[data] === 'undefined') {
+                                    return data;
+                                }
+                                return '<span class="kt-badge kt-badge--' + status[data].state + ' kt-badge--dot"></span>&nbsp;' +
+                                    '<span class="kt-font-bold kt-font-' + status[data].state + '">' + status[data].title + '</span>';
+                            }
+                        }
+                    ],
+                });
+
+                table.DataTable().on('order.dt search.dt', function () {
+                    table.DataTable().column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                        table.DataTable().cell(cell).invalidate('dom');
+                    });
+                }).draw();
+
+                $('#length').on('change', function () {
+                    var selectedValue = $(this).val();
+                    table.DataTable().page.len(selectedValue).draw();
+                });
+
+                $('#type').on('change', function () {
+                    table.DataTable().draw();
+                });
+
+                $("#search").on('keyup', function () {
+                    table.dataTable().fnFilter(this.value);
+                });
+
+                $('#min, #max').change(function () {
+                    console.log($('#min').val());
+                    console.log($('#max').val());
+                    if ($('#min').val() != "" && $('#max').val() != "") {
+                        $('#m_table').DataTable().draw();
+                    }
+                });
+
+                $("#btn_copy").on("click", function () {
+                    $('#m_table').DataTable().buttons([0]).trigger()
+                });
+
+                $("#btn_excel").on("click", function () {
+                    $('#m_table').DataTable().buttons([1]).trigger()
+                });
+
+                $("#btn_csv").on("click", function () {
+                    $('#m_table').DataTable().buttons([2]).trigger()
+                });
+
+                $("#btn_pdf").on("click", function () {
+                    $('#m_table').DataTable().buttons([3]).trigger()
+                });
+            };
+
+            return {
+
+                init: function () {
+                    initTable1();
+                },
+
+            };
+
+        }();
+
+        jQuery(document).ready(function () {
+            DatatablesAjaxServer.init();
+        });
+
+        </script>
+    }
+

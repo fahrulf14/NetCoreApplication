@@ -1,0 +1,251 @@
+﻿@model IEnumerable<SIP.Models.Stts>
+
+@{
+    ViewBag.Title = "STTS";
+    ViewBag.SubHeaderTitle = "STTS";
+    ViewBag.S1 = "";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<div class="row justify-content-center">
+    @*<div class="col-lg-3 order-2">
+            @await Component.InvokeAsync("DetailSubjek", new { id = ViewBag.IdSubjek, edit = false })
+        </div>*@
+    <div class="col-lg-8 order-1">
+        <!--begin::Portlet-->
+        <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        @ViewBag.Title
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-group">
+                        <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                            <div class="m-separator m-separator--dashed d-xl-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="kt-form kt-form--label-right kt-margin-t-10 kt-margin-b-10 kt-margin-5-mobile">
+                    <div class="row align-items-center">
+                        <div class="col-xl-12">
+                            <div class="row align-items-center">
+                                <div class="col-sm-2 col-1 kt-margin-b-10-mobile order-2 order-sm-1 length">
+                                    <div class="kt-form__group">
+                                        <select class="form-control kt-selectpicker" id="length">
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-auto order-3 order-sm-2 kt-margin-b-10-mobile">
+                                    <div class="kt-input-icon kt-input-icon--left">
+                                        <input type="text" class="form-control" placeholder="Search..." id="search">
+                                        <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                            <span><i class="la la-search"></i></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-3 col-12 order-1 order-sm-3 kt-margin-b-10-mobile">
+                                    <div class="kt-form__group kt-form__group--inline">
+                                        <div class="kt-form__label">
+                                            <label>Status:</label>
+                                        </div>
+                                        <div class="kt-form__control">
+                                            <select class="form-control kt-selectpicker" id="status">
+                                                <option value=" ">Semua</option>
+                                                <option value="1">Aktif</option>
+                                                <option value="0">Non Aktif</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover dt-custom" id="m_table">
+                    <thead>
+                        <tr>
+                            <th>
+                                No
+                            </th>
+                            <th>
+                                No Objek Pajak
+                            </th>
+                            <th>
+                                Tahun
+                            </th>
+                            <th>
+                                Letak
+                            </th>
+                            <th>
+                                Tanggal Bayar
+                            </th>
+                            <th>
+                                Total Bayar
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Kelola
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td></td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IdSpptNavigation.IdSpopNavigation.Nop)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IdSpptNavigation.IdSpopNavigation.Tahun)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IdSpptNavigation.IdSpopNavigation.NamaJalan)
+                                </td>
+                                <td>
+                                    @String.Format("{0:dd MMMM yyyy}", item.TanggalBayar)
+                                </td>
+                                <td>
+                                    @String.Format("{0:C0}", item.TotalBayar)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FlagValidasi)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FlagValidasi)
+                                </td>
+                                <td nowrap>
+                                    <span style="overflow: visible; position: relative;">
+                                        <span class="dropdown">
+                                            <a href="#" class="btn btn-sm btn-label-success" data-toggle="dropdown" aria-expanded="false"> Pilih </a>
+                                            <span class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="@Url.Action("Cetak", "STTS", new { id =@item.IdStts})">Cetak STTS</a>
+                                                <a class="dropdown-item" href="@Url.Action("Details", "STTS", new { id =@item.IdStts})"> Detail STTS</a>
+                                                @if (item.FlagValidasi)
+                                                {
+                                                    @*<a class="dropdown-item" href="@Url.Action("NJOP", "SPOP", new { id =@item.IdSPOP})"> Ubah NJOP Bumi</a>
+                                                        <a class="dropdown-item" href="@Url.Action("Validasi", "SPOP", new { id =@item.IdSpop})"> Batalkan Validasi</a>*@
+                                                }
+                                                else
+                                                {
+                                                    <a class="dropdown-item" href="@Url.Action("Edit", "STTS", new { id =@item.IdStts})"> Edit STTS</a>
+                                                    @*<a class="dropdown-item" href="@Url.Action("EditNOP", "SPOP", new { id =@item.IdSPOP})"> Edit NOP</a>*@
+                                                    <a class="dropdown-item" href="@Url.Action("Validasi", "STTS", new { id =@item.IdStts})"> Validasi STTS</a>
+                                                }
+                                            </span>
+                                        </span>
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--end::Portlet-->
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/rupiah.mask.js"></script>
+    <script>
+        var DatatablesBasicScrollable = function () {
+            var initTable = function () {
+                var table = $('#m_table');
+                table.DataTable({
+                    searching: true,
+                    bJQueryUI: true,
+                    bFilter: true,
+                    dom: "<'row'<'col-sm-12'tr>>\n\t\t\t<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                    scrollY: '60vh',
+                    scrollX: true,
+                    scrollCollapse: true,
+                    columnDefs: [{
+                        targets: 0,
+                        width: 15,
+                        className: "dt-center"
+                    }, {
+                        targets: -1,
+                        width: 100,
+                        className: "dt-center"
+                    }, {
+                        targets: 7,
+                        visible: false
+                    }, {
+                        targets: 6,
+                        render: function (data, type, full, meta) {
+                            var status = {
+                                "0": {
+                                    'title': 'Non Aktif',
+                                    'state': 'danger'
+                                },
+                                "1": {
+                                    'title': 'Aktif',
+                                    'state': 'success'
+                                }
+                            };
+                            if (typeof status[data] === 'undefined') {
+                                return data;
+                            }
+                            return '<span class="kt-badge kt-badge--' + status[data].state + ' kt-badge--dot"></span>&nbsp;' +
+                                '<span class="kt-font-bold kt-font-' + status[data].state + '">' + status[data].title + '</span>';
+                        }
+                    }]
+                });
+
+                $('#m_table').DataTable().on('order.dt search.dt', function () {
+                    $('#m_table').DataTable().column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                        $('#m_table').DataTable().cell(cell).invalidate('dom');
+                    });
+                }).draw();
+
+                $('#length').on('change', function () {
+                    var selectedValue = $(this).val();
+                    $('#m_table').DataTable().page.len(selectedValue).draw();
+                });
+
+                $('#status').on('change', function () {
+                    var selectedValue = $(this).val();
+                    table.dataTable().fnFilter("^" + selectedValue + "$", 7, true); //Exact value, column, reg
+                });
+
+                $("#search").on('keyup', function () {
+                    $('#m_table').dataTable().fnFilter(this.value);
+                });
+
+                $('.dataTables_scrollBody').css('min-height', '150px');
+            };
+
+            return {
+                init: function () {
+                    initTable();
+                },
+            };
+
+        }();
+
+        jQuery(document).ready(function () {
+            DatatablesBasicScrollable.init();
+        });
+
+    </script>
+}
+
+

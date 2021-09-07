@@ -1,0 +1,33 @@
+﻿@page
+@model LoginPartialModel
+
+@{
+    ViewData["Title"] = "Log in";
+    Layout = null;
+}
+
+    <form method="post" class="kt-form">
+        <div class="modal-header">
+            <h5 class="modal-title" id="ModalTitle"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" class="la la-remove"></span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12 orm-group">
+                    <label asp-for="Input.Email" class="control-label required">Username</label>
+                    <input asp-for="Input.Email" class="form-control" required autofocus />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="col-md-12 orm-group">
+                    <label asp-for="Input.Password" class="control-label required">Password</label>
+                    <input asp-for="Input.Password" class="form-control" required autofocus />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="submit" value="Simpan" class="btn btn-success" />
+        </div>
+    </form>

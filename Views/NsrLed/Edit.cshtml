@@ -1,0 +1,100 @@
+﻿@model SIP.Models.NsrLed
+
+<form asp-action="Edit">
+    <div class="modal-header">
+        <h5 class="modal-title" id="ModalTitle">Ubah Data NSR LED</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="la la-remove"></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" asp-for="IdNsr" />
+        <input type="hidden" asp-for="FlagAktif" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="Lokasi" class="control-label"></label>
+                <input asp-for="Lokasi" class="form-control" required />
+                <span asp-validation-for="Lokasi" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label asp-for="L1" class="control-label">Di Bawah 8 m<sup>2</sup></label>
+                <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                    <input asp-for="L1" class="form-control rupiah" autocomplete="off" required value="@String.Format("{0:N0}", Model.L1)" />
+                </div>
+                <span asp-validation-for="L1" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 form-group">
+                <label asp-for="L2" class="control-label"> 8 m<sup>2</sup> s.d 16 m<sup>2</sup></label>
+                <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                    <input asp-for="L2" class="form-control rupiah" autocomplete="off" required value="@String.Format("{0:N0}", Model.L2)" />
+                </div>
+                <span asp-validation-for="L2" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label asp-for="L3" class="control-label"> 16 m<sup>2</sup> s.d 24 m<sup>2</sup></label>
+                <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                    <input asp-for="L3" class="form-control rupiah" autocomplete="off" required value="@String.Format("{0:N0}", Model.L3)" />
+                </div>
+                <span asp-validation-for="L3" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 form-group">
+                <label asp-for="L4" class="control-label"> 24 m<sup>2</sup> s.d 32 m<sup>2</sup></label>
+                <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                    <input asp-for="L4" class="form-control rupiah" autocomplete="off" required value="@String.Format("{0:N0}", Model.L4)" />
+                </div>
+                <span asp-validation-for="L4" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label asp-for="L5" class="control-label"> 32 m<sup>2</sup> s.d 50 m<sup>2</sup></label>
+                <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                    <input asp-for="L5" class="form-control rupiah" autocomplete="off" required value="@String.Format("{0:N0}", Model.L5)" />
+                </div>
+                <span asp-validation-for="L5" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 form-group">
+                <label asp-for="L6" class="control-label"> 50 m<sup>2</sup> s.d 100 m<sup>2</sup></label>
+                <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                    <input asp-for="L6" class="form-control rupiah" autocomplete="off" required value="@String.Format("{0:N0}", Model.L6)" />
+                </div>
+                <span asp-validation-for="L6" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label asp-for="L7" class="control-label">100 m<sup>2</sup></label>
+                <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                    <input asp-for="L7" class="form-control rupiah" autocomplete="off" required value="@String.Format("{0:N0}", Model.L7)" />
+                </div>
+                <span asp-validation-for="L7" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label asp-for="Durasi" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="Durasi" class="form-control" autocomplete="off" required />
+                    <div class="input-group-append"><span class="input-group-text"><i class="normal-font">Detik</i></span></div>
+                </div>
+                <span asp-validation-for="Durasi" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" value="Simpan" class="btn btn-success" />
+    </div>
+</form>

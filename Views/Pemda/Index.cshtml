@@ -1,0 +1,80 @@
+﻿@model SIP.Models.Pemda
+
+@{
+    ViewBag.Title = "Data Pemda";
+    ViewBag.SubHeaderTitle = "Data Pemda";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-4">
+        <!--Begin::Portlet-->
+        <div class="kt-portlet kt-portlet--height-fluid">
+            <div class="kt-portlet__head kt-portlet__head--noborder">
+                <div class="kt-portlet__head-label">
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <!--begin::Widget -->
+                <div class="kt-widget kt-widget--user-profile-2">
+                    <div class="kt-widget__head">
+                        <div class="kt-widget__media">
+                            <img class="kt-widget__img" src="~/media/logos/logo.png" alt="image">
+                        </div>
+                        <div class="kt-widget__info">
+                            <a href="#" class="kt-widget__username">
+                                @Model.NamaPemda
+                            </a>
+                            <span class="kt-widget__desc">
+                                @Model.NamaOpd
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kt-widget__body">
+                        <div class="kt-widget__section">
+
+                        </div>
+                        <div class="kt-widget__item">
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Alamat:</span>
+                                <a href="#" class="kt-widget__data">@Model.Alamat</a>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Telepon:</span>
+                                <a href="#" class="kt-widget__data">@Model.Telp</a>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label"></span>
+                                <a href="#" class="kt-widget__data">@Model.Telp2</a>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Provinsi:</span>
+                                <span class="kt-widget__data">@Model.IndProvinsi.Provinsi</span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Kabupaten:</span>
+                                <span class="kt-widget__data">@Model.IndKabKota.KabKota</span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Kecamatan:</span>
+                                <span class="kt-widget__data">@Model.IndKecamatan.Kecamatan</span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Kelurahan:</span>
+                                <span class="kt-widget__data">@Model.IndKelurahan.Kelurahan</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-widget__footer">
+                        <a type="button" href="/Pemda/Edit/@Model.IdPemda" class="btn btn-label-info btn-lg btn-upper">Edit</a>
+                    </div>
+                </div>
+
+                <!--end::Widget -->
+            </div>
+        </div>
+        <!--End::Portlet-->
+    </div>
+</div>

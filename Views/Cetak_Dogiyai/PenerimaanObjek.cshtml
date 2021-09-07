@@ -1,0 +1,260 @@
+﻿@model IEnumerable<SIP.ViewModels.BukuPenerimaan>
+
+@{
+    Layout = null;
+}
+
+    <html lang="id">
+
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title>
+        <link href="~/css/print-style.css" rel="stylesheet" />
+        <link href="~/css/paper/F4.css" rel="stylesheet" />
+        <link href="~/css/paper/Landscape.css" rel="stylesheet" />
+        <style>
+            .join {
+                border-collapse: collapse;
+            }
+        </style>
+        <!--begin::Favicon -->
+        <link rel="apple-touch-icon" sizes="180x180" href="~/media/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="~/media/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="~/media/favicon/favicon-16x16.png">
+        <link rel="shortcut icon" href="~/media/favicon/favicon.ico">
+        <meta name="msapplication-TileColor" content="#2d89ef">
+        <meta name="msapplication-config" content="~/media/favicon/browserconfig.xml">
+        <meta name="theme-color" content="#ffffff">
+        <!--end::Favicon -->
+    </head>
+
+
+    <body>
+        <div style="width: 100%;">
+            <div align="center">
+                @foreach (var item in Model.GroupBy(d => d.Kode))
+                {
+                    var no = 0;
+                    <div class="F4-Landscape break">
+                        <table width="100%" cellspacing="0" cellpadding="0" style="width: 1300px; padding: 20px 30px; color: #343030; background-color:#FFF;">
+                            <tr>
+                                <td>
+                                    <table class="table-borderless" width="100%" style="margin-top: 5px; font-size: 18px;">
+                                        <tr class="header">
+                                            <td align="center" style="font-weight: 600"><span style="text-transform:uppercase;">@Context.Session.GetString("NamaPemda")</span></td>
+                                        </tr>
+                                        <tr class="header">
+                                            <td align="center" valign="top" style="font-weight: 600">@Context.Session.GetString("Opd")</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 16px;" align="center">
+                                                BUKU PEMBANTU PER RINCIAN OBJEK PENERIMAAN
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td height="10px" style="border-bottom: double #000000"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom: 10px">
+                                    <table class="table-borderless" width="100%" style="margin-top: 10px; font-size: 14px;">
+                                        <tr>
+                                            <td width="10%">No. Rekening</td>
+                                            <td width="90%">: @item.FirstOrDefault().Kode</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Uraian</td>
+                                            <td>: @item.FirstOrDefault().Uraian</td>
+                                        </tr>
+                                        @if (ViewBag.Jenis == "Bulan")
+                                        {
+                                            @foreach (var lra in ((List<Lra>)ViewBag.LRA).Where(d => d.IdCoa == item.FirstOrDefault().Kode.Replace(".", "")))
+                                            {
+                                                <tr>
+                                                    <td>Target</td>
+                                                    @if (string.Format("{0:MM}", ViewBag.T1) == "01")
+                                                    {
+                                                        <td>: @string.Format("{0:C0}", lra.Januari ?? 0)</td>
+                                                    }
+                                                    else if (string.Format("{0:MM}", ViewBag.T1) == "02")
+                                                    {
+                                                        <td>: @string.Format("{0:C0}", lra.Februari ?? 0)</td>
+                                                    }
+                                                    else if (string.Format("{0:MM}", ViewBag.T1) == "03")
+                                                    {
+                                                        <td>: @string.Format("{0:C0}", lra.Maret ?? 0)</td>
+                                                    }
+                                                    else if (string.Format("{0:MM}", ViewBag.T1) == "04")
+                                                    {
+                                                        <td>: @string.Format("{0:C0}", lra.April ?? 0)</td>
+                                                    }
+                                                    else if (string.Format("{0:MM}", ViewBag.T1) == "05")
+                                                    {
+                                                        <td>: @string.Format("{0:C0}", lra.Mei ?? 0)</td>
+                                                    }
+                                                    else if (string.Format("{0:MM}", ViewBag.T1) == "06")
+                                                    {
+                                                        <td>: @string.Format("{0:C0}", lra.Juni ?? 0)</td>
+                                                    }
+                                                    else if (string.Format("{0:MM}", ViewBag.T1) == "07")
+                                                    {
+                                                        <td>: @string.Format("{0:C0}", lra.Juli ?? 0)</td>
+                                                    }
+                                                    else if (string.Format("{0:MM}", ViewBag.T1) == "08")
+                                                    {
+                                                        <td>: @string.Format("{0:C0}", lra.Agustus ?? 0)</td>
+                                                    }
+                                                    else if (string.Format("{0:MM}", ViewBag.T1) == "09")
+                                                    {
+                                                        <td>: @string.Format("{0:C0}", lra.September ?? 0)</td>
+                                                    }
+                                                    else if (string.Format("{0:MM}", ViewBag.T1) == "10")
+                                                    {
+                                                        <td>: @string.Format("{0:C0}", lra.Oktober ?? 0)</td>
+                                                    }
+                                                    else if (string.Format("{0:MM}", ViewBag.T1) == "11")
+                                                    {
+                                                        <td>: @string.Format("{0:C0}", lra.November ?? 0)</td>
+                                                    }
+                                                    else if (string.Format("{0:MM}", ViewBag.T1) == "12")
+                                                    {
+                                                        <td>: @string.Format("{0:C0}", lra.Desember ?? 0)</td>
+                                                    }
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <td>Bulan</td>
+                                                <td>: @string.Format("{0:MMMM}", ViewBag.T1)</td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            @foreach (var lra in ((List<Lra>)ViewBag.LRA).Where(d => d.IdCoa == item.FirstOrDefault().Kode.Replace(".", "")))
+                                            {
+                                                <tr>
+                                                    <td>Target</td>
+                                                    <td>: @string.Format("{0:C0}", lra.Afinal)</td>
+                                                </tr>
+                                            }
+                                            <tr>
+                                                <td>Tanggal</td>
+                                                <td>: @string.Format("{0:dd MMMM yyyy}", ViewBag.T1) - @string.Format("{0:dd MMMM yyyy}", ViewBag.T2)</td>
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <td>Tahun</td>
+                                            <td>: @string.Format("{0:yyyy}", ViewBag.T1)</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table class="join" width="100%" id="bpp">
+                                        <tr class="tb-border--all tb-border tb-min-border" style="font-size: 14px; font-weight: 300;">
+                                            <td rowspan="2" align="center">No</td>
+                                            <td colspan="4" align="center">Penerimaan</td>
+                                            <td colspan="3" align="center">Penyetoran</td>
+                                        </tr>
+                                        <tr class="tb-border--all tb-border tb-min-border" style="font-size: 14px; font-weight: 300;">
+                                            <td align="center">Tanggal</td>
+                                            <td align="center">No.Bukti</td>
+                                            <td align="center">Pembayaran</td>
+                                            <td align="center">Jumlah</td>
+                                            <td align="center">Tanggal</td>
+                                            <td align="center">No.STS</td>
+                                            <td align="center">Jumlah</td>
+                                        </tr>
+                                        <tr class="tb-border--all tb-border tb-min-border" style="font-size: 14px; font-weight: 300;">
+                                            <td width="3%" align="center">1</td>
+                                            <td width="7%" align="center">2</td>
+                                            <td width="13%" align="center">3</td>
+                                            <td width="8%" align="center">4</td>
+                                            <td width="7%" align="center">5</td>
+                                            <td width="7%" align="center">6</td>
+                                            <td width="8%" align="center">7</td>
+                                            <td width="7%" align="center">8</td>
+                                        </tr>
+                                        @foreach (var core in Model.Where(d => d.Kode == item.FirstOrDefault().Kode).OrderBy(d => d.Tanggal))
+                                        {
+                                            <tr class="tb-border--all tb-border tb-min-border" style="font-size: 14px; font-weight: 300;">
+                                                <td align="center">@(no += 1)</td>
+                                                <td align="center">@String.Format("{0:dd MMM yyyy}", core.Tanggal)</td>
+                                                <td align="center">@core.Nomor</td>
+                                                <td align="center">@core.Pembayaran</td>
+                                                <td align="right">@String.Format("{0:N0}", core.Jumlah)</td>
+
+                                                @if (core.Valid != null)
+                                                {
+                                                    <td align="center">@String.Format("{0:dd MMM yyyy}", core.Valid)</td>
+                                                    <td align="center">@core.Sts</td>
+                                                    <td align="right">@String.Format("{0:N0}", core.Jumlah)</td>
+                                                }
+                                                else if (core.Status)
+                                                {
+                                                    <td align="center">@String.Format("{0:dd MMM yyyy}", core.Tanggal)</td>
+                                                    <td align="center">-</td>
+                                                    <td align="right">@String.Format("{0:N0}", core.Jumlah)</td>
+                                                }
+                                                else
+                                                {
+                                                    <td align="center"></td>
+                                                    <td align="center"></td>
+                                                    <td align="right"></td>
+                                                }
+                                            </tr>
+                                        }
+                                        <tr class="tb-min-border" style="font-size: 14px; font-weight: 300;">
+                                            <td colspan="3" align="center" class="tb-kiri tb-bawah"></td>
+                                            <td align="center" class="tb-kiri tb-bawah tb-kanan">Jumlah</td>
+                                            <td align="right" class="tb-bawah tb-kanan">@String.Format("{0:N0}", item.Sum(d => d.Jumlah))</td>
+                                            <td align="center" class="tb-bawah"></td>
+                                            <td align="center" class="tb-kiri tb-bawah tb-kanan">Jumlah</td>
+                                            <td align="right" class="tb-bawah tb-kanan">@String.Format("{0:N0}", item.Where(d => d.Status || d.Valid != null).Sum(d => d.Jumlah))</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table width="100%" class="join break">
+                                        <tr>
+                                            <td colspan="2" style="padding-top: 20px;"></td>
+                                        </tr>
+                                        <tr style="font-size: 13px">
+                                            <td width="80%"></td>
+                                            <td align="center" width="20%">@Context.Session.GetString("Kecamatan"), @string.Format("{0:dd MMMM yyyy}", DateTime.Now)</td>
+                                        </tr>
+                                        <tr style="font-size: 13px">
+                                            <td></td>
+                                            <td align="center">@ViewBag.Jabatan</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="height: 60px;"></td>
+                                        </tr>
+                                        <tr style="font-size: 13px">
+                                            <td></td>
+                                            <td align="center" style="text-decoration: underline;">@ViewBag.TTD</td>
+                                        </tr>
+                                        <tr style="font-size: 13px">
+                                            <td></td>
+                                            <td align="center">NIP. @ViewBag.NIP</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </body>
+    </html>
+
+
+<script src="~/js/terbilang.js"></script>
+<script>
+
+</script>

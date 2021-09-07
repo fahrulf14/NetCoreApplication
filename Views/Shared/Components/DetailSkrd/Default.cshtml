@@ -1,0 +1,61 @@
+﻿@model SIP.Models.Skrd
+
+    <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+        <div class="kt-portlet__head kt-ribbon @ViewBag.State kt-ribbon--left kt-ribbon--round">
+            <div class="kt-ribbon__target" style="top: 10px; right: -2px;">@ViewBag.Status</div>
+            <div class="kt-portlet__head-label">
+                <h3 class="kt-portlet__head-title">
+                    Detail SKRD
+                </h3>
+            </div>
+        </div>
+        <div class="kt-portlet__body">
+            <div class="kt-widget kt-widget--user-profile-2">
+                <div class="kt-widget__body">
+                    <div class="kt-widget__item kt-padding-t-0">
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">Nama</span>
+                            <span class="kt-widget__data kt-align-right">@Model.IdSubjekNavigation.Nama</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">NPWRD</span>
+                            <span class="kt-widget__data kt-align-right">@Model.IdSubjekNavigation.Npwrd</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">Jenis Reribusi</span>
+                            <span class="kt-widget__data kt-align-right">@Model.IdCoaNavigation.Uraian</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">No. SKRD</span>
+                            <span class="kt-widget__data kt-align-right">@Model.NoSkrd</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">Tanggal:</span>
+                            <span class="kt-widget__data kt-align-right">@string.Format("{0:dd MMMM yyyy}", Model.TanggalSkrd)</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">Masa Retribusi:</span>
+                            <span class="kt-widget__data kt-align-right">@string.Format("{0:MMMM yyyy}", Model.MasaRetribusi1)</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">Terhutang:</span>
+                            <span class="kt-widget__data kt-align-right">@string.Format("{0:C0}", Model.Terhutang)</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label"></span>
+                            <span class="kt-widget__data kt-align-right">
+                                @if (Model.FlagValidasi)
+                                {
+                                    <span><span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">Valid</span></span>
+                                }
+                                else
+                                {
+                                    <span><span class="kt-badge kt-badge--danger kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-danger">Belum Valid</span></span>
+                                }
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,134 @@
+﻿@model SIP.Models.Stts
+
+@{
+    ViewBag.Title = "Tambah Data STTS";
+    ViewBag.SubHeaderTitle = "STTS";
+    ViewBag.S1 = "Tambah Data";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<form asp-action="Create">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            @ViewBag.Title
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-group">
+                            <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label asp-for="TanggalBayar" class="control-label required">Tanggal Bayar</label>
+                            <input asp-for="TanggalBayar" class="form-control datefield" type="text" asp-format="{0:dd-MM-yyyy}" value="@string.Format("{0:dd-MM-yyyy}", DateTime.Now)" autocomplete="off" required />
+                            <span asp-validation-for="TanggalBayar" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 form-group">
+                            <label asp-for="IdSetoran" class="control-label required">Jenis Setoran</label>
+                            <select asp-for="IdSetoran" class="form-control kt-selectpicker" title="Pilih Jenis Setoran..." required asp-items="ViewBag.IdSetoran"></select>
+                            <span asp-validation-for="IdSetoran" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label asp-for="IdBank" class="control-label required">Bank Setoran</label>
+                            <select asp-for="IdBank" class="form-control kt-selectpicker" disabled title="Pilih Bank..." required ></select>
+                            <span asp-validation-for="IdBank" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label class="control-label">Pokok Pajak</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input id="Terhutang" class="form-control" readonly value="@string.Format("{0:N0}", ViewBag.Terhutang)" />
+                            </div>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label asp-for="Denda" class="control-label">Denda</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="Denda" class="form-control rupiah" value="0" />
+                            </div>
+                            <span asp-validation-for="Denda" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label asp-for="TotalBayar" class="control-label">Total Bayar</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="TotalBayar" class="form-control rupiah" readonly value="@string.Format("{0:N0}", ViewBag.Terhutang)" required />
+                            </div>
+                            <span asp-validation-for="TotalBayar" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__foot">
+                    <div class="kt-form__actions kt-align-right">
+                        <a asp-action="STTS" asp-controller="PBB" asp-route-id="@ViewBag.IdSubjek" class="btn btn-secondary">Kembali</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <script src="~/js/rupiah.mask.js"></script>
+    <script>
+        function rupiah(a, currency) {
+            return currency + a.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+        }
+
+        $("#Denda").on("blur", function () {
+            var hutang = document.getElementById("Terhutang").value.replace(".","");
+            var denda = document.getElementById("Denda").value.replace(".", "");
+            var total = parseInt(hutang,10) + parseInt(denda,10);
+            document.getElementById("TotalBayar").value = (rupiah(total,""));
+        });
+
+        $("#IdSetoran").on("changed.bs.select", function () {
+            DropBank(this.value);
+        });
+
+        function DropBank(id) {
+            $("#IdBank option").remove();
+                var sel = $("#IdBank");
+                $.ajax({
+                    type: 'POST',
+                    url: '/AjaxData/DropBank',
+                    dataType: 'json',
+                    data: { id },
+                    success: function (data) {
+                        if (data != "") {
+                            $.each(data, function (i, item) {
+                                var option =
+                                    '<option value="' + item.value + '">' + item.text + '</option>';
+                                sel.append(option);
+                            });
+                            sel.removeAttr("disabled");
+                        }
+                        else {
+                            sel.attr("disabled", "true");
+                        }
+                        sel.selectpicker('refresh');
+                    }
+                });
+        return false;
+        }
+
+    </script>
+}
+
+

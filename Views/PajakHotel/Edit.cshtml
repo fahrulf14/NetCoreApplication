@@ -1,0 +1,559 @@
+﻿@model SIP.Models.PHotel
+
+@{
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<form id="sptpd" asp-action="SPTPD"></form>
+<form class="form-detail" id="hotel" action="/PajakHotel/AddKamar/" method="post"></form>
+<form class="form-detail" id="fasilitas" action="/PajakHotel/AddDetail/@Model.IdHotel" method="post"></form>
+<form class="form-detail" id="layanan" action="/PajakHotel/AddDetail/@Model.IdHotel" method="post"></form>
+<form class="form-detail" id="restoran" action="/PajakHotel/AddDetail/@Model.IdHotel" method="post"></form>
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!--begin::Portlet-->
+        <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        @ViewBag.Title
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-group">
+                        <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <input type="hidden" asp-for="IdSptpd" form="sptpd" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @await Component.InvokeAsync("FormSPTPD", new { id = Model.IdSptpd })
+                <div class="row kt-margin-t-10 kt-padding-b-0">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="control-label">Data Pendukung</label>
+                            <div class="kt-checkbox-inline">
+                                <label class="kt-checkbox">
+                                    <input asp-for="KasRegister" form="sptpd" /> Kas Register
+                                    <span></span>
+                                </label>
+                                <label class="kt-checkbox">
+                                    <input asp-for="Pembukuan" form="sptpd" /> Pembukuan
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-separator kt-separator--space-sm"></div>
+                <div class="row kt-margin-t-10">
+                    <div class="col-lg-12">
+                        <div class="kt-section kt-section--first">
+                            <h3 class="kt-section__title">Omzet Kamar Hotel:</h3>
+                            <div class="kt-section__body">
+                                <input type="hidden" id="IdHotel" name="IdHotel" value="@Model.IdHotel" form="hotel" />
+                                <div class="row">
+                                    <div class="col-md-3 form-group">
+                                        <label class="control-label" for="NamaKamar">Nama Kamar</label>
+                                        <input type="text" name="NamaKamar" id="NamaKamar" class="form-control" autocomplete="off" required form="hotel" />
+                                        <span class="text-danger field-validation-valid" data-valmsg-for="NamaKamar" data-valmsg-replace="true"></span>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label class="control-label" for="Tarif">Tarif</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                            <input type="text" name="Tarif" id="Tarif" class="form-control rupiah" autocomplete="off" required form="hotel" />
+                                            <span class="text-danger field-validation-valid" data-valmsg-for="Tarif" data-valmsg-replace="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label class="control-label" for="Jumlah" form="hotel">Jumlah</label>
+                                        <div class="input-group">
+                                            <input type="number" name="Jumlah" id="Jumlah" min="1" class="form-control" autocomplete="off" required form="hotel" />
+                                            <div class="input-group-append"><span class="input-group-text"><i class="la la-user"></i></span></div>
+                                            <span class="text-danger field-validation-valid" data-valmsg-for="Jumlah" data-valmsg-replace="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group kt-align-right kt-margin-t-30-desktop kt-margin-t-25-tablet">
+                                            <button type="submit" class="btn btn-success btn-sm" form="hotel">Input</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <table id="tbl_kamar" class="table table-hover table-responsive-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th width="5%">No</th>
+                                                    <th>Nama Kamar</th>
+                                                    <th>Tarif</th>
+                                                    <th>Jumlah</th>
+                                                    <th style="text-align:right">Total</th>
+                                                    <th nowrap width="10%"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm"></div>
+                            <h3 class="kt-section__title kt-margin-t-15">Omzet Fasilitas Hotel:</h3>
+                            <div class="kt-section__body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label" for="IdFasilitas" form="fasilitas">Fasilitas</label>
+                                            <select class="form-control kt-selectpicker" id="IdFasilitas" name="IdFasilitas" data-size="5" title="Pilih Fasilitas..." asp-items="ViewBag.Fasilitas" required form="fasilitas"></select>
+                                            <span class="text-danger field-validation-valid" data-valmsg-for="IdFasilitas" data-valmsg-replace="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="control-label" for="OmzetFasilitas" form="fasilitas">Omzet</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                                <input type="text" name="OmzetFasilitas" id="OmzetFasilitas" class="form-control rupiah" autocomplete="off" required form="fasilitas" />
+                                                <span class="text-danger field-validation-valid" data-valmsg-for="OmzetFasilitas" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group kt-align-right kt-margin-t-30-desktop kt-margin-t-25-tablet">
+                                            <button type="submit" class="btn btn-success btn-sm" form="fasilitas">Input</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <table id="tbl_fasilitas" class="table table-hover table-responsive-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th width="5%">No</th>
+                                                    <th>Fasilitas</th>
+                                                    <th style="text-align:right">Omzet</th>
+                                                    <th nowrap style="width: 10%"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm"></div>
+                            <h3 class="kt-section__title kt-margin-t-15">Omzet Layanan Lain:</h3>
+                            <div class="kt-section__body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label" for="IdLayanan" form="layanan">Jenis Layanan</label>
+                                            <select class="form-control kt-selectpicker" id="IdLayanan" name="IdLayanan" data-size="5" title="Pilih Layanan..." asp-items="ViewBag.Layanan" required form="layanan"></select>
+                                            <span class="text-danger field-validation-valid" data-valmsg-for="IdLayanan" data-valmsg-replace="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="control-label" for="OmzetLayanan" form="layanan">Omzet</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                                <input type="text" name="OmzetLayanan" id="OmzetLayanan" class="form-control rupiah" autocomplete="off" required form="layanan" />
+                                                <span class="text-danger field-validation-valid" data-valmsg-for="OmzetLayanan" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group kt-align-right kt-margin-t-30-desktop kt-margin-t-25-tablet">
+                                            <button type="submit" class="btn btn-success btn-sm" form="layanan">Input</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <table id="tbl_layanan" class="table table-hover table-responsive-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th width="5%">No</th>
+                                                    <th>Layanan</th>
+                                                    <th style="text-align:right">Omzet</th>
+                                                    <th nowrap style="width: 10%"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm"></div>
+                            <h3 class="kt-section__title kt-margin-t-15">Omzet Layanan Restoran:</h3>
+                            <div class="kt-section__body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label" for="IdRestoran" form="restoran">Jenis Layanan</label>
+                                            <select class="form-control kt-selectpicker" id="IdRestoran" name="IdRestoran" data-size="5" title="Pilih Layanan..." asp-items="ViewBag.Restoran" required form="restoran"></select>
+                                            <span class="text-danger field-validation-valid" data-valmsg-for="IdRestoran" data-valmsg-replace="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="control-label" for="OmzetRestoran" form="restoran">Omzet</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                                <input type="text" name="OmzetRestoran" id="OmzetRestoran" class="form-control rupiah" autocomplete="off" required form="restoran" />
+                                                <span class="text-danger field-validation-valid" data-valmsg-for="OmzetRestoran" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group kt-align-right kt-margin-t-30-desktop kt-margin-t-25-tablet">
+                                            <button type="submit" class="btn btn-success btn-sm" form="restoran">Input</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <table id="tbl_restoran" class="table table-hover table-responsive-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th width="5%">No</th>
+                                                    <th>Layanan</th>
+                                                    <th style="text-align:right">Omzet</th>
+                                                    <th nowrap style="width: 10%"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__foot">
+                <div class="kt-form__actions kt-align-right">
+                    <a href="/SPTPD/@Model.IdSptpd" class="btn btn-secondary">Kembali</a>
+                    <button type="submit" class="btn btn-primary" form="sptpd">Simpan</button>
+                </div>
+            </div>
+        </div>
+        <!--end::Portlet-->
+    </div>
+</div>
+
+<div class="modal fade" id="RemoveModal" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="kt-widget kt-widget--user-profile-4">
+                    <div class="kt-widget__head">
+                        <div class="kt-widget__media">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100px" height="100px" viewBox="0 0 24 24" version="1.1" class="kt-widget__img">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24" />
+                                    <circle fill="#e83e8c" opacity="0.3" cx="12" cy="12" r="10" />
+                                    <rect fill="#dc3545" x="11" y="7" width="2" height="8" rx="1" />
+                                    <rect fill="#dc3545" x="11" y="16" width="2" height="2" rx="1" />
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="kt-widget__content">
+                            <div class="kt-widget__section">
+                                <span class="kt-widget__username">
+                                    Hapus Data ini?
+                                </span>
+                                <div class="kt-widget__action">
+                                    <button class="btn btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button id="DeleteBtn" class="btn btn-danger">Hapus</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/spt.js"></script>
+    <script src="~/js/rupiah.mask.js"></script>
+    <script>
+        function rupiah(a, currency) {
+            return currency + a.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+        }
+
+        Load_Kamar();
+        Load_Fasilitas();
+        Load_Layanan();
+        Load_Restoran();
+
+        function ResetFasilitas() {
+            $("#IdFasilitas").val('default').selectpicker("refresh");
+            document.getElementById("fasilitas").reset();
+        }
+
+        function ResetRestoran() {
+            $("#IdRestoran").val('default').selectpicker("refresh");
+            document.getElementById("restoran").reset();
+        }
+
+        function ResetLayanan() {
+            $("#IdLayanan").val('default').selectpicker("refresh");
+            document.getElementById("layanan").reset();
+        }
+
+        $('.form-detail').submit(function () {
+            $.ajax({
+                url: this.action,
+                type: this.method,
+                data: $(this).serialize(),
+                success: function (result) {
+                    if (result.success) {
+                        if (result.jenis == null) {
+                            Load_Kamar();
+                            document.getElementById("hotel").reset();
+                        }
+                        else if (result.jenis == "Fasilitas Hotel") {
+                            Load_Fasilitas();
+                            ResetFasilitas();
+                        }
+                        else if (result.jenis == "Layanan Restoran") {
+                            Load_Restoran();
+                            ResetRestoran();
+                        }
+                        else if (result.jenis == "Layanan Lain") {
+                            Load_Layanan();
+                            ResetLayanan();
+                        }
+                        toastr.success("Data berhasil disimpan!");
+                    } else {
+                        if (result.exist) {
+                            if (result.jenis == "Fasilitas Hotel") {
+                                ResetFasilitas();
+                            }
+                            else if (result.jenis == "Layanan Restoran") {
+                                ResetRestoran();
+                            }
+                            else if (result.jenis == "Layanan Lain") {
+                                ResetLayanan();
+                            }
+                            toastr.error("Error! " + result.uraian + " sudah diinput!");
+                        }
+                        else {
+                            toastr.error("Error! Terjadi kesalahan!");
+                        }
+                    }
+                }
+            });
+            return false;
+        });
+
+        function Load_Kamar() {
+            $("#tbl_kamar tbody tr").remove();
+            $.ajax({
+                type: 'POST',
+                url: '/PajakHotel/GetKamar',
+                dataType: 'json',
+                data: { id: "@Model.IdHotel" },
+                success: function (data) {
+                    var no = 0;
+                    var subtotal = 0;
+                    $.each(data, function (i, item) {
+                        no += 1;
+                        var total = item.jumlah * item.tarif;
+                        subtotal += total;
+                        var rows = "<tr>"
+                            + "<td>" + no + "</td>"
+                            + "<td>" + item.jenis + "</td>"
+                            + "<td>" + (rupiah(item.tarif, 'Rp. ')) + "</td>"
+                            + "<td>" + item.jumlah + "</td>"
+                            + '<td align="right">' + (rupiah(total, 'Rp. ')) + "</td>"
+                            + '<td align="right"><a href="javascript:;" onclick="HapusKamar(' + "'" + item.id + "'" + ')" ><span class="kt-badge kt-badge--danger">x</span></a></td>'
+                            + "</tr>";
+                        $('#tbl_kamar tbody').append(rows);
+                    });
+                    if (no > 0) {
+                        $("#tbl_kamar").removeClass("kt-hidden");
+                        var rows = '<tr><td></td><td></td><td></td><td></td><td align="right" class="kt-font-bold">' + (rupiah(subtotal, 'Rp. ')) + "</td><td></td></tr>";
+                        $('#tbl_kamar tbody').append(rows);
+                    }
+                    else {
+                        $("#tbl_kamar").addClass("kt-hidden");
+                    }
+                },
+                error: function () {
+                    toastr.error("Error! Terjadi kesalahan!");
+                }
+            });
+            return false;
+        }
+
+        function Load_Fasilitas() {
+            $("#tbl_fasilitas tbody tr").remove();
+            $.ajax({
+                type: 'POST',
+                url: '/PajakHotel/GetFasilitas',
+                dataType: 'json',
+                data: { id: "@Model.IdHotel" },
+                success: function (data) {
+                    var subtotal = 0;
+                    var no = 0;
+                    $.each(data, function (i, item) {
+                        no += 1;
+                        subtotal += item.jumlah;
+                        var rows= "<tr>"
+                            + "<td>" + no + "</td>"
+                            + "<td>" + item.jenis + "</td>"
+                            + '<td align="right">' + (rupiah(item.jumlah, 'Rp. ')) + "</td>"
+                            + '<td align="right"><a href="javascript:;" onclick="HapusDetail(' + "'" + item.id + "'" + ')" ><span class="kt-badge kt-badge--danger">x</span></a></td>'
+                            + "</tr>";
+                        $('#tbl_fasilitas tbody').append(rows);
+                    });
+                    if (no > 0) {
+                        $("#tbl_fasilitas").removeClass("kt-hidden");
+                        var rows = '<tr><td></td><td></td><td align="right" class="kt-font-bold">' + (rupiah(subtotal, 'Rp. ')) + "</td><td></td></tr>";
+                        $('#tbl_fasilitas tbody').append(rows);
+                    }
+                    else {
+                        $("#tbl_fasilitas").addClass("kt-hidden");
+                    }
+                },
+                error: function () {
+                    toastr.error("Error! Terjadi kesalahan!");
+                }
+            });
+            return false;
+        }
+
+        function Load_Layanan() {
+            $("#tbl_layanan tbody tr").remove();
+            $.ajax({
+                type: 'POST',
+                url: '/PajakHotel/GetLayanan',
+                dataType: 'json',
+                data: { id: "@Model.IdHotel" },
+                success: function (data) {
+                    var subtotal = 0;
+                    var no = 0;
+                    $.each(data, function (i, item) {
+                        no += 1;
+                        subtotal += item.jumlah;
+                        var rows= "<tr>"
+                            + "<td>" + no + "</td>"
+                            + "<td>" + item.jenis + "</td>"
+                            + '<td align="right">' + (rupiah(item.jumlah, 'Rp. ')) + "</td>"
+                            + '<td align="right"><a href="javascript:;" onclick="HapusDetail(' + "'" + item.id + "'" + ')" ><span class="kt-badge kt-badge--danger">x</span></a></td>'
+                            + "</tr>";
+                        $('#tbl_layanan tbody').append(rows);
+                    });
+                    if (no > 0) {
+                        $("#tbl_layanan").removeClass("kt-hidden");
+                        var rows = '<tr><td></td><td></td><td align="right" class="kt-font-bold">' + (rupiah(subtotal, 'Rp. ')) + "</td><td></td></tr>";
+                        $('#tbl_layanan tbody').append(rows);
+                    }
+                    else {
+                        $("#tbl_layanan").addClass("kt-hidden");
+                    }
+                },
+                error: function () {
+                    toastr.error("Error! Terjadi kesalahan!");
+                }
+            });
+            return false;
+        }
+
+        function Load_Restoran() {
+            $("#tbl_restoran tbody tr").remove();
+            $.ajax({
+                type: 'POST',
+                url: '/PajakHotel/GetRestoran',
+                dataType: 'json',
+                data: { id: "@Model.IdHotel" },
+                success: function (data) {
+                    var subtotal = 0;
+                    var no = 0;
+                    $.each(data, function (i, item) {
+                        no += 1;
+                        subtotal += item.jumlah;
+                        var rows= "<tr>"
+                            + "<td>" + no + "</td>"
+                            + "<td>" + item.jenis + "</td>"
+                            + '<td align="right">' + (rupiah(item.jumlah, 'Rp. ')) + "</td>"
+                            + '<td align="right"><a href="javascript:;" onclick="HapusDetail(' + "'" + item.id + "'" + ')" ><span class="kt-badge kt-badge--danger">x</span></a></td>'
+                            + "</tr>";
+                        $('#tbl_restoran tbody').append(rows);
+                    });
+                    if (no > 0) {
+                        $("#tbl_restoran").removeClass("kt-hidden");
+                        var rows = '<tr><td></td><td></td><td align="right" class="kt-font-bold">' + (rupiah(subtotal, 'Rp. ')) + "</td><td></td></tr>";
+                        $('#tbl_restoran tbody').append(rows);
+                    }
+                    else {
+                        $("#tbl_restoran").addClass("kt-hidden");
+                    }
+                },
+                error: function () {
+                    toastr.error("Error! Terjadi kesalahan!");
+                }
+            });
+            return false;
+        }
+
+        // EDIT KAMAR
+        function HapusKamar(id) {
+            $("#RemoveModal").modal();
+            $("#DeleteBtn").attr("onclick", "RemoveKamar(" + "'" + id + "'" + ")");
+        };
+
+        // DELETE DETAIL
+        function HapusDetail(id) {
+            $("#RemoveModal").modal();
+            $("#DeleteBtn").attr("onclick", "RemoveDetail(" + "'" + id + "'" + ")");
+        };
+
+        // HAPUS KAMAR
+        function RemoveKamar(id) {
+            $.ajax({
+                type: "POST",
+                url: '/PajakHotel/RemoveKamar',
+                dataType: 'json',
+                data: { id : id },
+                success: function () {
+                    $('.modal').modal('hide');
+                    Load_Kamar();
+                    toastr.success("Data berhasil dihapus!");
+                },
+                error: function () {
+                    toastr.error("Error! Terjadi kesalahan!");
+                }
+            });
+            return false;
+        };
+
+        // HAPUS KAMAR
+        function RemoveDetail(id) {
+            $.ajax({
+                type: "POST",
+                url: '/PajakHotel/RemoveDetail',
+                dataType: 'json',
+                data: { id : id },
+                success: function (data) {
+                    $('.modal').modal('hide');
+                    if (data.jenis == "Fasilitas Hotel") {
+                        Load_Fasilitas();
+                    }
+                    else if (data.jenis == "Layanan Restoran") {
+                        Load_Restoran();
+                    }
+                    else if (data.jenis == "Layanan Lain") {
+                        Load_Layanan();
+                    }
+                    toastr.success("Data berhasil dihapus!");
+                },
+                error: function () {
+                    toastr.error("Error! Terjadi kesalahan!");
+                }
+            });
+            return false;
+        };
+
+    </script>
+}

@@ -1,0 +1,41 @@
+﻿@model SIP.Models.TarifPajak
+
+<form asp-action="Create">
+    <div class="modal-header">
+        <h5 class="modal-title" id="ModalTitle">Tambah Tarif Pajak</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="la la-remove"></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" asp-for="FlagAktif" value="true" />
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="IdCoa" class="control-label">Jenis Pajak</label>
+                <select asp-for="IdCoa" class="form-control kt-selectpicker" data-size="6" data-live-search="true" title="Pilih Jenis Pajak..." required asp-items="ViewBag.IdCoa"></select>
+                <span asp-validation-for="IdCoa" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label asp-for="Tarif" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="Tarif" class="form-control" autocomplete="off" required autofocus />
+                    <div class="input-group-append"><span class="input-group-text"><i class="normal-font">%</i></span></div>
+                </div>
+                <span asp-validation-for="Tarif" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label asp-for="MulaiBerlaku" class="control-label">Tanggal Berlaku</label>
+                <input asp-for="MulaiBerlaku" class="form-control datefield" type="text" autocomplete="off" required />
+                <span asp-validation-for="MulaiBerlaku" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" value="Simpan" class="btn btn-success" />
+    </div>
+</form>

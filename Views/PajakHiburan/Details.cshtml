@@ -1,0 +1,212 @@
+﻿@model SIP.Models.PHiburan
+
+@{
+    ViewBag.S1 = "Detail";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-3">
+        <!--begin::Portlet-->
+        <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+            <div class="kt-portlet__head kt-ribbon @ViewBag.State kt-ribbon--left kt-ribbon--round">
+                <div class="kt-ribbon__target" style="top: 10px; right: -2px;">@ViewBag.Status</div>
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        @ViewBag.Title
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="kt-widget kt-widget--user-profile-2">
+                    <div class="kt-widget__body">
+                        <div class="kt-widget__item kt-padding-t-0">
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Jenis Pajak</span>
+                                <span class="kt-widget__data kt-align-right">@Model.IdSptpdNavigation.IdCoaNavigation.Uraian</span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">No. @(Model.IdSptpdNavigation.Jabatan ? "Nota" : "SPTPD")</span>
+                                <span class="kt-widget__data kt-align-right">@Model.IdSptpdNavigation.NoSptpd</span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Tanggal:</span>
+                                <span class="kt-widget__data kt-align-right">@string.Format("{0:dd MMMM yyyy}", Model.IdSptpdNavigation.Tanggal)</span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Masa Pajak:</span>
+                                <span class="kt-widget__data kt-align-right">
+                                    @string.Format("{0:MMMM}", Model.IdSptpdNavigation.MasaPajak1)
+                                    <small>(@string.Format("{0:dd MMM yyyy}", Model.IdSptpdNavigation.MasaPajak1) - @string.Format("{0:dd MMM yyyy}", Model.IdSptpdNavigation.MasaPajak2))</small>
+                                </span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label"></span>
+                                <span class="kt-widget__data kt-align-right">
+                                    @if (Model.IdSptpdNavigation.FlagValidasi)
+                                    {
+                                        <span><span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">Valid</span></span>
+                                    }
+                                    else
+                                    {
+                                        <span><span class="kt-badge kt-badge--danger kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-danger">Belum Valid</span></span>
+                                    }
+                                </span>
+                            </div><div class="kt-separator kt-separator--space-sm"></div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Pembukuan:</span>
+                                <span class="kt-widget__data kt-align-right">@(Model.Pembukuan ? "Ya" : "Tidak")</span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Kas Register:</span>
+                                <span class="kt-widget__data kt-align-right">@(Model.KasRegister ? "Ya" : "Tidak")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::Portlet-->
+    </div>
+    <div class="col-lg-7">
+        <!--begin::Portlet-->
+        <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Perhitungan Pajak
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="kt-section kt-section--first">
+                            <h3 class="kt-section__title kamar">Omzet Penjualan:</h3>
+                            <div class="kt-section__body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <table id="tbl_detail" class="table table-hover table-responsive-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th width="5%">No</th>
+                                                    <th>Jenis</th>
+                                                    <th>Tarif</th>
+                                                    <th>Jumlah</th>
+                                                    <th style="text-align:right">Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-separator kt-separator--space-sm "></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-separator kt-separator--space-sm "></div>
+                <div class="row justify-content-center kt-margin-t-15">
+                    <div class="col-lg-3">
+                        <div class="kt-widget12">
+                            <div class="kt-widget12__content">
+                                <div class="kt-widget12__item kt-margin-b-10">
+                                    <div class="kt-widget12__info">
+                                        <span class="kt-widget12__desc">Dasar Pengenaan</span>
+                                        <span class="kt-widget12__value">Rp. @string.Format("{0:N0}", Model.Dpp ?? 0)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="kt-widget12">
+                            <div class="kt-widget12__content">
+                                <div class="kt-widget12__item kt-margin-b-10">
+                                    <div class="kt-widget12__info">
+                                        <span class="kt-widget12__desc">Tarif Pajak</span>
+                                        <span class="kt-widget12__value">@string.Format("{0:N2}", Model.IdSptpdNavigation.IdTarifNavigation.Tarif ?? 0)%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="kt-widget12">
+                            <div class="kt-widget12__content">
+                                <div class="kt-widget12__item kt-margin-b-10">
+                                    <div class="kt-widget12__info">
+                                        <span class="kt-widget12__desc">Pajak Terhutang</span>
+                                        <span class="kt-widget12__value">Rp. @string.Format("{0:N0}", Model.PajakTerhutang ?? 0)</span>
+                                        <span class="kt-widget12__desc" style="font-style:italic" id="terbilang"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__foot">
+                <div class="kt-form__actions kt-align-right">
+                    <a href="/SPTPD/@Model.IdSptpd" class="btn btn-secondary">Kembali</a>
+                </div>
+            </div>
+        </div>
+        <!--end::Portlet-->
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/terbilang.js"></script>
+    <script>
+        function rupiah(a, currency) {
+            return currency + a.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+        }
+
+        document.getElementById("terbilang").innerHTML = (terbilang(@Math.Floor(Model.PajakTerhutang ?? 0))) + "rupiah";
+
+        Load_Detail();
+
+        function Load_Detail() {
+            $("#tbl_detail tbody tr").remove();
+            $.ajax({
+                type: 'POST',
+                url: '/PajakHiburan/GetDetail',
+                dataType: 'json',
+                data: { id: "@Model.IdHiburan" },
+                success: function (data) {
+                    var no = 0;
+                    var subtotal = 0;
+                    $.each(data, function (i, item) {
+                        no += 1;
+                        var total = item.jumlah * item.tarif;
+                        subtotal += total;
+                        var rows = "<tr>"
+                            + "<td>" + no + "</td>"
+                            + "<td>" + item.jenis + "</td>"
+                            + "<td>" + (rupiah(item.tarif, 'Rp. ')) + "</td>"
+                            + "<td>" + item.jumlah + ' ' + item.satuan + "</td>"
+                            + '<td align="right">' + (rupiah(total, 'Rp. ')) + "</td>"
+                            + "</tr>";
+                        $('#tbl_detail tbody').append(rows);
+                    });
+                    if (no > 0) {
+                        $("#tbl_detail").removeClass("kt-hidden");
+                        var rows = '<tr><td></td><td></td><td></td><td></td><td align="right" class="kt-font-bold">' + (rupiah(subtotal, 'Rp. ')) + "</td></tr>";
+                        $('#tbl_detail tbody').append(rows);
+                    }
+                    else {
+                        $("#tbl_detail").addClass("kt-hidden");
+                    }
+                },
+                error: function () {
+                    toastr.error("Error! Terjadi kesalahan!");
+                }
+            });
+            return false;
+        }
+
+    </script>
+}

@@ -1,0 +1,61 @@
+﻿@model SIP.Models.Fiskal
+
+@{
+    ViewBag.Title = "Tambah Data Fiskal";
+    ViewBag.SubHeaderTitle = "Fiskal";
+    ViewBag.S1 = "Tambah Data";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<form asp-action="Create">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            @ViewBag.Title
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-group">
+                            <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-8 form-group">
+                            <label class="control-label">Masa Berlaku</label>
+                            <div class="input-group">
+                                <input asp-for="Tanggal" class="form-control datefield" required type="text" value="@string.Format("{0:dd-MM-yyyy}", DateTime.Now)" asp-format="{0:dd-MM-yyyy}" autocomplete="off" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="la la-ellipsis-h"></i></span>
+                                </div>
+                                <input asp-for="Berakhir" class="form-control datefield" required type="text" value="@string.Format("{0:dd-MM-yyyy}", DateTime.Now.AddYears(1))" asp-format="{0:dd-MM-yyyy}" autocomplete="off" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label asp-for="Tujuan" class="control-label required">Tujuan</label>
+                            <input asp-for="Tujuan" class="form-control" type="text" autocomplete="off" required />
+                            <span asp-validation-for="Tujuan" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__foot">
+                    <div class="kt-form__actions kt-align-right">
+                        <a asp-action="Index" asp-controller="Fiskal" asp-route-id="@ViewBag.IdSubjek" class="btn btn-secondary">Kembali</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+

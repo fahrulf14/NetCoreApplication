@@ -1,0 +1,102 @@
+﻿@model SIP.Models.AspNetRoles
+@using SIP.ViewModels
+
+@{
+    ViewBag.SubHeaderTitle = "Akses Role";
+    ViewBag.S1 = "Ubah Akses";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-4">
+        <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        @ViewBag.Title
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-group">
+                        <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="kt-checkbox-list">
+                            @foreach (var item in (List<UserRoleEdit>)ViewBag.Pegawai)
+                            {
+                                <label class="kt-checkbox">
+                                    <input type="checkbox" id="R_@item.IdUser" name="R_@item.Nama" /> @item.Nama
+                                    <span></span>
+                                </label>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__foot">
+                <div class="kt-form__actions kt-align-right">
+                    <a asp-action="Index" class="btn btn-secondary">Kembali</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+
+        jQuery(document).ready(function () {
+            Load_Roles();
+        });
+        
+        function Load_Roles() {
+            $.ajax({
+                type: 'POST',
+                url: '/Roles/LoadUsers/',
+                dataType: 'json',
+                data: { id: "@Model.Id" },
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                    var IdUser = "R_" + item.iduser;
+                        document.getElementById(IdUser).checked = true;
+                    });
+                },
+                error: function () {
+                    toastr.error("Error! Terjadi kesalahan!");
+                }
+            });
+            return false;
+        }
+
+        $(function () {
+            $('input').on('click', function () {
+                var RawId = event.srcElement.id;
+                var Checked = document.getElementById(RawId).checked;
+                var IdUser = RawId.replace('R_', '');
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: '/Roles/ChangeRoles/',
+                        data: {
+                            role: "@Model.Id",
+                            user: IdUser,
+                            check: Checked
+                        },
+                        success: function () {
+                            //Load_Users();
+                        },
+                        error: function () {
+                            toastr.error("Error! Terjadi kesalahan!");
+                        }
+                    });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,381 @@
+﻿@model IEnumerable<SIP.Models.DataUsaha>
+
+@{
+    ViewBag.Title = "Data Usaha";
+    ViewBag.SubHeaderTitle = "Penetapan";
+    ViewBag.S1 = "Data Usaha";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-3 order-2">
+        @await Component.InvokeAsync("DetailSubjek", new { id = ViewBag.IdSubjek, edit = false })
+    </div>
+    <div class="col-lg-8 order-1">
+        <!--begin::Portlet-->
+        <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        @ViewBag.Title
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-group">
+                        <a href="javascript:;" onclick="ShowModal();" class="btn btn-bold btn-label-success btn-sm"><i class="la la-search"></i> Cari Data</a>
+                        <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="kt-form kt-form--label-right kt-margin-t-10 kt-margin-b-10 kt-margin-5-mobile">
+                    <div class="row align-items-center">
+                        <div class="col-xl-12">
+                            <div class="row align-items-center">
+                                <div class="col-sm-2 col-1 kt-margin-b-10-mobile order-2 order-sm-1 length">
+                                    <div class="kt-form__group">
+                                        <select class="form-control kt-selectpicker" id="length">
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-auto order-3 order-sm-2 kt-margin-b-10-mobile">
+                                    <div class="kt-input-icon kt-input-icon--left">
+                                        <input type="text" class="form-control" placeholder="Search..." id="search">
+                                        <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                            <span><i class="la la-search"></i></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-3 col-12 order-1 order-sm-3 kt-margin-b-10-mobile">
+                                    <div class="kt-form__group kt-form__group--inline">
+                                        <div class="kt-form__label">
+                                            <label>Status:</label>
+                                        </div>
+                                        <div class="kt-form__control">
+                                            <select class="form-control kt-selectpicker" id="status">
+                                                <option value=" ">Semua</option>
+                                                <option value="1">Aktif</option>
+                                                <option value="0">Non Aktif</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover dt-custom" id="m_table">
+                    <thead>
+                        <tr>
+                            <th>
+                                No
+                            </th>
+                            <th>
+                                Nama Usaha
+                            </th>
+                            <th>
+                                Alamat Usaha
+                            </th>
+                            <th>
+                                Kecamatan
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Status)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Status)
+                            </th>
+                            <th>Kelola</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td></td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NamaUsaha)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AlamatUsaha)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IndKecamatan.Kecamatan)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                <td nowrap>
+                                    @if (item.Sptpd.Count != 0)
+                                    {
+                                        <a asp-action="Kewajiban" asp-route-id="@item.IdUsaha" class="btn btn-sm btn-label-success">Pilih <i class="la la-arrow-circle-right"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-sm btn-label-success disabled">Pilih <i class="la la-arrow-circle-right"></i></a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--end::Portlet-->
+    </div>
+</div>
+
+<div class="modal fade" id="BigModal" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row align-items-center">
+                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-3 col-auto order-3 order-sm-2 kt-margin-b-10-mobile">
+                                <div class="kt-input-icon kt-input-icon--left">
+                                    <input type="text" class="form-control" placeholder="Search..." id="searchSubjek">
+                                    <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                        <span><i class="la la-search"></i></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <table id="dataSubjek" class="table table-hover dt-custom table-responsive-sm">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>
+                                        Nama
+                                    </th>
+                                    <th>
+                                        NIK/NPWP
+                                    </th>
+                                    <th>
+                                        NPWPD
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        function ShowModal() {
+            $("#BigModal").modal();
+        };
+
+        var DatatablesBasicScrollable = function () {
+            var initTable = function () {
+                var table = $('#m_table');
+                table.DataTable({
+                    searching: true,
+                    bJQueryUI: true,
+                    bFilter: true,
+                    dom: "<'row'<'col-sm-12'tr>>\n\t\t\t<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                    scrollY: '60vh',
+                    scrollX: true,
+                    scrollCollapse: true,
+                    columnDefs: [{
+                        targets: 0,
+                        width: 15,
+                        className: "dt-center"
+                    }, {
+                        targets: -1,
+                        width: 100,
+                        className: "dt-center"
+                    },{
+                        targets: 5,
+                        visible: false
+                    }, {
+                        targets: 4,
+                        render: function (data, type, full, meta) {
+                            var status = {
+                                "0": {
+                                    'title': 'Non Aktif',
+                                    'state': 'danger'
+                                },
+                                "1": {
+                                    'title': 'Aktif',
+                                    'state': 'success'
+                                }
+                            };
+                            if (typeof status[data] === 'undefined') {
+                                return data;
+                            }
+                            return '<span class="kt-badge kt-badge--' + status[data].state + ' kt-badge--dot"></span>&nbsp;' +
+                                '<span class="kt-font-bold kt-font-' + status[data].state + '">' + status[data].title + '</span>';
+                        }
+                    }]
+                });
+
+                $('#m_table').DataTable().on('order.dt search.dt', function () {
+                    $('#m_table').DataTable().column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                        $('#m_table').DataTable().cell(cell).invalidate('dom');
+                    });
+                }).draw();
+
+                $('#length').on('change', function () {
+                    var selectedValue = $(this).val();
+                    $('#m_table').DataTable().page.len(selectedValue).draw();
+                });
+
+                $('#status').on('change', function () {
+                    var selectedValue = $(this).val();
+                    table.dataTable().fnFilter("^" + selectedValue + "$", 5, true); //Exact value, column, reg
+                });
+
+                $("#search").on('keyup', function () {
+                    $('#m_table').dataTable().fnFilter(this.value);
+                });
+
+                $('.dataTables_scrollBody').css('min-height', '150px');
+            };
+
+            return {
+                init: function () {
+                    initTable();
+                },
+            };
+
+        }();
+
+        var DatatablesAjaxServer = function () {
+
+            var initTable1 = function () {
+                var table = $('#dataSubjek');
+
+                // begin first table
+                table.DataTable({
+                    responsive: true,
+                    searchDelay: 500,
+                    processing: true,
+                    serverSide: true,
+                    searching: true,
+                    bJQueryUI: true,
+                    bFilter: true,
+                    bSort: true,
+                    dom: "<'row'<'col-sm-12'tr>>\n\t\t\t<'row'<'col-sm-12 col-md-5'><'col-sm-12 col-md-7'>>",
+                    "ajaxSource": "/AjaxData/GetSubjekDetail",
+                    fnServerData: function (sSource, aoData, fnCallback) {
+                        aoData.push({ "name": "all", "value": true });
+                        $.getJSON(sSource, aoData, function (json) {
+                            fnCallback(json)
+                        });
+                    },
+                    columns: [
+                        { data: 'id' },
+                        { data: 'nama' },
+                        { data: 'nik' },
+                        { data: 'npwpd' },
+                        { data: 'status' },
+                        { data: 'id' },
+                    ],
+                    columnDefs: [
+                        {
+                            targets: 0,
+                            orderable: false,
+                            render: function (data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + 1;
+                            }
+                        }, 
+                        {
+                            targets: -1,
+                            title: '',
+                            orderable: false,
+                            render: function (data, type, full, meta) {
+                                return `<a href="/Penetapan/DataUsaha/` + data + `" class="btn btn-sm btn-label-success">Pilih <i class="la la-arrow-circle-right"></i></a>`;
+                            },
+                        },{
+                            targets: 2,
+                            orderable: false,
+                            render: function (data, type, full, meta) {
+                                if (full['nik'] != null) {
+                                    return full['nik'];
+                                }
+                                else {
+                                    return full['npwp'];
+                                }
+                            }
+                        },{
+                            targets: 4,
+                            render: function (data, type, full, meta) {
+                                var status = {
+                                    "0": {
+                                        'title': 'Non Aktif',
+                                        'state': 'danger'
+                                    },
+                                    "1": {
+                                        'title': 'Aktif',
+                                        'state': 'success'
+                                    }
+                                };
+                                if (typeof status[data] === 'undefined') {
+                                    return data;
+                                }
+                                return '<span class="kt-badge kt-badge--' + status[data].state + ' kt-badge--dot"></span>&nbsp;' +
+                                    '<span class="kt-font-bold kt-font-' + status[data].state + '">' + status[data].title + '</span>';
+                            }
+                        }
+                    ],
+                });
+
+                table.DataTable().on('order.dt search.dt', function () {
+                    table.DataTable().column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                        table.DataTable().cell(cell).invalidate('dom');
+                    });
+                }).draw();
+
+                $("#searchSubjek").on('keyup', function () {
+                    table.dataTable().fnFilter(this.value);
+                });
+            };
+
+            return {
+
+                //main function to initiate the module
+                init: function () {
+                    initTable1();
+                },
+
+            };
+
+        }();
+
+        jQuery(document).ready(function () {
+            DatatablesBasicScrollable.init();
+            DatatablesAjaxServer.init();
+        });
+
+    </script>
+}
+
+
+
+
+

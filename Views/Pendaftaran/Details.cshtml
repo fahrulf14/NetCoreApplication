@@ -1,0 +1,168 @@
+﻿@model SIP.Models.DataSubjek
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>DataSubjek</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nama)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nama)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Alamat)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Alamat)
+        </dd>
+        <dt class = "col-sm-2">
+            Rt/Rw
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Rtrw)
+        </dd>
+        <dt class = "col-sm-2">
+            Provinsi
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IndProvinsiId)
+        </dd>
+        <dt class = "col-sm-2">
+            Kabupaten/Kota
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IndKabKotaId)
+        </dd>
+        <dt class = "col-sm-2">
+            Kecamatan/Distrik
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IndKecamatanId)
+        </dd>
+        <dt class = "col-sm-2">
+            Kelurahan/Desa
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IndKelurahanId)
+        </dd>
+        <dt class = "col-sm-2">
+            Nomor Telepon
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NoTelp)
+        </dd>
+        <dt class = "col-sm-2">
+            Kode Pos
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.KodePos)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nik)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nik)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Npwp)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Npwp)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Kelamin)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Kelamin)
+        </dd>
+        <dt class = "col-sm-2">
+            Tanggal Lahir
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TglLahir)
+        </dd>
+        <dt class = "col-sm-2">
+            Pekerjaan
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdPekerjaan)
+        </dd>
+        <dt class = "col-sm-2">
+            Pekerjaan Lain
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PekerjaanLain)
+        </dd>
+        <dt class = "col-sm-2">
+            Nama Instansi
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NamaInstansi)
+        </dd>
+        <dt class = "col-sm-2">
+            Badan Hukum
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdBadanHukum)
+        </dd>
+        <dt class = "col-sm-2">
+            Tanggal Daftar
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TglDaftar)
+        </dd>
+        <dt class = "col-sm-2">
+            Nomor Pokok
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NoPokok)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Npwpd)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Npwpd)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Npwrd)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Npwrd)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Eu)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Eu)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Ed)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Ed)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdSubjek">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

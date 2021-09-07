@@ -1,0 +1,120 @@
+﻿@model SIP.Models.Sppt
+
+@{
+    ViewBag.Title = "Tambah Data SPPT";
+    ViewBag.SubHeaderTitle = "SPPT - PBB";
+    ViewBag.S1 = "Tambah Data";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<form asp-action="Create">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            @ViewBag.Title
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-group">
+                            <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label asp-for="Tanggal" class="control-label required"></label>
+                            <input asp-for="Tanggal" class="form-control datefield" type="text" asp-format="{0:dd-MM-yyyy}" autocomplete="off" required />
+                            <span asp-validation-for="Tanggal" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label asp-for="JatuhTempo" class="control-label required">Jatuh Tempo</label>
+                            <input asp-for="JatuhTempo" class="form-control datefield" type="text" asp-format="{0:dd-MM-yyyy}" value="31-08-@DateTime.Now.Year" autocomplete="off" required />
+                            <span asp-validation-for="JatuhTempo" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label asp-for="Tahun" class="control-label required"></label>
+                            <select asp-for="Tahun" class="form-control kt-selectpicker" title="Pilih Tahun..."size="4" required asp-items="ViewBag.Tahun"></select>
+                            <span asp-validation-for="Tahun" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label class="control-label">NOP</label>
+                            <input id="NOP" name="NOP" class="form-control" value="@ViewBag.NOP" readonly />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 form-group">
+                            <label class="control-label">Luas Tanah</label>
+                            <input id="LuasTanah" name="LuasTanah" class="form-control" value="@ViewBag.LuasTanah" readonly />
+                        </div>
+                        <div class="col-md-2 form-group">
+                            <label class="control-label">Kelas</label>
+                            <input id="Kelas1" name="Kelas1" class="form-control" value="@ViewBag.ZonaTanah" readonly />
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label">NJOP Bumi</label>
+                            <input id="NJOPBumi1" name="NJOPBumi1" class="form-control" value="@string.Format("{0:N0}", ViewBag.NJOPTanah)" readonly />
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label">Total</label>
+                            <input id="Total1" name="Total1" class="form-control" value="@string.Format("{0:N0}", ViewBag.TotalTanah)" readonly />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2 form-group">
+                            <label class="control-label">Luas Bangunan</label>
+                            <input id="LuasBangunan" name="LuasBangunan" class="form-control" value="@ViewBag.LuasBangunan" readonly />
+                        </div>
+                        <div class="col-md-2 form-group">
+                            <label class="control-label">Kelas</label>
+                            <input id="Kelas2" name="Kelas2" class="form-control" value="@ViewBag.KelasBangunan" readonly />
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label">NJOP Bangunan</label>
+                            <input id="NJOPBumi2" name="NJOPBumi2" class="form-control" value="@string.Format("{0:N0}", ViewBag.NJOPBangunan)" readonly />
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label">Total</label>
+                            <input id="Total2" name="Total2" class="form-control" value="@string.Format("{0:N0}", ViewBag.TotalBangunan)" readonly />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label asp-for="Njoptkp" class="control-label"></label>
+                            <select asp-for="Njoptkp" class="form-control kt-selectpicker" title="Pilih NJOPTKP..." asp-items="ViewBag.NJOPTKP"></select>
+                            <span asp-validation-for="Njoptkp" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label class="control-label">Total NJOP</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input id="totalnjop" class="form-control" value="@string.Format("{0:N0}", ViewBag.TotalTanah + ViewBag.TotalBangunan)" readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__foot">
+                    <div class="kt-form__actions kt-align-right">
+                        <a asp-action="SPPT" asp-controller="PBB" asp-route-id="@ViewBag.IdSpop" class="btn btn-secondary">Kembali</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+
+}
+
+

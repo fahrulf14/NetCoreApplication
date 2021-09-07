@@ -1,0 +1,149 @@
+﻿@model IEnumerable<SIP.Models.PParkir>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RekapKarcis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KapasitasMobil)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KapasitasMotor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JumlahMobil)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JumlahMotor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MobilJam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MobilNext)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MobilMax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MotorJam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MotorNext)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MotorMax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalMobil)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalMotor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sistem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pendapatan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dpp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PajakTerhutang)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Eu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdSptpdNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RekapKarcis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KapasitasMobil)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KapasitasMotor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JumlahMobil)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JumlahMotor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobilJam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobilNext)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobilMax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MotorJam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MotorNext)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MotorMax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalMobil)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalMotor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sistem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pendapatan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dpp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PajakTerhutang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Eu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdSptpdNavigation.IdSptpd)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdParkir">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdParkir">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdParkir">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

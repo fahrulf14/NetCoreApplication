@@ -1,0 +1,55 @@
+﻿@model SIP.Models.Sts
+
+@{
+    ViewBag.Title = "Tambah STS";
+    ViewBag.SubHeaderTitle = "STS";
+    ViewBag.S1 = "Tambah Data";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<form asp-action="Create">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <!--begin::Portlet-->
+            <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            @ViewBag.Title
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-group">
+                            <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label asp-for="IdBank" class="control-label">Rekening</label>
+                            <select asp-for="IdBank" title="Pilih Bank..." class="form-control kt-selectpicker" asp-items="ViewBag.IdBank" required></select>
+                        </div>
+                        <div class="col-lg-4 form-group">
+                            <label asp-for="Tanggal" class="control-label required"></label>
+                            <input asp-for="Tanggal" class="form-control datefield" type="text" asp-format="{0:dd-MM-yyyy}" value="@string.Format("{0:dd-MM-yyyy}", DateTime.Now)" autocomplete="off" required />
+                            <span asp-validation-for="Tanggal" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__foot">
+                    <div class="kt-form__actions kt-align-right">
+                        <a asp-action="Index" class="btn btn-secondary">Kembali</a>
+                        <input type="submit" value="Simpan" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+        </div>
+    </div>
+</form>
+
+

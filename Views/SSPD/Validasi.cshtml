@@ -1,0 +1,233 @@
+﻿@model SIP.Models.Sspd
+
+@{
+    ViewBag.Title = "Validasi SSPD";
+    ViewBag.SubHeaderTitle = "SSPD";
+    ViewBag.S1 = "Validasi";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+    <div class="row justify-content-center">
+        @if (Model.IdSptpd != null)
+        {
+            <div class="col-lg-3">
+                @await Component.InvokeAsync("DetailSptpd", new { id = Model.IdSptpd })
+            </div>
+        }
+        else if (Model.IdSkpd != null)
+        {
+            <div class="col-lg-3">
+                @await Component.InvokeAsync("DetailSkpd", new { id = Model.IdSkpd })
+            </div>
+        }
+        else if (Model.IdSkpdkb != null)
+        {
+            <div class="col-lg-3">
+                @await Component.InvokeAsync("DetailSkpdkb", new { id = Model.IdSkpdkb })
+            </div>
+        }
+        else if (Model.IdSkpdkbt != null)
+        {
+            <div class="col-lg-3">
+                @await Component.InvokeAsync("DetailSkpdkbt", new { id = Model.IdSkpdkbt })
+            </div>
+        }
+        else if (Model.IdStpd != null)
+        {
+            <div class="col-lg-3">
+                @await Component.InvokeAsync("DetailStpd", new { id = Model.IdStpd })
+            </div>
+        }
+        <div class="col-lg-7">
+            <form asp-action="Validasi">
+                <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                @ViewBag.Title
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__body">
+                        <div class="row justify-content-around">
+                            <div class="col-md-5">
+                                <div class="kt-widget kt-widget--user-profile-2">
+                                    <div class="kt-widget__body">
+                                        <div class="kt-widget__item kt-padding-t-0">
+                                            <div class="kt-widget__contact">
+                                                <span class="kt-widget__label">NPWPD</span>
+                                                <span class="kt-widget__data kt-align-right">@Model.IdSubjekNavigation.Npwpd</span>
+                                            </div>
+                                            <div class="kt-widget__contact">
+                                                <span class="kt-widget__label">Nama WP</span>
+                                                <span class="kt-widget__data kt-align-right">@Model.IdSubjekNavigation.Nama</span>
+                                            </div>
+                                            @if (Model.IdSubjekNavigation.Nik != null)
+                                            {
+                                                <div class="kt-widget__contact">
+                                                    <span class="kt-widget__label">NIK</span>
+                                                    <span class="kt-widget__data kt-align-right">@Model.IdSubjekNavigation.Nik</span>
+                                                </div>
+                                            }
+                                            @if (Model.IdSubjekNavigation.Npwp != null)
+                                            {
+                                                <div class="kt-widget__contact">
+                                                    <span class="kt-widget__label">NPWP</span>
+                                                    <span class="kt-widget__data kt-align-right">@Model.IdSubjekNavigation.Npwp</span>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="kt-widget kt-widget--user-profile-2">
+                                    <div class="kt-widget__body">
+                                        <div class="kt-widget__item kt-padding-t-0">
+                                            <div class="kt-widget__contact">
+                                                <span class="kt-widget__label">Nama Usaha</span>
+                                                <span class="kt-widget__data kt-align-right">@Model.IdUsahaNavigation.NamaUsaha</span>
+                                            </div>
+                                            <div class="kt-widget__contact">
+                                                <span class="kt-widget__label">Jenis Usaha</span>
+                                                <span class="kt-widget__data kt-align-right">@Model.IdUsahaNavigation.IdJenisNavigation.Usaha</span>
+                                            </div>
+                                            <div class="kt-widget__contact">
+                                                <span class="kt-widget__label">Alamat Usaha</span>
+                                                <span class="kt-widget__data kt-align-right">@Model.IdUsahaNavigation.AlamatUsaha</span>
+                                            </div>
+                                            <div class="kt-widget__contact">
+                                                <span class="kt-widget__label"></span>
+                                                <span class="kt-widget__data kt-align-right">Kel. @Model.IdUsahaNavigation.IndKelurahan.Kelurahan</span>
+                                            </div>
+                                            <div class="kt-widget__contact">
+                                                <span class="kt-widget__label"></span>
+                                                <span class="kt-widget__data kt-align-right">Kec. @Model.IdUsahaNavigation.IndKecamatan.Kecamatan</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm "></div>
+                        <div class="row justify-content-around kt-margin-t-10">
+                            <div class="col-md-5">
+                                <div class="kt-widget kt-widget--user-profile-2">
+                                    <div class="kt-widget__body">
+                                        <div class="kt-widget__item kt-padding-t-0">
+                                            <div class="kt-widget__contact">
+                                                <span class="kt-widget__label">Nomor SSPD</span>
+                                                <span class="kt-widget__data kt-align-right">@Model.NoSspd</span>
+                                            </div>
+                                            <div class="kt-widget__contact">
+                                                <span class="kt-widget__label">Tanggal</span>
+                                                <span class="kt-widget__data kt-align-right">@string.Format("{0:dd MMMM yyyy}", Model.Tanggal)</span>
+                                            </div>
+                                            <div class="kt-widget__contact">
+                                                <span class="kt-widget__label">Status</span>
+                                                <span class="kt-widget__data kt-align-right">
+                                                    @if (Model.FlagBayar)
+                                                    {
+                                                        <span><span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">Sudah Bayar</span></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span><span class="kt-badge kt-badge--danger kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-danger">Belum Bayar</span></span>
+                                                    }
+                                                </span>
+                                            </div>
+                                            @if (Model.TanggalBayar != null)
+                                            {
+                                                <div class="kt-widget__contact">
+                                                    <span class="kt-widget__label">Tanggal Bayar</span>
+                                                    <span class="kt-widget__data kt-align-right">@string.Format("{0:dd MMMM yyyy}", Model.TanggalBayar)</span>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="kt-widget kt-widget--user-profile-2">
+                                    <div class="kt-widget__body">
+                                        <div class="kt-widget__item">
+                                            <div class="kt-widget__contact">
+                                                <span class="kt-widget__label">Jenis Setoran</span>
+                                                <span class="kt-widget__data kt-align-right">@Model.IdSetoranNavigation.Jenis</span>
+                                            </div>
+                                            @if (Model.IdBank != null)
+                                            {
+                                                <div class="kt-widget__contact">
+                                                    <span class="kt-widget__label">Bank</span>
+                                                    <span class="kt-widget__data kt-align-right">@Model.IdBankNavigation.IdRefNavigation.NamaBank</span>
+                                                </div>
+                                                <div class="kt-widget__contact">
+                                                    <span class="kt-widget__label">Rekening</span>
+                                                    <span class="kt-widget__data kt-align-right">@Model.IdBankNavigation.NoRek</span>
+                                                </div>
+                                                <div class="kt-widget__contact">
+                                                    <span class="kt-widget__label"></span>
+                                                    <span class="kt-widget__data kt-align-right">a.n @Model.IdBankNavigation.NamaRek</span>
+                                                </div>
+                                            }
+                                            <div class="kt-widget__contact">
+                                                <span class="kt-widget__label">Jumlah</span>
+                                                <span class="kt-widget__data kt-align-right">@string.Format("{0:C0}", Model.JumlahSetoran)</span>
+                                            </div>
+                                            <div class="kt-widget__contact">
+                                                <span class="kt-widget__label"></span>
+                                                <span class="kt-widget__data kt-align-right" id="terbilang"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kt-separator kt-separator--space-sm "></div>
+                        <input type="hidden" asp-for="IdSspd" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        @if (Model.FlagBayar == false)
+                        {
+                            <div class="row kt-margin-t-10">
+                                <div class="col-md-4 form-group">
+                                    <label asp-for="TanggalBayar" class="control-label required"></label>
+                                    <input asp-for="TanggalBayar" class="form-control datefield" type="text" asp-format="{0:dd-MM-yyyy}" value="@string.Format("{0:dd-MM-yyyy}", DateTime.Now)" autocomplete="off" required />
+                                    <span asp-validation-for="TanggalBayar" class="text-danger"></span>
+                                </div>
+                                @if (Model.IdSetoran == 1 || Model.IdSetoran == 2)
+                                {
+                                    <div class="col-md-4 form-group">
+                                        <label asp-for="IdBank" class="control-label required">Bank Setoran</label>
+                                        <select asp-for="IdBank" class="form-control kt-selectpicker" title="Pilih Bank..." asp-items="ViewBag.IdBank" required></select>
+                                        <span asp-validation-for="IdBank" class="text-danger"></span>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                    <div class="kt-portlet__foot">
+                        <div class="kt-form__actions kt-align-right">
+                            <a href="/SSPD/@Model.IdUsaha" class="btn btn-secondary">Kembali</a>
+                            @if (Model.FlagBayar)
+                            {
+                                <input type="submit" value="Batalkan Validasi" class="btn btn-danger" />
+                            }
+                            else
+                            {
+                                <input type="submit" value="Validasi" class="btn btn-success" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+@section Scripts {
+    <script src="~/js/terbilang.js"></script>
+    <script>
+        document.getElementById("terbilang").innerHTML = (terbilang(@Math.Floor(Model.JumlahSetoran ?? 0))) + "rupiah";
+    </script>
+}

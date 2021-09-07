@@ -1,0 +1,247 @@
+﻿@model SIP.Models.PReklame
+
+@{
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<form asp-action="SPTPD">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!--begin::Portlet-->
+            <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            @ViewBag.Title
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-group">
+                            <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <input type="hidden" asp-for="IdSptpd" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @await Component.InvokeAsync("FormSPTPDRek", new { id = Model.IdSptpd, jenis = "Tahun" })
+                    <div class="row">
+                        <div class="col-md-4 form-group ">
+                            <label class="control-label">Jenis Reklame</label>
+                            <input class="form-control disabled" value="@Model.IdSptpdNavigation.IdCoaNavigation.Uraian" disabled />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 form-group ">
+                            <label asp-for="Judul" class="control-label">Judul</label>
+                            <input asp-for="Judul" class="form-control " type="text" autocomplete="off" />
+                            <span asp-validation-for="Judul" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 form-group ">
+                            <label asp-for="Teks" class="control-label">Text</label>
+                            <input asp-for="Teks" class="form-control " type="text" autocomplete="off" />
+                            <span asp-validation-for="Teks" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group ">
+                            <label asp-for="AlamatPasang" class="control-label required">Alamat Pasang</label>
+                            <input asp-for="AlamatPasang" class="form-control" required autocomplete="off" />
+                            <span asp-validation-for="AlamatPasang" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-3 form-group ">
+                            <label asp-for="KelasJalan" class="control-label required">Kelas Jalan</label>
+                            <select asp-for="KelasJalan" class="form-control kt-selectpicker drop" title="Pilih Lokasi..." asp-items="ViewBag.KelasJalan" required></select>
+                            <span asp-validation-for="KelasJalan" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label asp-for="IndKecamatanId" class="control-label required">Kecamatan/Distrik</label>
+                            <select asp-for="IndKecamatanId" data-size="6" title="Pilih Kecamatan..." data-live-search="true" asp-items="ViewBag.IndKecamatanId" required class="form-control kt-selectpicker"></select>
+                        </div>
+                        @if (Model.IndKelurahanId == null)
+                        {
+                            <div class="col-md-4 form-group">
+                                <label asp-for="IndKelurahanId" class="control-label required">Kelurahan/Desa</label>
+                                <select asp-for="IndKelurahanId" data-size="6" data-live-search="true" required class="form-control kt-selectpicker">
+                                    <option hidden>Pilih Kelurahan...</option>
+                                </select>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-4 form-group">
+                                <label asp-for="IndKelurahanId" class="control-label required">Kelurahan</label>
+                                <select asp-for="IndKelurahanId" data-size="6" title="Pilih Kelurahan..." data-live-search="true" asp-items="ViewBag.IndKelurahanId" required class="form-control kt-selectpicker"></select>
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group ">
+                            <label asp-for="Letak" class="control-label required"></label>
+                            <select asp-for="Letak" class="form-control kt-selectpicker drop clr" title="Pilih Letak..." asp-items="ViewBag.Letak" required></select>
+                            <span asp-validation-for="AlamatPasang" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-3 form-group ">
+                            <label asp-for="Produk" class="control-label required"></label>
+                            <select asp-for="Produk" class="form-control kt-selectpicker drop clr" title="Pilih Letak..." asp-items="ViewBag.Produk" required></select>
+                            <span asp-validation-for="Produk" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-3 form-group ">
+                            <label asp-for="Rokok" class="control-label required"></label>
+                            <select asp-for="Rokok" class="form-control kt-selectpicker drop clr" title="Pilih Letak..." asp-items="ViewBag.Rokok" required></select>
+                            <span asp-validation-for="Rokok" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-md-4 col-form-label hor-label">Ukuran Reklame:</label>
+                                <div class="col-md-4 form-group">
+                                    <label asp-for="P1" class="control-label required">Panjang</label>
+                                    <div class="input-group">
+                                        <input asp-for="P1" class="form-control kt-align-right ukuran opt clr" autocomplete="off" min="1" value="@String.Format("{0:N2}", Model.P1)" required />
+                                        <div class="input-group-append"><span class="input-group-text"><i class="normal-font uk">M</i></span></div>
+                                    </div>
+                                    <span asp-validation-for="P1" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label asp-for="L1" class="control-label required">Lebar</label>
+                                    <div class="input-group">
+                                        <input asp-for="L1" class="form-control kt-align-right ukuran opt clr" autocomplete="off" min="1" value="@String.Format("{0:N2}", Model.L1)" required />
+                                        <div class="input-group-append"><span class="input-group-text"><i class="normal-font uk">M</i></span></div>
+                                    </div>
+                                    <span asp-validation-for="L1" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label hor-label kt-hidden-mobile"></label>
+                                <div class="col-md-4 form-group">
+                                    <label asp-for="P2" class="control-label kt-hidden-desktop kt-hidden-tablet">Panjang 2</label>
+                                    <div class="input-group">
+                                        <input asp-for="P2" class="form-control kt-align-right ukuran opt clr" autocomplete="off" min="1" value="@String.Format("{0:N2}", Model.P2)" />
+                                        <div class="input-group-append"><span class="input-group-text"><i class="normal-font uk">M</i></span></div>
+                                    </div>
+                                    <span asp-validation-for="P2" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label asp-for="L2" class="control-label kt-hidden-desktop kt-hidden-tablet">Lebar 2</label>
+                                    <div class="input-group">
+                                        <input asp-for="L2" class="form-control kt-align-right ukuran opt clr" autocomplete="off" min="1" value="@String.Format("{0:N2}", Model.L2)" />
+                                        <div class="input-group-append"><span class="input-group-text"><i class="normal-font uk">M</i></span></div>
+                                    </div>
+                                    <span asp-validation-for="L2" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label hor-label kt-hidden-mobile"></label>
+                                <div class="col-md-4 form-group">
+                                    <label asp-for="P3" class="control-label kt-hidden-desktop kt-hidden-tablet">Panjang 3</label>
+                                    <div class="input-group">
+                                        <input asp-for="P3" class="form-control kt-align-right ukuran opt clr" autocomplete="off" min="1" value="@String.Format("{0:N2}", Model.P3)" />
+                                        <div class="input-group-append"><span class="input-group-text"><i class="normal-font uk">M</i></span></div>
+                                    </div>
+                                    <span asp-validation-for="P3" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label asp-for="L3" class="control-label kt-hidden-desktop kt-hidden-tablet">Lebar 3</label>
+                                    <div class="input-group">
+                                        <input asp-for="L3" class="form-control kt-align-right ukuran opt clr" autocomplete="off" min="1" value="@String.Format("{0:N2}", Model.L4)" />
+                                        <div class="input-group-append"><span class="input-group-text"><i class="normal-font uk">M</i></span></div>
+                                    </div>
+                                    <span asp-validation-for="L3" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-md-4 col-form-label hor-label kt-hidden-mobile"></label>
+                                <div class="col-md-4 form-group">
+                                    <label asp-for="P4" class="control-label kt-hidden-desktop kt-hidden-tablet">Panjang 4</label>
+                                    <div class="input-group">
+                                        <input asp-for="P4" class="form-control kt-align-right ukuran opt clr" autocomplete="off" min="1" value="@String.Format("{0:N2}", Model.P4)" />
+                                        <div class="input-group-append"><span class="input-group-text"><i class="normal-font uk">M</i></span></div>
+                                    </div>
+                                    <span asp-validation-for="P4" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label asp-for="L4" class="control-label kt-hidden-desktop kt-hidden-tablet">Lebar 4</label>
+                                    <div class="input-group">
+                                        <input asp-for="L4" class="form-control kt-align-right ukuran opt clr" autocomplete="off" min="1" value="@String.Format("{0:N2}", Model.L4)" />
+                                        <div class="input-group-append"><span class="input-group-text"><i class="normal-font uk">M</i></span></div>
+                                    </div>
+                                    <span asp-validation-for="L4" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-4 form-group ">
+                                    <label asp-for="Tinggi" class="control-label required"></label>
+                                    <div class="input-group">
+                                        <input asp-for="Tinggi" class="form-control kt-align-right ukuran" autocomplete="off" min="1" value="@String.Format("{0:N2}", Model.Tinggi)" required />
+                                        <div class="input-group-append"><span class="input-group-text"><i class="normal-font">M</i></span></div>
+                                    </div>
+                                    <span asp-validation-for="Tinggi" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-2 col-form-label hor-label">Jumlah:</label>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label"></label>
+                            <div class="input-group">
+                                <input asp-for="JumlahHari" class="form-control kt-align-right ukuran clr" autocomplete="off" min="1" required />
+                                <div class="input-group-append"><span class="input-group-text"><i class="normal-font" id="addon-hari">Hari</i></span></div>
+                            </div>
+                            <span asp-validation-for="JumlahHari" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label"></label>
+                            <div class="input-group">
+                                <input asp-for="JumlahDetik" class="form-control kt-align-right ukuran clr" autocomplete="off" min="1" required />
+                                <div class="input-group-append"><span class="input-group-text"><i class="normal-font" id="addon-detik">Detik</i></span></div>
+                            </div>
+                            <span asp-validation-for="JumlahDetik" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label class="control-label"></label>
+                            <div class="input-group">
+                                <input asp-for="Jumlah" class="form-control kt-align-right ukuran clr" autocomplete="off" min="1" required />
+                                <div class="input-group-append"><span class="input-group-text"><i class="normal-font" id="addon-kali">Kali</i></span></div>
+                            </div>
+                            <span asp-validation-for="Jumlah" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__foot">
+                    <div class="kt-form__actions kt-align-right">
+                        <a href="/SPTPD/@Model.IdSptpd" class="btn btn-secondary">Kembali</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/js/spt-reklame.js"></script>
+    <script src="~/js/wilayah-partial.js"></script>
+    <script src="~/js/rupiah.mask.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Reklame("@Model.IdSptpdNavigation.IdCoa");
+        });
+    </script>
+
+    @if (Model.IndKelurahanId == null)
+    {
+        <script>
+            $("#IndKelurahanId").prop('disabled', true);
+        </script>
+    }
+}

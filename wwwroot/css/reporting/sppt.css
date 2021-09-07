@@ -1,0 +1,14 @@
+﻿@media print {
+    .space {
+        margin: 0 0;
+    }
+
+    .report {
+        width: 242mm;
+    }
+}
+
+@Page {
+    size:216mm 230mm;
+    margin: 0 1cm 0 1cm;
+}

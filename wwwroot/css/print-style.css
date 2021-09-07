@@ -1,0 +1,268 @@
+﻿a {
+    text-decoration: none;
+}
+
+    a:link {
+        color: black;
+    }
+
+    a:visited {
+        color: black;
+    }
+
+    a:hover {
+        color: black;
+    }
+
+    a:active {
+        color: black;
+    }
+
+body {
+    font-family: open sans, tahoma, sans-serif;
+    margin: 0;
+    background-color: #c2c2c2;
+    -webkit-print-color-adjust: exact;
+}
+
+.logo {
+    position: absolute;
+    padding-left: 20px;
+    z-index: 50;
+    height: 85px;
+    width: auto;
+}
+
+.logo-new {
+    position: absolute;
+    height: 55px;
+    padding-top: 33px;
+    padding-left: 5px;
+    z-index: 50;
+    width: auto;
+}
+
+.font-regular {
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.report {
+    padding: 20px 30px 5px;
+    color: #343030;
+    background-color: #FFF;
+}
+
+.report-bordered {
+    padding: 85px 85px 5px;
+    color: #343030;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.join {
+    border-collapse: collapse;
+}
+
+.A4 {
+    background-color: #ffffff;
+    width: 800px;
+    height: 1155px;
+}
+
+.A4-Bordered {
+    background-color: #ffffff;
+    width: 800px;
+    height: 1125px;
+}
+
+.F4 {
+    background-color: #ffffff;
+    width: 800px;
+    height: 1230px;
+}
+
+.F4-Landscape {
+    background-color: #ffffff;
+    height: 800px;
+    width: 1230px;
+}
+
+.Letter {
+    background-color: #ffffff;
+    width: 820px;
+    height: 1033px;
+}
+
+.A5-Landscape {
+    background-color: #ffffff;
+    width: 800px;
+    height: 565px;
+}
+
+@media print {
+    .break {
+        page-break-after: always;
+    }
+
+    .cetak {
+        visibility: hidden;
+        border: none!important;
+    }
+
+    .vis-print {
+        visibility: visible!important;
+    }
+}
+
+/* LRA */
+
+.tb-narrow td {
+    padding: 2px 8px;
+    border-left: solid 1px #000000;
+    border-right: solid 1px #000000;
+}
+
+.tab-1 {
+    padding-left: 22px!important;
+}
+
+.tab-2 {
+    padding-left: 36px!important;
+}
+
+.tab-3 {
+    padding-left: 50px!important;
+}
+
+.tab-4 {
+    padding-left: 64px!important;
+}
+
+/* ====== */
+
+.tb-border--top {
+    border-top: solid 1px #000000;
+    padding: 10px 20px 2px 20px;
+}
+
+.tb-border--bottom {
+    border-bottom: solid 1px #000000;
+}
+
+.tb-border--left {
+    border-left: solid 1px #000000;
+}
+
+.tb-border--right {
+    border-right: solid 1px #000000;
+}
+
+.tb-border--both {
+    border-left: solid 1px #000000;
+    border-right: solid 1px #000000;
+}
+
+.tb-border--top-three {
+    border-top: solid 1px #000000;
+    border-left: solid 1px #000000;
+    border-right: solid 1px #000000;
+}
+
+.tb-border--bottom-three {
+    border-bottom: solid 1px #000000;
+    border-left: solid 1px #000000;
+    border-right: solid 1px #000000;
+}
+
+.tb-border--all td{
+    border: solid 1px #000000;
+}
+
+.tb-border td {
+    border-left: solid 1px #000000;
+    border-right: solid 1px #000000;
+    padding: 2px 20px;
+}
+
+.tb-min-border td {
+    padding: 4px 7px!important;
+}
+
+.tb-border--top-three td {
+    padding: 10px 20px 2px 20px;
+}
+
+
+.tb-border--bottom-three td {
+    padding: 2px 20px 10px 20px;
+}
+
+.tb-border--left, .tb-border--right, .tb-border--both td {
+    padding: 2px 20px;
+}
+
+table tr td.tb-kiri {
+    border-left: solid 1px #000000;
+}
+
+table tr td.tb-kanan {
+    border-right: solid 1px #000000;
+}
+
+table tr td.tb-bawah {
+    border-bottom: solid 1px #000000;
+}
+
+table tr td.tb-atas {
+    border-top: solid 1px #000000;
+}
+
+table tr td.tb-no--padding {
+    padding-left: 0;
+}
+
+.tb-padding--top-three td {
+    padding: 10px 20px 2px 20px;
+}
+
+.tb-padding--both td {
+    padding: 2px 20px 2px 20px;
+}
+
+.tb-padding--top-bottom td {
+    padding: 7px 20px 7px 20px;
+}
+
+tr.tb-height--ttd {
+    height: 80px;
+    vertical-align: top;
+}
+
+.tb-join {
+    margin-top:-1px;
+}
+
+.tb-padding--top td {
+    padding-top:25px;
+}
+
+.tb-padding--bottom td {
+    padding-bottom: 25px;
+}
+
+.header td {
+    padding: 2px 15px;
+}
+
+.tb-separator {
+    height: 0;
+    margin: 20px 0;
+    border-bottom: 1px solid #000;
+}
+
+.tb-separator.tb-separator-dashed {
+    border-bottom: 1px dashed #000;
+}

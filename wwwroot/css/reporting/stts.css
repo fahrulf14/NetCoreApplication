@@ -1,0 +1,27 @@
+﻿@media print {
+    .space {
+        margin: 0 0;
+    }
+
+    .report {
+        width: 17cm;
+        /*visibility: hidden !important;*/
+    }
+
+    .rpt {
+        visibility: hidden !important;
+    }
+
+    .vis-print {
+        visibility: visible !important;
+    }
+
+    .inv-print {
+        visibility: hidden !important;
+    }
+}
+
+@Page {
+    size:118mm 305mm;
+    margin: -20px 0 -10px 0;
+}

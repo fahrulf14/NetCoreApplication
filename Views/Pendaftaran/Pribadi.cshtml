@@ -1,0 +1,275 @@
+﻿@model IEnumerable<SIP.Models.DataSubjek>
+
+@{
+    ViewBag.Title = "Pendaftaran";
+    ViewBag.SubHeaderTitle = "Pendaftaran";
+    ViewBag.S1 = "Wajib Pajak/Retribusi Pribadi";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-12">
+        <!--begin::Portlet-->
+        <div class="kt-portlet" data-ktportlet="true" id="pendaftaran">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        @ViewBag.Title
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-group">
+                        <span style="overflow: visible; position: relative;">
+                            <span class="dropdown">
+                                <a href="#" class="btn btn-sm m-btn btn-info" data-toggle="dropdown" aria-expanded="false"><i class="la la-plus-circle"></i> Tambah Data </a>
+                                <span class="dropdown-menu dropdown-menu-right">
+                                    <a asp-action="Create" asp-route-id="Pribadi" asp-route-jenis="Pajak" class="dropdown-item"><i class="la la-user-plus"></i> Wajib Pajak</a>
+                                    <a asp-action="Create" asp-route-id="Pribadi" asp-route-jenis="Retribusi" class="dropdown-item"><i class="la la-user-plus"></i> Wajib Retribusi</a>
+                                </span>
+                            </span>
+                        </span>
+                        <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="kt-form kt-form--label-right kt-margin-t-10 kt-margin-b-10 kt-margin-5-mobile">
+                    <div class="row align-items-center">
+                        <div class="col-xl-12">
+                            <div class="row align-items-center">
+                                <div class="col-sm-2 col-1 kt-margin-b-10-mobile order-2 order-sm-1 length">
+                                    <div class="kt-form__group">
+                                        <select class="form-control kt-selectpicker" id="length">
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-auto order-3 order-sm-2 kt-margin-b-10-mobile">
+                                    <div class="kt-input-icon kt-input-icon--left">
+                                        <input type="text" class="form-control" placeholder="Search..." id="search">
+                                        <span class="kt-input-icon__icon kt-input-icon__icon--left">
+                                            <span><i class="la la-search"></i></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-3 col-12 order-1 order-sm-3 kt-margin-b-10-mobile">
+                                    <div class="kt-form__group kt-form__group--inline">
+                                        <div class="kt-form__label">
+                                            <label>Pekerjaan:</label>
+                                        </div>
+                                        <div class="kt-form__control">
+                                            <select class="form-control kt-selectpicker" id="type">
+                                                <option value=" ">Semua</option>
+                                                @foreach (var items in ViewBag.Pekerjaan)
+                                                {
+                                                    <option value="@items.IdPekerjaan">@items.Pekerjaan</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-3 col-12 order-1 order-sm-3 kt-margin-b-10-mobile">
+                                    <div class="kt-form__group kt-form__group--inline">
+                                        <div class="kt-form__label">
+                                            <label>Status:</label>
+                                        </div>
+                                        <div class="kt-form__control">
+                                            <select class="form-control kt-selectpicker" id="status">
+                                                <option value=" ">Semua</option>
+                                                <option value="true">Aktif</option>
+                                                <option value="false">Non Aktif</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover dt-custom" id="m_table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>NPWPD</th>
+                            <th>NIK</th>
+                            <th>Alamat</th>
+                            <th>Kecamatan</th>
+                            <th>Pekerjaan</th>
+                            <th>Status</th>
+                            <th>Kelola</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <!--end::Portlet-->
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var DatatablesAjaxServer = function () {
+
+            var initTable1 = function () {
+                var table = $('#m_table');
+
+                table.DataTable({
+                    scrollY: '60vh',
+                    scrollX: true,
+                    scrollCollapse: true,
+                    searchDelay: 500,
+                    processing: true,
+                    serverSide: true,
+                    searching: true,
+                    bJQueryUI: true,
+                    bFilter: true,
+                    bSort: true,
+                    dom: "<'row'<'col-sm-12'tr>>\n\t\t\t<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                    "ajaxSource": "/AjaxData/GetSubjekPribadi",
+                    fnServerData: function (sSource, aoData, fnCallback) {
+                        aoData.push({ "name": "all", "value": true });
+                        aoData.push({ "name": "status", "value": $('#status').val() });
+                        aoData.push({ "name": "tipe", "value": $('#type').val() });
+                        $.getJSON(sSource, aoData, function (json) {
+                            fnCallback(json)
+                        });
+                    },
+                    columns: [
+                        { data: 'id' },
+                        { data: 'nama' },
+                        { data: 'npwpd' },
+                        { data: 'nik' },
+                        { data: 'alamat' },
+                        { data: 'kecamatan' },
+                        { data: 'pekerjaan' },
+                        { data: 'status' },
+                        { data: 'id' },
+                    ],
+                    drawCallback: function () {
+                        var api = this.api();
+                        $.ajaxSetup({ cache: false });
+                        api.$("a[mini-modal]").on("click", function (e) {
+                            $('#minModalContent').load(this.href, function () {
+                                $('#minModal').modal({
+                                    keyboard: true
+                                }, 'show');
+                                $('.kt-selectpicker').selectpicker();
+                                bindForm(this);
+                            });
+                            return false;
+                        });
+                    },
+                    columnDefs: [
+                        {
+                            targets: 0,
+                            orderable: false,
+                            render: function (data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + 1;
+                            }
+                        },
+                        {
+                            targets: -1,
+                            title: 'Kelola',
+                            data: 'id',
+                            orderable: false,
+                            render: function (data, type, full, meta) {
+                                if (full['usaha'] == "") {
+                                    return `
+                        <span style="overflow: visible; position: relative;">
+                                        <span class="dropdown">
+                                            <a href="#" class="btn btn-sm btn-label-success" data-toggle="dropdown" aria-expanded="false"> Kelola</a>
+                                            <span class="dropdown-menu dropdown-menu-right">
+                                                <a href="/Pendaftaran/DataUsaha/` + data + `" class="dropdown-item"><i class="la la-external-link-square"></i> Detail</a>
+                                                <a href="/Pendaftaran/Edit/` + data + `" class="dropdown-item"><i class="la la-pencil-square"></i> Edit</a>
+                                                <a target="_blank" href="/Pendaftaran/Cetak/` + data + `" class="dropdown-item"><i class="la la-credit-card"></i> Cetak Kartu</a>
+                                                <a mini-modal href="/Pendaftaran/Delete/` + data + `" class="dropdown-item"><i class="la la-trash-o"></i> Hapus</a>
+                                            </span>
+                                        </span>
+                                    </span>`;
+                                }
+                                else {
+                                    return `
+                        <span style="overflow: visible; position: relative;">
+                                        <span class="dropdown">
+                                            <a href="#" class="btn btn-sm btn-label-success" data-toggle="dropdown" aria-expanded="false"> Kelola</a>
+                                            <span class="dropdown-menu dropdown-menu-right">
+                                                <a href="/Pendaftaran/DataUsaha/` + data + `" class="dropdown-item"><i class="la la-external-link-square"></i> Detail</a>
+                                                <a href="/Pendaftaran/Edit/` + data + `" class="dropdown-item"><i class="la la-pencil-square"></i> Edit</a>
+                                                <a target="_blank" href="/Pendaftaran/Cetak/` + data + `" class="dropdown-item"><i class="la la-credit-card"></i> Cetak Kartu</a>
+                                            </span>
+                                        </span>
+                                    </span>`;
+                                }
+                            },
+                        }, {
+                            targets: 7,
+                            render: function (data, type, full, meta) {
+                                var status = {
+                                    "0": {
+                                        'title': 'Non Aktif',
+                                        'state': 'danger'
+                                    },
+                                    "1": {
+                                        'title': 'Aktif',
+                                        'state': 'success'
+                                    }
+                                };
+                                if (typeof status[data] === 'undefined') {
+                                    return data;
+                                }
+                                return '<span class="kt-badge kt-badge--' + status[data].state + ' kt-badge--dot"></span>&nbsp;' +
+                                    '<span class="kt-font-bold kt-font-' + status[data].state + '">' + status[data].title + '</span>';
+                            }
+                        }
+                    ],
+                });
+
+                table.DataTable().on('order.dt search.dt', function () {
+                    table.DataTable().column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                        table.DataTable().cell(cell).invalidate('dom');
+                    });
+                }).draw();
+
+                $('#length').on('change', function () {
+                    var selectedValue = $(this).val();
+                    table.DataTable().page.len(selectedValue).draw();
+                });
+
+                $('#status').on('change', function () {
+                    table.DataTable().draw();
+                });
+
+                $('#type').on('change', function () {
+                    table.DataTable().draw();
+                });
+
+                $("#search").on('keyup', function () {
+                    table.dataTable().fnFilter(this.value);
+                });
+            };
+
+            return {
+
+                init: function () {
+                    initTable1();
+                },
+
+            };
+
+        }();
+
+        jQuery(document).ready(function () {
+            DatatablesAjaxServer.init();
+        });
+
+    </script>
+}

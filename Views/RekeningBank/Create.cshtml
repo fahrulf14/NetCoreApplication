@@ -1,0 +1,51 @@
+﻿@model SIP.Models.Bank
+
+<form asp-action="Create">
+    <div class="modal-header">
+        <h5 class="modal-title" id="ModalTitle">Tambah Data Bank</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="la la-remove"></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" asp-for="Status" value="true" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="IdRef" class="control-label">Nama Bank</label>
+                <select asp-for="IdRef" class="form-control kt-selectpicker" data-size="6" asp-items="ViewBag.IdRef" required></select>
+                <span asp-validation-for="IdRef" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label asp-for="Cabang" class="control-label"></label>
+                <input asp-for="Cabang" class="form-control" required />
+                <span asp-validation-for="Cabang" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 form-group">
+                <label asp-for="NoRek" class="control-label">Nomor Rekening</label>
+                <input asp-for="NoRek" class="form-control" required />
+                <span asp-validation-for="NoRek" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="NamaRek" class="control-label">Nama Rekening</label>
+                <input asp-for="NamaRek" class="form-control" required />
+                <span asp-validation-for="NamaRek" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="IdSetoran" class="control-label">Jenis</label>
+                <select asp-for="IdSetoran" class="form-control kt-selectpicker" asp-items="ViewBag.IdSetoran" required></select>
+                <span asp-validation-for="IdSetoran" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" value="Simpan" class="btn btn-success" />
+    </div>
+</form>

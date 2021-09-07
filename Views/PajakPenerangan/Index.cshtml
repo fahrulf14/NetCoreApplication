@@ -1,0 +1,101 @@
+﻿@model IEnumerable<SIP.Models.PPenerangan>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Sumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Golongan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bulan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JumlahKwh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TarifListrik)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tagihan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rekap)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dpp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PajakTerhutang)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Eu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdSptpdNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Golongan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bulan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JumlahKwh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TarifListrik)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tagihan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rekap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dpp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PajakTerhutang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Eu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdSptpdNavigation.IdSptpd)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdPenerangan">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdPenerangan">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdPenerangan">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

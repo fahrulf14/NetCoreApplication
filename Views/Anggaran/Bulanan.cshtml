@@ -1,0 +1,175 @@
+﻿@model SIP.Models.Lra
+
+@{
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<form asp-action="Bulanan">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <!--begin::Portlet-->
+            <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            @ViewBag.SubHeaderTitle
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-group">
+                            <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <input type="hidden" asp-for="IdLra" />
+                    <input type="hidden" asp-for="IdCoa" />
+                    <input type="hidden" asp-for="Tahun" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label class="control-label">Kode Rekening</label>
+                            <input class="form-control" disabled value="@Model.IdCoa.Substring(0, 1) . @Model.IdCoa.Substring(1, 1) . @Model.IdCoa.Substring(2, 1) . @Model.IdCoa.Substring(3, 2) . @Model.IdCoa.Substring(5, 2)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label class="control-label">Jenis</label>
+                            <input class="form-control" disabled value="@Model.IdCoaNavigation.Uraian" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label class="control-label">Anggaran</label>
+                            <input class="form-control" disabled value="@String.Format("{0:N0}", Model.Afinal)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label asp-for="Januari" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="Januari" class="form-control rupiah" autocomplete="off" required autofocus value="@String.Format("{0:N0}", Model.Januari ?? 0)" />
+                            </div>
+                            <span asp-validation-for="Januari" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label asp-for="Februari" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="Februari" class="form-control rupiah" autocomplete="off" required autofocus value="@String.Format("{0:N0}", Model.Februari ?? 0)" />
+                            </div>
+                            <span asp-validation-for="Februari" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label asp-for="Maret" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="Maret" class="form-control rupiah" autocomplete="off" required autofocus value="@String.Format("{0:N0}", Model.Maret ?? 0)" />
+                            </div>
+                            <span asp-validation-for="Maret" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label asp-for="April" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="April" class="form-control rupiah" autocomplete="off" required autofocus value="@String.Format("{0:N0}", Model.April ?? 0)" />
+                            </div>
+                            <span asp-validation-for="April" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label asp-for="Mei" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="Mei" class="form-control rupiah" autocomplete="off" required autofocus value="@String.Format("{0:N0}", Model.Mei ?? 0)" />
+                            </div>
+                            <span asp-validation-for="Mei" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label asp-for="Juni" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="Juni" class="form-control rupiah" autocomplete="off" required autofocus value="@String.Format("{0:N0}", Model.Juni ?? 0)" />
+                            </div>
+                            <span asp-validation-for="Juni" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label asp-for="Juli" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="Juli" class="form-control rupiah" autocomplete="off" required autofocus value="@String.Format("{0:N0}", Model.Juli ?? 0)" />
+                            </div>
+                            <span asp-validation-for="Juli" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label asp-for="Agustus" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="Agustus" class="form-control rupiah" autocomplete="off" required autofocus value="@String.Format("{0:N0}", Model.Agustus ?? 0)" />
+                            </div>
+                            <span asp-validation-for="Agustus" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label asp-for="September" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="September" class="form-control rupiah" autocomplete="off" required autofocus value="@String.Format("{0:N0}", Model.September ?? 0)" />
+                            </div>
+                            <span asp-validation-for="September" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label asp-for="Oktober" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="Oktober" class="form-control rupiah" autocomplete="off" required autofocus value="@String.Format("{0:N0}", Model.Oktober ?? 0)" />
+                            </div>
+                            <span asp-validation-for="Oktober" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label asp-for="November" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="November" class="form-control rupiah" autocomplete="off" required autofocus value="@String.Format("{0:N0}", Model.November ?? 0)" />
+                            </div>
+                            <span asp-validation-for="November" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label asp-for="Desember" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="normal-font">Rp</i></span></div>
+                                <input asp-for="Desember" class="form-control rupiah" autocomplete="off" required autofocus value="@String.Format("{0:N0}", Model.Desember ?? 0)" />
+                            </div>
+                            <span asp-validation-for="Agustus" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="kt-portlet__foot">
+                    <div class="kt-form__actions kt-align-right">
+                        <a asp-action="Tahun" asp-route-id="@Model.Tahun" class="btn btn-secondary">Kembali</a>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/js/rupiah.mask.js"></script>
+}
+
+

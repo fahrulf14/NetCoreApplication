@@ -1,0 +1,250 @@
+﻿@model IEnumerable<SIP.Models.Sptpd>
+
+@{
+    ViewBag.Title = "Data Kewajiban";
+    ViewBag.SubHeaderTitle = "Data Kewajiban";
+    ViewBag.S1 = "";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-3 order-1 order-md-2">
+        @await Component.InvokeAsync("DetailUsaha", new { id = ViewBag.IdUsaha })
+    </div>
+    <div class="col-lg-9 order-2 order-md-1">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">
+                                @ViewBag.Title
+                            </h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            <div class="kt-portlet__head-group">
+                                <a asp-action="DataUsaha" asp-controller="Pendataan" asp-route-id="@ViewBag.IdSubjek" class="btn btn-bold btn-label-success btn-sm"><i class="la la-undo"></i> Data Usaha</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--begin::Portlet-->
+        <div class="row">
+            @foreach (var item in Model.GroupBy(d => d.IdCoa))
+            {
+                ViewBag.Icon = "/media/icons/pajak/" + item.FirstOrDefault().IdCoaNavigation.Parent + ".png";
+                <div class="col-md-4 col-lg-4 col-xl-3">
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                        <div class="kt-portlet__head kt-portlet__head--noborder">
+                            <div class="kt-portlet__head-label">
+                                <h3 class="kt-portlet__head-title">
+                                </h3>
+                            </div>
+                            <div class="kt-portlet__head-toolbar">
+                                <a href="#" class="btn btn-clean btn-icon" data-toggle="dropdown">
+                                    <i class="flaticon-more-1"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <ul class="kt-nav">
+                                        <li class="kt-nav__item">
+                                            <a href="/SPTPD/@item.FirstOrDefault().IdSptpd" class="kt-nav__link">
+                                                <i class="kt-nav__link-icon flaticon2-add"></i>
+                                                <span class="kt-nav__link-text">Lapor Pajak</span>
+                                            </a>
+                                        </li>
+                                        @if (item.Where(d => d.FlagValidasi).Count() > 0)
+                                        {
+                                            if (item.FirstOrDefault().IdCoaNavigation.Jenis == "Official Assessment")
+                                            {
+                                                <li class="kt-nav__item">
+                                                    <a asp-action="SKPD" asp-route-id="@item.FirstOrDefault().IdSptpd" class="kt-nav__link">
+                                                        <i class="kt-nav__link-icon flaticon2-writing"></i>
+                                                        <span class="kt-nav__link-text">Buat SKPD</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="kt-nav__item">
+                                                    <a asp-action="SKPDKB" asp-route-id="@item.FirstOrDefault().IdSptpd" class="kt-nav__link">
+                                                        <i class="kt-nav__link-icon flaticon2-writing"></i>
+                                                        <span class="kt-nav__link-text">Buat SKPDKB</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kt-portlet__body kt-portlet__body--fit-y">
+                            <!--begin::Widget -->
+                            <div class="kt-widget kt-widget--user-profile-4">
+                                <div class="kt-widget__head">
+                                    <div class="kt-widget__media">
+                                        <img class="kt-widget__img kt-hidden-" src="@ViewBag.Icon" alt="image">
+                                    </div>
+                                    <div class="kt-widget__content">
+                                        <div class="kt-widget__section">
+                                            <a href="/SPTPD/@item.FirstOrDefault().IdSptpd" class="kt-widget__username">
+                                                @item.FirstOrDefault().IdCoaNavigation.Uraian
+                                            </a>
+                                            @if (item.FirstOrDefault().IdCoaNavigation.Jenis == "Official Assessment")
+                                            {
+                                                <div class="kt-widget__button">
+                                                    <span class="btn btn-label-warning btn-sm">Official Assessment</span>
+                                                </div>
+                                            }
+                                            else if (item.FirstOrDefault().IdCoaNavigation.Jenis == "Self Assessment")
+                                            {
+                                                <div class="kt-widget__button">
+                                                    <span class="btn btn-label-success btn-sm">Self Assessment</span>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-widget kt-widget--user-profile-2 kt-padding-t-10-desktop">
+                                <div class="kt-widget__body">
+                                    <div class="kt-widget__item">
+                                        <div class="kt-widget__contact">
+                                            <span class="kt-widget__label">SPTPD Dilaporkan:</span>
+                                            <span class="kt-widget__data">@item.Where(d => d.FlagKonfirmasi).Count()</span>
+                                        </div>
+                                        @if (item.Max(d => d.MasaPajak1).HasValue)
+                                        {
+                                            var tanggal = DateTime.Now;
+                                            var end = item.Max(d => d.MasaPajak2);
+                                            var now = tanggal.DayOfYear;
+                                            var masa = end?.DayOfYear;
+                                            if (end?.Year < tanggal.Year)
+                                            {
+                                                now = now + masa ?? 0;
+                                            }
+                                            else if (end?.Year > tanggal.Year)
+                                            {
+                                                masa = masa + now;
+                                            }
+                                            var masaPajak = now - masa;
+
+                                            @if (masaPajak <= 0)
+                                            {
+                                                <div class="kt-widget__contact">
+                                                    <span class="kt-widget__label">Masa Pajak:</span>
+                                                    <span class="kt-badge kt-badge--inline kt-badge--success">@string.Format("{0:dd MMM yyyy}", end)</span>
+                                                </div>
+                                            }
+                                            else if (masaPajak >= 0 && masaPajak < 15)
+                                            {
+                                                <div class="kt-widget__contact">
+                                                    <span class="kt-widget__label">Masa Pajak:</span>
+                                                    <a asp-action="Create" asp-controller="SuratTeguran" asp-route-id="@item.OrderByDescending(d => d.MasaPajak1).FirstOrDefault().IdSptpd" class="kt-badge kt-badge--inline kt-badge--warning" data-toggle="kt-tooltip" data-placement="top" title="" data-original-title="Tegur">
+                                                        @string.Format("{0:dd MMM yyyy}", end)
+                                                    </a>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="kt-widget__contact">
+                                                    <span class="kt-widget__label">Masa Pajak:</span>
+                                                    <a asp-action="Create" asp-controller="SuratTeguran" asp-route-id="@item.OrderByDescending(d => d.MasaPajak1).FirstOrDefault().IdSptpd" class="kt-badge kt-badge--inline kt-badge--danger" data-toggle="kt-tooltip" data-placement="top" title="" data-original-title="Tegur">
+                                                        @string.Format("{0:dd MMM yyyy}", end)
+                                                    </a>
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <div class="kt-widget__contact">
+                                                <span class="kt-widget__label">Masa Pajak:</span>
+                                                <span class="kt-widget__data">-</span>
+                                            </div>
+                                        }
+                                        <div class="kt-widget__contact">
+                                            <span class="kt-widget__label">Total Pajak:</span>
+                                            <span class="kt-widget__data">Rp. @string.Format("{0:N0}", item.Sum(d => d.Terhutang))</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="kt-widget__footer">
+                                    @*<button type="button" class="btn btn-label-warning btn-lg btn-upper">write message</button>*@
+                                </div>
+                            </div>
+
+                            <!--end::Widget -->
+                        </div>
+                    </div>
+                </div>
+            }
+            </div>
+        <!--end::Portlet-->
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var DatatablesBasicScrollable = function () {
+            var initTable = function () {
+                var table = $('#m_table');
+                table.DataTable({
+                    searching: true,
+                    bJQueryUI: true,
+                    bFilter: true,
+                    dom: "<'row'<'col-sm-12'tr>>\n\t\t\t<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                    scrollY: '60vh',
+                    scrollX: true,
+                    scrollCollapse: true,
+                    columnDefs: [{
+                        targets: 0,
+                        width: 15,
+                        className: "dt-center"
+                    }, {
+                        targets: -1,
+                        width: 100,
+                        className: "dt-center"
+                    }]
+                });
+
+                $('#m_table').DataTable().on('order.dt search.dt', function () {
+                    $('#m_table').DataTable().column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                        $('#m_table').DataTable().cell(cell).invalidate('dom');
+                    });
+                }).draw();
+
+                $('#length').on('change', function () {
+                    var selectedValue = $(this).val();
+                    $('#m_table').DataTable().page.len(selectedValue).draw();
+                });
+
+
+                $("#search").on('keyup', function () {
+                    $('#m_table').dataTable().fnFilter(this.value);
+                });
+
+                $('.dataTables_scrollBody').css('min-height', '150px');
+            };
+
+            return {
+                init: function () {
+                    initTable();
+                },
+            };
+
+        }();
+
+        jQuery(document).ready(function () {
+            DatatablesBasicScrollable.init();
+        });
+
+    </script>
+}
+
+
+
+

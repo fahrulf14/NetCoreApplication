@@ -1,0 +1,251 @@
+﻿@model SIP.Models.DataSubjek
+
+@{ 
+    ViewBag.Pengelola = Model.DataBadan.ToList();
+}
+
+<div class="kt-portlet kt-portlet--tabs">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <ul class="nav nav-tabs nav-tabs-bold nav-tabs-line   nav-tabs-line-right nav-tabs-line-brand" role="tablist">
+                @if (Model.IdBadanHukum != null)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#portlet_tab_subjek" role="tab">
+                            Data Badan
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#portlet_tab_data" role="tab">
+                            Data @(ViewBag.Jabatan ?? "Tambahan")
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#portlet_tab_subjek" role="tab">
+                            Data Pribadi
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        @if (Model.IdBadanHukum != null)
+        {
+            <div class="tab-content">
+                <div class="tab-pane active" id="portlet_tab_subjek">
+                    <div class="kt-widget kt-widget--user-profile-2">
+                        <div class="kt-widget__body">
+                            <div class="kt-widget__item">
+                                <div class="kt-widget__contact">
+                                    <span class="kt-widget__label">Nama:</span>
+                                    <span class="kt-widget__data kt-align-right">@Model.Nama</span>
+                                </div>
+                                @if (Model.Npwpd != null)
+                                {
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">NPWPD:</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.Npwpd</span>
+                                    </div>
+                                }
+                                @if (Model.Npwrd != null)
+                                {
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">NPWRD:</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.Npwrd</span>
+                                    </div>
+                                }
+                                <div class="kt-widget__contact">
+                                    <span class="kt-widget__label">NPWP:</span>
+                                    <span class="kt-widget__data kt-align-right">@Model.Npwp</span>
+                                </div>
+                                <div class="kt-widget__contact">
+                                    <span class="kt-widget__label">Alamat:</span>
+                                    <span class="kt-widget__data kt-align-right">@Model.Alamat RT. @Model.Rtrw</span>
+                                </div>
+                                <div class="kt-widget__contact">
+                                    <span class="kt-widget__label"></span>
+                                    <span class="kt-widget__data kt-align-right">Kec. @Model.IndKecamatan.Kecamatan</span>
+                                </div>
+                                <div class="kt-widget__contact">
+                                    <span class="kt-widget__label"></span>
+                                    <span class="kt-widget__data kt-align-right">Kel. @Model.IndKelurahan.Kelurahan</span>
+                                </div>
+                                <div class="kt-widget__contact">
+                                    <span class="kt-widget__label">No Telepon:</span>
+                                    <span class="kt-widget__data kt-align-right">@(Model.NoTelp ?? "-")</span>
+                                </div>
+                                <div class="kt-widget__contact">
+                                    <span class="kt-widget__label">Email:</span>
+                                    <span class="kt-widget__data kt-align-right">@(Model.Email ?? "-")</span>
+                                </div>
+                                <div class="kt-widget__contact">
+                                    <span class="kt-widget__label">Badan Hukum:</span>
+                                    <span class="kt-widget__data kt-align-right">@Model.IdBadanHukumNavigation.BadanHukum</span>
+                                </div>
+                            </div>
+                        </div>
+                        @if (ViewBag.Edit)
+                        {
+                            <div class="kt-separator kt-separator--space-md kt-separator--border-dashed"></div>
+                            <div class="kt-form__actions @(Model.Npwpd != null && Model.Npwrd != null ? "kt-align-right" : "kt-space-between")">
+                                @if (Model.Npwpd == null)
+                                {
+                                    <a asp-action="NPWPD" asp-controller="Pendaftaran" asp-route-id="@Model.IdSubjek" data-modal class="btn btn-label-success btn-sm btn-bold">Buat NPWPD</a>
+                                }
+                                else if (Model.Npwrd == null)
+                                {
+                                    <a asp-action="NPWPD" asp-controller="Pendaftaran" asp-route-id="@Model.IdSubjek" data-modal class="btn btn-label-success btn-sm btn-bold">Buat NPWRD</a>
+                                }
+                                <a asp-action="Edit" asp-route-id="@Model.IdSubjek" class="btn btn-clean btn-sm btn-bold">Edit Data</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+                @foreach (var item in (List<DataBadan>)ViewBag.Pengelola)
+                {
+                    <div class="tab-pane" id="portlet_tab_data">
+                        <div class="kt-widget kt-widget--user-profile-2">
+                            <div class="kt-widget__body">
+                                <div class="kt-widget__item">
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Nama:</span>
+                                        <span class="kt-widget__data kt-align-right">@item.Nama</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Jenis Kelamin:</span>
+                                        <span class="kt-widget__data kt-align-right">@(item.Kelamin == "L" ? "Laki-Laki" : "Perempuan")</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">NIK:</span>
+                                        <span class="kt-widget__data kt-align-right">@item.Nik</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">NPWP:</span>
+                                        <span class="kt-widget__data kt-align-right">@item.Npwp</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Alamat:</span>
+                                        <span class="kt-widget__data kt-align-right">@item.Alamat</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">No Telepon:</span>
+                                        <span class="kt-widget__data kt-align-right">@(item.NoTelp ?? "-")</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Email:</span>
+                                        <span class="kt-widget__data kt-align-right">@(item.Email ?? "-")</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Pekerjaan Lain:</span>
+                                        <span class="kt-widget__data kt-align-right">@(item.PekerjaanLain ?? "-")</span>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (ViewBag.Edit)
+                            {
+                                <div class="kt-separator kt-separator--space-md kt-separator--border-dashed"></div>
+                                <div class="kt-form__actions kt-align-right">
+                                    <a asp-action="DataTambahan" asp-route-id="@item.IdBadan" class="btn btn-clean btn-sm btn-bold">Edit Data</a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+    <div class="tab-content">
+        <div class="tab-pane active" id="portlet_tab_subjek">
+            <div class="kt-widget kt-widget--user-profile-2">
+                <div class="kt-widget__body">
+                    <div class="kt-widget__item">
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">Nama:</span>
+                            <span class="kt-widget__data kt-align-right">@Model.Nama</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">Jenis Kelamin:</span>
+                            <span class="kt-widget__data kt-align-right">@(Model.Kelamin == "L" ? "Laki-Laki" : "Perempuan")</span>
+                        </div>
+                        @if (Model.Npwpd != null)
+                        {
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">NPWPD:</span>
+                                <span class="kt-widget__data kt-align-right">@Model.Npwpd</span>
+                            </div>
+                        }
+                        @if (Model.Npwrd != null)
+                        {
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">NPWRD:</span>
+                                <span class="kt-widget__data kt-align-right">@Model.Npwrd</span>
+                            </div>
+                        }
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">NPWP:</span>
+                            <span class="kt-widget__data kt-align-right">@Model.Npwp</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">Alamat:</span>
+                            <span class="kt-widget__data kt-align-right">@Model.Alamat RT. @Model.Rtrw</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label"></span>
+                            <span class="kt-widget__data kt-align-right">Kec. @Model.IndKecamatan.Kecamatan</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label"></span>
+                            <span class="kt-widget__data kt-align-right">Kel. @Model.IndKelurahan.Kelurahan</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">No Telepon:</span>
+                            <span class="kt-widget__data kt-align-right">@(Model.NoTelp ?? "-")</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">Email:</span>
+                            <span class="kt-widget__data kt-align-right">@(Model.Email ?? "-")</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">Pekerjaan:</span>
+                            <span class="kt-widget__data kt-align-right">@Model.IdPekerjaanNavigation.Pekerjaan</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">Nama Instansi:</span>
+                            <span class="kt-widget__data kt-align-right">@(Model.NamaInstansi ?? "-")</span>
+                        </div>
+                        <div class="kt-widget__contact">
+                            <span class="kt-widget__label">Pekerjaan Lain:</span>
+                            <span class="kt-widget__data kt-align-right">@(Model.PekerjaanLain ?? "-")</span>
+                        </div>
+                    </div>
+                </div>
+                @if (ViewBag.Edit)
+                {
+                    <div class="kt-separator kt-separator--space-md kt-separator--border-dashed"></div>
+                    <div class="kt-form__actions @(Model.Npwpd != null && Model.Npwrd != null ? "kt-align-right" : "kt-space-between") ">
+                        @if (Model.Npwpd == null)
+                        {
+                            <a data-modal asp-action="Npwpd" asp-route-id="@Model.IdSubjek" class="btn btn-label-success btn-sm btn-bold">Buat NPWPD</a>
+                        }
+                        else if (Model.Npwrd == null)
+                        {
+                            <a data-modal asp-action="Npwpd" asp-route-id="@Model.IdSubjek" class="btn btn-label-success btn-sm btn-bold">Buat NPWRD</a>
+                        }
+                        <a asp-action="Edit" asp-route-id="@Model.IdSubjek" class="btn btn-clean btn-sm btn-bold">Edit Data</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+        }
+    </div>
+</div>

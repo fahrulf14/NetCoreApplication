@@ -1,0 +1,36 @@
+﻿@model SIP.Models.RefJenisBangunan
+
+<form asp-action="Edit">
+    <div class="modal-header">
+        <h5 class="modal-title" id="ModalTitle">Ubah Data Jenis Bangunan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="la la-remove"></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" asp-for="IdJenis" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="Jenis" class="control-label"></label>
+                <input asp-for="Jenis" class="form-control" required />
+                <span asp-validation-for="Jenis" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="FlagAktif" class="control-label">Status</label>
+                <div class="kt-checkbox-inline">
+                    <label class="kt-checkbox">
+                        <input class="check" asp-for="FlagAktif" /> <p id="@Html.DisplayNameFor(model => model.FlagAktif)_Status">@(Model.FlagAktif ? "Aktif" : "Tidak Aktif")</p>
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" value="Simpan" class="btn btn-success" />
+    </div>
+</form>

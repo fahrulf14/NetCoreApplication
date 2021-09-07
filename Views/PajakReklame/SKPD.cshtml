@@ -1,0 +1,244 @@
+﻿@model SIP.Models.PReklame
+
+@{
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-3">
+        <!--begin::Portlet-->
+        <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+            <div class="kt-portlet__head kt-ribbon @ViewBag.State kt-ribbon--left kt-ribbon--round">
+                <div class="kt-ribbon__target" style="top: 10px; right: -2px;">@ViewBag.Status</div>
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Detail SPTPD
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="kt-widget kt-widget--user-profile-2">
+                    <div class="kt-widget__body">
+                        <div class="kt-widget__item kt-padding-t-0">
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Jenis Pajak</span>
+                                <span class="kt-widget__data kt-align-right">@Model.IdSptpdNavigation.IdCoaNavigation.Uraian</span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">No. @(Model.IdSptpdNavigation.Jabatan ? "Nota" : "SPTPD")</span>
+                                <span class="kt-widget__data kt-align-right">@Model.IdSptpdNavigation.NoSptpd</span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Tanggal:</span>
+                                <span class="kt-widget__data kt-align-right">@string.Format("{0:dd MMMM yyyy}", Model.IdSptpdNavigation.Tanggal)</span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label">Masa Pajak:</span>
+                                <span class="kt-widget__data kt-align-right">
+                                    @string.Format("{0:MMMM}", Model.IdSptpdNavigation.MasaPajak1)
+                                    <small>(@string.Format("{0:dd MMM yyyy}", Model.IdSptpdNavigation.MasaPajak1) - @string.Format("{0:dd MMM yyyy}", Model.IdSptpdNavigation.MasaPajak2))</small>
+                                </span>
+                            </div>
+                            <div class="kt-widget__contact">
+                                <span class="kt-widget__label"></span>
+                                <span class="kt-widget__data kt-align-right">
+                                    @if (Model.IdSptpdNavigation.FlagValidasi)
+                                    {
+                                        <span><span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">Valid</span></span>
+                                    }
+                                    else
+                                    {
+                                        <span><span class="kt-badge kt-badge--danger kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-danger">Belum Valid</span></span>
+                                    }
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <!--begin::Portlet-->
+        <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Perhitungan Pajak
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="row justify-content-around">
+                    <div class="col-md-5">
+                        <div class="kt-widget kt-widget--user-profile-2">
+                            <div class="kt-widget__body">
+                                <div class="kt-widget__item kt-padding-t-0">
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Jenis Reklame</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.IdSptpdNavigation.IdCoaNavigation.Uraian </span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Judul</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.Judul </span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Teks</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.Teks </span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Kelurahan</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.IndKelurahan.Kelurahan </span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Kecamatan</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.IndKecamatan.Kecamatan </span>
+                                    </div>
+                                    @if (Model.KelasJalan != null)
+                                    {
+                                        <div class="kt-widget__contact">
+                                            <span class="kt-widget__label">Kelas Jalan</span>
+                                            <span class="kt-widget__data kt-align-right">@Model.KelasJalan </span>
+                                        </div>
+                                    }
+                                    @if (Model.Letak != null)
+                                    {
+                                        <div class="kt-widget__contact">
+                                            <span class="kt-widget__label">Letak Reklame</span>
+                                            <span class="kt-widget__data kt-align-right">@Model.Letak </span>
+                                        </div>
+                                    }
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Reklame Produk</span>
+                                        <span class="kt-widget__data kt-align-right">@(Model.Produk.Contains("Non") ? "Tidak" : "Ya")</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Reklame Rokok</span>
+                                        <span class="kt-widget__data kt-align-right">@(Model.Rokok.Contains("Non") ? "Tidak" : "Ya")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="kt-widget kt-widget--user-profile-2">
+                            <div class="kt-widget__body">
+                                <div class="kt-widget__item kt-padding-t-0">
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Masa Pajak</span>
+                                        <span class="kt-widget__data kt-align-right">@string.Format("{0:dd MMM yy}", Model.TglPasang1) - @string.Format("{0:dd MMM yy}", Model.TglPasang2)</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Ukuran</span>
+                                        @if (Model.P1 * Model.L1 != 0)
+                                        {
+                                            <span class="kt-widget__data kt-align-right">@Model.L1 @ViewBag.Ukuran x @Model.P1 @ViewBag.Ukuran = @(Model.L1 * Model.P1) @Html.Raw(ViewBag.UkuranL)</span>
+                                        }
+                                    </div>
+                                    @if (Model.P2 * Model.L2 != 0)
+                                    {
+                                        <div class="kt-widget__contact">
+                                            <span class="kt-widget__label"></span>
+                                            <span class="kt-widget__data kt-align-right">@Model.L2 @ViewBag.Ukuran x @Model.P2 @ViewBag.Ukuran = @(Model.L2 * Model.P2) @Html.Raw(ViewBag.UkuranL)</span>
+                                        </div>
+                                    }
+                                    @if (Model.P4 * Model.L4 != 0)
+                                    {
+                                        <div class="kt-widget__contact">
+                                            <span class="kt-widget__label"></span>
+                                            <span class="kt-widget__data kt-align-right">@Model.L4 @ViewBag.Ukuran x @Model.P4 @ViewBag.Ukuran = @(Model.L4 * Model.P4) @Html.Raw(ViewBag.UkuranL)</span>
+                                        </div>
+                                    }
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Luas</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.Luas @Html.Raw(ViewBag.UkuranL)</span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Tinggi</span>
+                                        <span class="kt-widget__data kt-align-right">@Model.Tinggi M</span>
+                                    </div>
+                                    @if (Model.JumlahHari != null)
+                                    {
+                                        <div class="kt-widget__contact">
+                                            <span class="kt-widget__label">Jangka Waktu</span>
+                                            <span class="kt-widget__data kt-align-right">@Model.JumlahHari @ViewBag.Hari</span>
+                                        </div>
+                                    }
+                                    @if (Model.JumlahDetik != null)
+                                    {
+                                        <div class="kt-widget__contact">
+                                            <span class="kt-widget__label">Durasi</span>
+                                            <span class="kt-widget__data kt-align-right">@Model.JumlahDetik Detik</span>
+                                        </div>
+                                    }
+                                    @if (Model.Jumlah != null)
+                                    {
+                                        <div class="kt-widget__contact">
+                                            <span class="kt-widget__label">Jumlah</span>
+                                            <span class="kt-widget__data kt-align-right">@Model.Jumlah @ViewBag.Jumlah</span>
+                                        </div>
+                                    }
+                                    @if (Model.NilaiKontrak != 0)
+                                    {
+                                        <div class="kt-widget__contact">
+                                            <span class="kt-widget__label">Nilai Kontrak</span>
+                                            <span class="kt-widget__data kt-align-right">@string.Format("{0:C0}", Model.NilaiKontrak)</span>
+                                        </div>
+                                    }
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">NSR</span>
+                                        <span class="kt-widget__data kt-align-right">@string.Format("{0:C0}", Model.Nsr) @Html.Raw(ViewBag.Ukuran)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-separator kt-separator--space-sm"></div>
+                <div class="row justify-content-around">
+                    <div class="col-md-5">
+                        <div class="kt-widget kt-widget--user-profile-2">
+                            <div class="kt-widget__body">
+                                <div class="kt-widget__item">
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Dasar Pengenaan</span>
+                                        <span class="kt-widget__data kt-align-right">@string.Format("{0:C0}", Model.Dpp) </span>
+                                    </div>
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Tarif Pajak</span>
+                                        <span class="kt-widget__data kt-align-right">@string.Format("{0:N2}", Model.IdSptpdNavigation.IdTarifNavigation.Tarif) </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="kt-widget kt-widget--user-profile-2">
+                            <div class="kt-widget__body">
+                                <div class="kt-widget__item">
+                                    <div class="kt-widget__contact">
+                                        <span class="kt-widget__label">Pokok Pajak</span>
+                                        <span class="kt-widget__data kt-align-right">@string.Format("{0:C0}", Model.Dpp * (decimal)Model.IdSptpdNavigation.IdTarifNavigation.Tarif / 100) </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__foot">
+                <div class="kt-form__actions kt-align-right">
+                    <form asp-action="SKPD">
+                        <input type="hidden" asp-for="IdSptpd" />
+                        <a asp-action="SKPD" asp-controller="Penetapan" asp-route-id="@Model.IdSptpd" class="btn btn-secondary">Kembali</a>
+                        <input type="submit" value="Simpan" class="btn btn-primary" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--end::Portlet-->
+    </div>
+</div>

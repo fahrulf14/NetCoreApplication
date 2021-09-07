@@ -1,0 +1,71 @@
+﻿@model IEnumerable<SIP.Models.PHotel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.KasRegister)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pembukuan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dpp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PajakTerhutang)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Eu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdSptpdNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.KasRegister)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pembukuan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dpp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PajakTerhutang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Eu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdSptpdNavigation.IdSptpd)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdHotel">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdHotel">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdHotel">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

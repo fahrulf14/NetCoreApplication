@@ -61,7 +61,7 @@
                                 No
                             </th>
                             <th>
-                                Pegawai
+                                Personal
                             </th>
                             <th>Akses</th>
                             <th>Kelola</th>
@@ -86,14 +86,14 @@
                                 </td>
                             </tr>
                         }
-                        @foreach (var item in (List<Pegawai>)ViewBag.Sisa)
+                        @foreach (var item in (List<Personal>)ViewBag.Sisa)
                         {
                             <tr>
                                 <td></td>
                                 <td>@item.Nama</td>
                                 <td></td>
                                 <td nowrap>
-                                    <a asp-action="Update" asp-route-id="@item.IdPegawai" class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Edit"><i class="la la-edit"></i></a>
+                                    <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Edit"><i class="la la-edit"></i></a>
                                 </td>
                             </tr>
                         }

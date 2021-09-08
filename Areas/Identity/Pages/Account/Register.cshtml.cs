@@ -48,7 +48,7 @@ namespace SIP.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public PegawaiModel Pegawais { get; set; }
+        public PersonalModel Personals { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -57,8 +57,8 @@ namespace SIP.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [Display(Name = "Pegawai")]
-            public Guid IdPegawai { get; set; }
+            [Display(Name = "Personal")]
+            public int Id { get; set; }
            
             [Required]
             [EmailAddress]
@@ -77,7 +77,7 @@ namespace SIP.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
-        public class PegawaiModel
+        public class PersonalModel
         {
             public string Nama { get; set; }
             [StringLength(20)]
@@ -85,21 +85,16 @@ namespace SIP.Areas.Identity.Pages.Account
             [Column("NIP")]
             [StringLength(50)]
             public string Nip { get; set; }
-            public int? IdJabatan { get; set; }
+            public int? PositionId { get; set; }
             public bool Active { get; set; }
             public string Email { get; set; }
-            [StringLength(256)]
-
-            [ForeignKey(nameof(IdJabatan))]
-            [InverseProperty(nameof(RefJabatan.Pegawai))]
-            public virtual RefJabatan IdJabatanNavigation { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
 
-            ViewData["IdPegawai"] = new SelectList(_context.Pegawai.Where(d => d.Email == null), "IdPegawai", "Nama");
+            ViewData["IdPersonal"] = new SelectList(_context.Personal.Where(d => d.Email == null), "IdPersonal", "Nama");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
@@ -118,9 +113,9 @@ namespace SIP.Areas.Identity.Pages.Account
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-                    var pegawai = _context.Pegawai.FirstOrDefault(p => p.IdPegawai == Input.IdPegawai);
-                    pegawai.Email = Input.Email;
-                    _context.Pegawai.Update(pegawai);
+                    var Personal = _context.Personal.FirstOrDefault(p => p.Id == Input.Id);
+                    Personal.Email = Input.Email;
+                    _context.Personal.Update(Personal);
 
                     var dataUser = _context.AspNetUsers.FirstOrDefault(d => d.Email == Input.Email);
                     dataUser.EmailConfirmed = true;

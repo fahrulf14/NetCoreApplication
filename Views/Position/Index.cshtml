@@ -1,8 +1,8 @@
-﻿@model IEnumerable<SIP.Models.RefJabatan>
+﻿@model IEnumerable<SIP.Models.RF_Position>
 
 @{
-    ViewBag.Title = "Referensi Jabatan";
-    ViewBag.SubHeaderTitle = "Referensi Jabatan";
+    ViewBag.Title = "Referensi Position";
+    ViewBag.SubHeaderTitle = "Referensi Position";
     ViewBag.S1 = "";
     ViewBag.S2 = "";
     ViewBag.S3 = "";
@@ -75,7 +75,7 @@
                                 No
                             </th>
                             <th>
-                                Jabatan
+                                Position
                             </th>
                             <th>
                                 Status
@@ -92,17 +92,17 @@
                             <tr>
                                 <td></td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Jabatan)
+                                    @Html.DisplayFor(modelItem => item.Position)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.FlagAktif)
+                                    @Html.DisplayFor(modelItem => item.IsActive)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.FlagAktif)
+                                    @Html.DisplayFor(modelItem => item.IsActive)
                                 </td>
                                 <td nowrap>
-                                    <a data-modal asp-action="Edit" asp-route-id="@item.IdJabatan" class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Edit"><i class="la la-edit"></i></a>
-                                    <a mini-modal asp-action="Delete" asp-route-id="@item.IdJabatan" class="btn btn-sm btn-label-danger btn-icon btn-icon-md" title="Hapus"><i class="la la-trash-o"></i></a>
+                                    <a data-modal asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Edit"><i class="la la-edit"></i></a>
+                                    <a mini-modal asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-label-danger btn-icon btn-icon-md" title="Hapus"><i class="la la-trash-o"></i></a>
                                 </td>
                             </tr>
                         }

@@ -10,11 +10,11 @@ using SIP.Models;
 
 namespace SIP.Controllers
 {
-    public class JabatanController : Controller
+    public class PositionController : Controller
     {
         private readonly DB_NewContext _context;
 
-        public JabatanController(DB_NewContext context)
+        public PositionController(DB_NewContext context)
         {
             _context = context;
         }
@@ -28,7 +28,7 @@ namespace SIP.Controllers
             ViewBag.L2 = "";
             ViewBag.L3 = "";
 
-            return View(await _context.RefJabatan.ToListAsync());
+            return View(await _context.RF_Positions.ToListAsync());
         }
 
         [Auth(new string[] { "Developers", "Parameter" })]
@@ -40,17 +40,17 @@ namespace SIP.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdJabatan,Jabatan,FlagAktif")] RefJabatan refJabatan)
+        public async Task<IActionResult> Create([Bind("Id,Position,FlagAktif")] RF_Position refPosition)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(refJabatan);
+                _context.Add(refPosition);
                 await _context.SaveChangesAsync();
                 TempData["status"] = "create";
                 string link = Url.Action("Index");
                 return Json(new { success = true, url = link });
             }
-            return PartialView(refJabatan);
+            return PartialView(refPosition);
         }
 
         [Auth(new string[] { "Developers", "Parameter" })]
@@ -62,19 +62,19 @@ namespace SIP.Controllers
                 return NotFound();
             }
 
-            var refJabatan = await _context.RefJabatan.FindAsync(id);
-            if (refJabatan == null)
+            var refPosition = await _context.RF_Positions.FindAsync(id);
+            if (refPosition == null)
             {
                 return NotFound();
             }
-            return PartialView(refJabatan);
+            return PartialView(refPosition);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdJabatan,Jabatan,FlagAktif")] RefJabatan refJabatan)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Position,FlagAktif")] RF_Position refPosition)
         {
-            if (id != refJabatan.IdJabatan)
+            if (id != refPosition.Id)
             {
                 return NotFound();
             }
@@ -83,12 +83,12 @@ namespace SIP.Controllers
             {
                 try
                 {
-                    _context.Update(refJabatan);
+                    _context.Update(refPosition);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RefJabatanExists(refJabatan.IdJabatan))
+                    if (!RefPositionExists(refPosition.Id))
                     {
                         return NotFound();
                     }
@@ -101,7 +101,7 @@ namespace SIP.Controllers
                 string link = Url.Action("Index");
                 return Json(new { success = true, url = link });
             }
-            return PartialView(refJabatan);
+            return PartialView(refPosition);
         }
 
         [Auth(new string[] { "Developers", "Parameter" })]
@@ -113,9 +113,9 @@ namespace SIP.Controllers
                 return NotFound();
             }
 
-            var refJabatan = await _context.RefJabatan
-                .FirstOrDefaultAsync(m => m.IdJabatan == id);
-            if (refJabatan == null)
+            var refPosition = await _context.RF_Positions
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (refPosition == null)
             {
                 return NotFound();
             }
@@ -127,10 +127,10 @@ namespace SIP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var refJabatan = await _context.RefJabatan.FindAsync(id);
+            var refPosition = await _context.RF_Positions.FindAsync(id);
             try
             {
-                _context.RefJabatan.Remove(refJabatan);
+                _context.RF_Positions.Remove(refPosition);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
@@ -145,9 +145,9 @@ namespace SIP.Controllers
             return Json(new { success = true, url = link });
         }
 
-        private bool RefJabatanExists(int id)
+        private bool RefPositionExists(int id)
         {
-            return _context.RefJabatan.Any(e => e.IdJabatan == id);
+            return _context.RF_Positions.Any(e => e.Id == id);
         }
     }
 }

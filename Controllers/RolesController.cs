@@ -34,13 +34,13 @@ namespace SIP.Controllers
             var data = (from role in _context.AspNetRoles
                         join userrole in _context.AspNetUserRoles on role.Id equals userrole.RoleId
                         join user in _context.AspNetUsers on userrole.UserId equals user.Id
-                        join pegawai in _context.Pegawai on user.Email equals pegawai.Email
+                        join Personal in _context.Personal on user.Email equals Personal.Email
                         where role.Name != "Developers"
                         select new 
                         {
                             role.Id,
                             Role = role.Name,
-                            User = pegawai.Nama
+                            User = Personal.Nama
                         });
 
             List<ListRole> listRole = new List<ListRole>();
@@ -76,13 +76,13 @@ namespace SIP.Controllers
             var data = (from user in _context.AspNetUsers
                         join userrole in _context.AspNetUserRoles on user.Id equals userrole.UserId
                         join role in _context.AspNetRoles on userrole.RoleId equals role.Id
-                        join pegawai in _context.Pegawai on user.Email equals pegawai.Email
-                        where pegawai.Nama != "Developers"
+                        join Personal in _context.Personal on user.Email equals Personal.Email
+                        where Personal.Nama != "Developers"
                         select new
                         {
-                            pegawai.IdPegawai,
+                            Personal.Id,
                             Role = role.Name,
-                            User = pegawai.Nama
+                            User = Personal.Nama
                         });
 
             List<ListUser> listUser = new List<ListUser>();
@@ -91,16 +91,16 @@ namespace SIP.Controllers
             {
                 listUser.Add(new ListUser
                 {
-                    Id = item.IdPegawai.ToString(),
+                    Id = item.Id,
                     Role = item.Role,
                     Nama = item.User
                 });
             }
 
             var subselect = (from d in listUser select d.Id).ToList();
-            var sisa = (from pegawai in _context.Pegawai
-                        where pegawai.Email != null && !subselect.Contains(pegawai.IdPegawai.ToString()) && pegawai.Nama != "Developers"
-                        select pegawai).ToList();
+            var sisa = (from Personal in _context.Personal
+                        where Personal.Email != null && !subselect.Contains(Personal.Id) && Personal.Nama != "Developers"
+                        select Personal).ToList();
             ViewBag.Sisa = sisa;
 
             return View(listUser);
@@ -195,12 +195,12 @@ namespace SIP.Controllers
             ViewBag.L3 = "";
 
             var data = (from user in _context.AspNetUsers
-                        join pegawai in _context.Pegawai on user.Email equals pegawai.Email
-                        where pegawai.Nama != "Developers"
+                        join Personal in _context.Personal on user.Email equals Personal.Email
+                        where Personal.Nama != "Developers"
                         select new
                         {
-                            IdUser = user.Id,
-                            pegawai.Nama
+                            UserId = user.Id,
+                            Personal.Nama
                         });
 
             List<UserRoleEdit> ListUser = new List<UserRoleEdit>();
@@ -209,46 +209,48 @@ namespace SIP.Controllers
             {
                 ListUser.Add(new UserRoleEdit
                 {
-                    IdUser = item.IdUser,
+                    UserId = item.UserId,
                     Nama = item.Nama
                 });
 
             }
 
-            ViewBag.Pegawai = ListUser;
+            ViewBag.Personal = ListUser;
 
             return View(aspNetRoles);
         }
 
         [Auth(new string[] { "Developers", "Setting" })]
-        public async Task<IActionResult> Update(string id)
+        public async Task<IActionResult> Update(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
 
-            var pegawai = await _context.Pegawai.Include(d => d.IdJabatanNavigation).FirstOrDefaultAsync(p => p.IdPegawai == Guid.Parse(id));
-            if (pegawai == null)
+            var Personal = await _context.Personal.FirstOrDefaultAsync(p => p.Id == id);
+            if (Personal == null)
             {
                 return NotFound();
             }
 
             //Link
-            ViewBag.Title = "Ubah Akses " + pegawai.Nama;
+            ViewBag.Title = "Ubah Akses " + Personal.Nama;
             ViewBag.L = Url.Action("Modul");
             ViewBag.L1 = Url.Action("Update", new { id });
             ViewBag.L2 = "";
             ViewBag.L3 = "";
 
-            var user = _context.AspNetUsers.FirstOrDefault(d => d.Email == pegawai.Email);
+            var user = _context.AspNetUsers.FirstOrDefault(d => d.Email == Personal.Email);
 
             var roles = _context.AspNetRoles.Where(d => d.Name != "Developers").ToList();
+
+            ViewBag.Position = _context.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
 
             ViewBag.IdUser = user.Id;
             ViewBag.Roles = roles;
 
-            return View(pegawai);
+            return View(Personal);
         }
 
         [Auth(new string[] { "Developers" })]

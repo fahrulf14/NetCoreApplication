@@ -26,10 +26,11 @@ namespace SIP.Components
             if (HttpContext.Session.GetString("Nama") == null || HttpContext.Session.GetString("Email") == null)
             {
                 var user = await _userManager.GetUserAsync(HttpContext.User);
-                var pegawai = await _context.Pegawai.Include(d => d.IdJabatanNavigation).FirstOrDefaultAsync(d => d.Email == user.Email);
-                HttpContext.Session.SetString("Email", pegawai.Email);
-                HttpContext.Session.SetString("Nama", pegawai.Nama);
-                HttpContext.Session.SetString("Jabatan", pegawai.IdJabatanNavigation.Jabatan);
+                var Personal = await _context.Personal.FirstOrDefaultAsync(d => d.Email == user.Email);
+                var Position = _context.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
+                HttpContext.Session.SetString("Email", Personal.Email);
+                HttpContext.Session.SetString("Nama", Personal.Nama);
+                HttpContext.Session.SetString("Position", Position);
             }
 
             var model = _context.Menu.Where(d => d.FlagAktif).OrderBy(d => d.NoUrut).ToList();

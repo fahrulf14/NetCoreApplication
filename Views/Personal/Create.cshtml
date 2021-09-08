@@ -1,8 +1,8 @@
-﻿@model SIP.Models.Pegawai
+﻿@model SIP.Models.Personal
 
 <form asp-action="Create">
     <div class="modal-header">
-        <h5 class="modal-title" id="ModalTitle">Tambah Data Pegawai</h5>
+        <h5 class="modal-title" id="ModalTitle">Tambah Data Personal</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true" class="la la-remove"></span>
         </button>
@@ -17,12 +17,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 form-group">
-                <label asp-for="Nick" class="control-label">Nama Panggilan</label>
-                <input asp-for="Nick" class="form-control" required />
-                <span asp-validation-for="Nick" class="text-danger"></span>
-            </div>
-            <div class="col-md-6 form-group">
+            <div class="col-md-12 form-group">
                 <label asp-for="Nip" class="control-label">NIP</label>
                 <input asp-for="Nip" class="form-control" required />
                 <span asp-validation-for="Nip" class="text-danger"></span>
@@ -30,8 +25,8 @@
         </div>
         <div class="row">
             <div class="col-md-12 form-group">
-                <label asp-for="IdJabatan" class="control-label">Jabatan</label>
-                <select asp-for="IdJabatan" class="form-control kt-selectpicker" title="Pilih Jabatan..." required asp-items="ViewBag.IdJabatan"></select>
+                <label asp-for="PositionId" class="control-label">Position</label>
+                <select asp-for="PositionId" class="form-control kt-selectpicker" title="Pilih Position..." required asp-items="ViewBag.PositionId"></select>
             </div>
         </div>
     </div>

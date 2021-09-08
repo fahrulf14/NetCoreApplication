@@ -3,21 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SIP.ViewModels
+namespace SIP.ViewModels.Personal
 {
-    public class IdentityViewModel
-    {
-
-    }
-
-    public partial class UserPersonal
+    public class ListAccountDto
     {
         public int PersonalId { get; set; }
-        public string UserId { get; set; }
         public string Nama { get; set; }
+        public string Nip { get; set; }
         public string Position { get; set; }
         public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public bool LockoutEnabled { get; set; }
+        public bool IsActive { get; set; }
     }
 }

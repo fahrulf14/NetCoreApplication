@@ -31,7 +31,7 @@ namespace SIP
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = Configuration.GetConnectionString("SIPConnection");
+            var connection = Configuration.GetConnectionString("ApplicationBase");
             services.AddDbContext<DB_NewContext>(options => options.UseNpgsql(connection));
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

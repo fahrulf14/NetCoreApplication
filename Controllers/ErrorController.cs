@@ -27,7 +27,7 @@ namespace SIP.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Login(string? returnUrl)
+        public IActionResult Login(string returnUrl)
         {
             return Redirect("/Identity/Account/Login?returnUrl=" + returnUrl);
         }

@@ -1,8 +1,8 @@
-﻿@model SIP.Models.RefJabatan
+﻿@model SIP.Models.RF_Position
 
 <form asp-action="Create">
     <div class="modal-header">
-        <h5 class="modal-title" id="ModalTitle">Tambah Data Referensi Jabatan</h5>
+        <h5 class="modal-title" id="ModalTitle">Tambah Data Referensi Position</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true" class="la la-remove"></span>
         </button>
@@ -12,9 +12,9 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row">
             <div class="col-md-12 form-group">
-                <label asp-for="Jabatan" class="control-label"></label>
-                <input asp-for="Jabatan" class="form-control" required autofocus/>
-                <span asp-validation-for="Jabatan" class="text-danger"></span>
+                <label asp-for="Position" class="control-label"></label>
+                <input asp-for="Position" class="form-control" required autofocus/>
+                <span asp-validation-for="Position" class="text-danger"></span>
             </div>
         </div>
     </div>

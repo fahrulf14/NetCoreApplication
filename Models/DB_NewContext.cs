@@ -23,8 +23,8 @@ namespace SIP.Models
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
-        public virtual DbSet<Pegawai> Pegawai { get; set; }
-        public virtual DbSet<RefJabatan> RefJabatan { get; set; }
+        public virtual DbSet<Personal> Personal { get; set; }
+        public virtual DbSet<RF_Position> RF_Positions { get; set; }
         public virtual DbSet<UserSetting> UserSetting { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -82,16 +82,11 @@ namespace SIP.Models
                 entity.Property(e => e.Id).ValueGeneratedNever();
             });
 
-            modelBuilder.Entity<Pegawai>(entity =>
+            modelBuilder.Entity<Personal>(entity =>
             {
-                entity.HasIndex(e => e.IdJabatan);
+                entity.HasIndex(e => e.PositionId);
 
-                entity.Property(e => e.IdPegawai).HasDefaultValueSql("uuid_generate_v4()");
-
-                entity.HasOne(d => d.IdJabatanNavigation)
-                    .WithMany(p => p.Pegawai)
-                    .HasForeignKey(d => d.IdJabatan)
-                    .HasConstraintName("FK_Pegawai_Ref_Jabatan");
+                entity.Property(e => e.Id).ValueGeneratedNever();
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -113,9 +113,6 @@
     <None Include="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\Identity\Pages\_ViewImports.cshtml" />
     <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
-    <None Include="Views\Jabatan\Create.cshtml" />
-    <None Include="Views\Jabatan\Edit.cshtml" />
-    <None Include="Views\Jabatan\Index.cshtml" />
     <None Include="Views\Roles\Create.cshtml" />
     <None Include="Views\Roles\Edit.cshtml" />
     <None Include="Views\Roles\Index.cshtml" />
@@ -130,9 +127,6 @@
     <None Include="Views\UserAccount\Create.cshtml" />
     <None Include="Views\UserAccount\Edit.cshtml" />
     <None Include="Views\UserAccount\Index.cshtml" />
-    <None Include="Views\Pegawai\Create.cshtml" />
-    <None Include="Views\Pegawai\Edit.cshtml" />
-    <None Include="Views\Pegawai\Index.cshtml" />
     <None Include="Views\Shared\Components\AsideIdentity\Default.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <None Include="Views\Shared\_aside-base.cshtml" />

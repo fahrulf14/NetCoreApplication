@@ -7,14 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SIP.Models;
+using SIP.ViewModels.Personal;
 
 namespace SIP.Controllers
 {
-    public class PegawaiController : Controller
+    public class PersonalController : Controller
     {
         private readonly DB_NewContext _context;
 
-        public PegawaiController(DB_NewContext context)
+        public PersonalController(DB_NewContext context)
         {
             _context = context;
         }
@@ -28,9 +29,19 @@ namespace SIP.Controllers
             ViewBag.L2 = "";
             ViewBag.L3 = "";
 
-            var dB_NewContext = _context.Pegawai.Include(p => p.IdJabatanNavigation).Where(p => p.Nama != "Developers");
+            var dB_NewContext = (from a in _context.Personal
+                                 join b in _context.RF_Positions on a.PositionId equals b.Id
+                                 select new ListAccountDto
+                                 {
+                                     PersonalId = a.Id,
+                                     Nama = a.Nama,
+                                     Nip = a.Nip,
+                                     Email = a.Email,
+                                     Position = b.Position,
+                                     IsActive = a.IsActive
+                                 });
 
-            ViewBag.Jabatan = _context.RefJabatan.ToList();
+            ViewBag.Position = _context.RF_Positions.ToList();
 
             return View(await dB_NewContext.ToListAsync());
         }
@@ -39,26 +50,25 @@ namespace SIP.Controllers
         [AjaxOnly]
         public IActionResult Create()
         {
-            ViewData["IdJabatan"] = new SelectList(_context.RefJabatan, "IdJabatan", "Jabatan");
+            ViewData["PositionId"] = new SelectList(_context.RF_Positions, "Id", "Position");
             return PartialView();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdPegawai,Nama,Nick,Nip,IdJabatan,Active")] Pegawai pegawai)
+        public async Task<IActionResult> Create([Bind("Id,Nama,UserName,Nip,PositionId,IsActive")] Personal Personal)
         {
             if (ModelState.IsValid)
             {
-                pegawai.IdPegawai = Guid.NewGuid();
-                pegawai.Active = true;
-                _context.Add(pegawai);
+                Personal.IsActive = true;
+                _context.Add(Personal);
                 await _context.SaveChangesAsync();
                 TempData["status"] = "create";
                 string link = Url.Action("Index");
                 return Json(new { success = true, url = link });
             }
-            ViewData["IdJabatan"] = new SelectList(_context.RefJabatan, "IdJabatan", "IdJabatan", pegawai.IdJabatan);
-            return PartialView(pegawai);
+            ViewData["PositionId"] = new SelectList(_context.RF_Positions, "Id", "Position", Personal.PositionId);
+            return PartialView(Personal);
         }
 
         [Auth(new string[] { "Developers", "Setting" })]
@@ -70,40 +80,40 @@ namespace SIP.Controllers
                 return NotFound();
             }
 
-            var pegawai = await _context.Pegawai.FindAsync(id);
-            if (pegawai == null)
+            var Personal = await _context.Personal.FindAsync(id);
+            if (Personal == null)
             {
                 return NotFound();
             }
-            ViewData["IdJabatan"] = new SelectList(_context.RefJabatan, "IdJabatan", "Jabatan", pegawai.IdJabatan);
-            return PartialView(pegawai);
+            ViewData["PositionId"] = new SelectList(_context.RF_Positions, "Id", "Position", Personal.PositionId);
+            return PartialView(Personal);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("IdPegawai,Nama,Nick,Nip,IdJabatan,Active")] Pegawai pegawai)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nama,UserName,Nip,PositionId,IsActive")] Personal Personal)
         {
-            if (id != pegawai.IdPegawai)
+            if (id != Personal.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                var old = _context.Pegawai.Find(id);
+                var old = _context.Personal.Find(id);
                 try
                 {
-                    old.Active = pegawai.Active;
-                    old.IdJabatan = pegawai.IdJabatan;
-                    old.Nama = pegawai.Nama;
-                    old.Nick = pegawai.Nick;
-                    old.Nip = pegawai.Nip;
-                    _context.Pegawai.Update(old);
+                    old.IsActive = Personal.IsActive;
+                    old.PositionId = Personal.PositionId;
+                    old.Nama = Personal.Nama;
+                    //old.UserName = Personal.UserName;
+                    old.Nip = Personal.Nip;
+                    _context.Personal.Update(old);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PegawaiExists(pegawai.IdPegawai))
+                    if (!PersonalExists(Personal.Id))
                     {
                         return NotFound();
                     }
@@ -116,23 +126,21 @@ namespace SIP.Controllers
                 string link = Url.Action("Index");
                 return Json(new { success = true, url = link });
             }
-            ViewData["IdJabatan"] = new SelectList(_context.RefJabatan, "IdJabatan", "IdJabatan", pegawai.IdJabatan);
-            return PartialView(pegawai);
+            ViewData["PositionId"] = new SelectList(_context.RF_Positions, "Id", "Position", Personal.PositionId);
+            return PartialView(Personal);
         }
 
         [Auth(new string[] { "Developers", "Setting" })]
         [AjaxOnly]
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
 
-            var pegawai = await _context.Pegawai
-                .Include(p => p.IdJabatanNavigation)
-                .FirstOrDefaultAsync(m => m.IdPegawai == id);
-            if (pegawai == null)
+            var Personal = await _context.Personal.FirstOrDefaultAsync(m => m.Id == id);
+            if (Personal == null)
             {
                 return NotFound();
             }
@@ -144,9 +152,9 @@ namespace SIP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var pegawai = await _context.Pegawai.FindAsync(id);
+            var Personal = await _context.Personal.FindAsync(id);
 
-            var user = _context.AspNetUsers.FirstOrDefault(d => d.Email == pegawai.Email);
+            var user = _context.AspNetUsers.FirstOrDefault(d => d.Email == Personal.Email);
             if (user != null)
             {
                 TempData["status"] = "deletefailed";
@@ -156,7 +164,7 @@ namespace SIP.Controllers
 
             try
             {
-                _context.Pegawai.Remove(pegawai);
+                _context.Personal.Remove(Personal);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
@@ -171,9 +179,9 @@ namespace SIP.Controllers
             return Json(new { success = true, url = link });
         }
 
-        private bool PegawaiExists(Guid id)
+        private bool PersonalExists(int id)
         {
-            return _context.Pegawai.Any(e => e.IdPegawai == id);
+            return _context.Personal.Any(e => e.Id == id);
         }
     }
 }

@@ -28,10 +28,10 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="kt-checkbox-list">
-                            @foreach (var item in (List<UserRoleEdit>)ViewBag.Pegawai)
+                            @foreach (var item in (List<UserRoleEdit>)ViewBag.Personal)
                             {
                                 <label class="kt-checkbox">
-                                    <input type="checkbox" id="R_@item.IdUser" name="R_@item.Nama" /> @item.Nama
+                                    <input type="checkbox" id="R_@item.UserId" name="R_@item.Nama" /> @item.Nama
                                     <span></span>
                                 </label>
                             }

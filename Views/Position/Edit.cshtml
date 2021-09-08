@@ -1,28 +1,28 @@
-﻿@model SIP.Models.RefJabatan
+﻿@model SIP.Models.RF_Position
 
 <form asp-action="Edit">
     <div class="modal-header">
-        <h5 class="modal-title" id="ModalTitle">Ubah Data Referensi Jabatan</h5>
+        <h5 class="modal-title" id="ModalTitle">Ubah Data Referensi Position</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true" class="la la-remove"></span>
         </button>
     </div>
     <div class="modal-body">
-        <input type="hidden" asp-for="IdJabatan" />
+        <input type="hidden" asp-for="Id" />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row">
             <div class="col-md-12 form-group">
-                <label asp-for="Jabatan" class="control-label"></label>
-                <input asp-for="Jabatan" class="form-control" required />
-                <span asp-validation-for="Jabatan" class="text-danger"></span>
+                <label asp-for="Position" class="control-label"></label>
+                <input asp-for="Position" class="form-control" required />
+                <span asp-validation-for="Position" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 form-group">
-                <label asp-for="FlagAktif" class="control-label">Status</label>
+                <label asp-for="IsActive" class="control-label">Status</label>
                 <div class="kt-checkbox-inline">
                     <label class="kt-checkbox">
-                        <input class="check" asp-for="FlagAktif" /> <p id="@Html.DisplayNameFor(model => model.FlagAktif)_Status">@(Model.FlagAktif ? "Aktif" : "Tidak Aktif")</p>
+                        <input class="check" asp-for="IsActive" /> <p id="@Html.DisplayNameFor(model => model.IsActive)_Status">@(Model.IsActive ? "Aktif" : "Tidak Aktif")</p>
                         <span></span>
                     </label>
                 </div>

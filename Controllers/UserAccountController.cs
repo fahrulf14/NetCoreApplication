@@ -24,30 +24,30 @@ namespace SIP.Controllers
         public IActionResult Index()
         {
             var data = (from u in _context.AspNetUsers
-                        join p in _context.Pegawai on u.Email equals p.Email
-                        join j in _context.RefJabatan on p.IdJabatan equals j.IdJabatan
+                        join p in _context.Personal on u.Email equals p.Email
+                        join j in _context.RF_Positions on p.PositionId equals j.Id
                         where p.Nama != "Developers"
                         select new
                         {
-                            p.IdPegawai,
+                            p.Id,
                             IdUser = u.Id,
                             p.Nama,
                             p.Email,
                             u.PhoneNumber,
-                            j.Jabatan,
+                            j.Position,
                             u.LockoutEnabled
                         }).ToList();
 
-            List<UserPegawai> List = new List<UserPegawai>();
+            List<UserPersonal> List = new List<UserPersonal>();
 
             foreach (var item in data)
             {
-                List.Add(new UserPegawai
+                List.Add(new UserPersonal
                 {
-                    IdPegawai = item.IdPegawai,
-                    IdUser = item.IdUser,
+                    PersonalId = item.Id,
+                    UserId = item.IdUser,
                     Nama = item.Nama,
-                    Jabatan = item.Jabatan,
+                    Position = item.Position,
                     Email = item.Email,
                     PhoneNumber = item.PhoneNumber,
                     LockoutEnabled = item.LockoutEnabled
@@ -85,9 +85,9 @@ namespace SIP.Controllers
             {
                 _context.AspNetUsers.Remove(aspNetUsers);
 
-                var pegawai = _context.Pegawai.FirstOrDefault(d => d.Email == aspNetUsers.Email);
-                pegawai.Email = null;
-                _context.Pegawai.Update(pegawai);
+                var Personal = _context.Personal.FirstOrDefault(d => d.Email == aspNetUsers.Email);
+                Personal.Email = null;
+                _context.Personal.Update(Personal);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)

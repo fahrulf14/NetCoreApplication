@@ -22,13 +22,13 @@ namespace SIP.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        private readonly DB_NewContext _context;
+        private readonly BaseApplicaionContext _appContext;
         public LoginModel(SignInManager<IdentityUser> signInManager,
-            ILogger<LoginModel> logger, DB_NewContext context)
+            ILogger<LoginModel> logger, BaseApplicaionContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
-            _context = context;
+            _appContext = context;
         }
 
         [BindProperty]
@@ -92,7 +92,7 @@ namespace SIP.Areas.Identity.Pages.Account
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
-                var user = _context.AspNetUsers.FirstOrDefault(d => d.Email.ToLower() == Input.Email.ToLower());
+                var user = _appContext.AspNetUsers.FirstOrDefault(d => d.Email.ToLower() == Input.Email.ToLower());
 
                 if (result.Succeeded)
                 {
@@ -107,7 +107,7 @@ namespace SIP.Areas.Identity.Pages.Account
                         return Page();
                     }
 
-                    Personal = await _context.Personal.FirstOrDefaultAsync(w => w.Email.ToLower() == Input.Email.ToLower());
+                    Personal = await _appContext.Personal.FirstOrDefaultAsync(w => w.Email.ToLower() == Input.Email.ToLower());
                     if (Personal == null)
                     {
                         await _signInManager.SignOutAsync();
@@ -131,7 +131,7 @@ namespace SIP.Areas.Identity.Pages.Account
                         }
                     }
 
-                    var Position = _context.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
+                    var Position = _appContext.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
 
                     HttpContext.Session.SetString("User", user.Id);
                     HttpContext.Session.SetString("Email", Input.Email);

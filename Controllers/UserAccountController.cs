@@ -13,19 +13,19 @@ namespace SIP.Controllers
 {
     public class UserAccountController : Controller
     {
-        private readonly DB_NewContext _context;
+        private readonly BaseApplicaionContext _appContext;
 
-        public UserAccountController(DB_NewContext context)
+        public UserAccountController(BaseApplicaionContext context)
         {
-            _context = context;
+            _appContext = context;
         }
 
         [Auth(new string[] { "Developers", "Setting" })]
         public IActionResult Index()
         {
-            var data = (from u in _context.AspNetUsers
-                        join p in _context.Personal on u.Email equals p.Email
-                        join j in _context.RF_Positions on p.PositionId equals j.Id
+            var data = (from u in _appContext.AspNetUsers
+                        join p in _appContext.Personal on u.Email equals p.Email
+                        join j in _appContext.RF_Positions on p.PositionId equals j.Id
                         where p.Nama != "Developers"
                         select new
                         {
@@ -66,7 +66,7 @@ namespace SIP.Controllers
                 return NotFound();
             }
 
-            var aspNetUsers = await _context.AspNetUsers
+            var aspNetUsers = await _appContext.AspNetUsers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (aspNetUsers == null)
             {
@@ -80,15 +80,15 @@ namespace SIP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var aspNetUsers = await _context.AspNetUsers.FindAsync(id);
+            var aspNetUsers = await _appContext.AspNetUsers.FindAsync(id);
             try
             {
-                _context.AspNetUsers.Remove(aspNetUsers);
+                _appContext.AspNetUsers.Remove(aspNetUsers);
 
-                var Personal = _context.Personal.FirstOrDefault(d => d.Email == aspNetUsers.Email);
+                var Personal = _appContext.Personal.FirstOrDefault(d => d.Email == aspNetUsers.Email);
                 Personal.Email = null;
-                _context.Personal.Update(Personal);
-                await _context.SaveChangesAsync();
+                _appContext.Personal.Update(Personal);
+                await _appContext.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {

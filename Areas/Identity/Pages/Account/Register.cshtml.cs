@@ -28,7 +28,7 @@ namespace SIP.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly DB_NewContext _context;
+        private readonly BaseApplicaionContext _appContext;
         //private readonly DB_NewContext db = new DB_NewContext();
 
         public RegisterModel(
@@ -36,13 +36,13 @@ namespace SIP.Areas.Identity.Pages.Account
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            DB_NewContext context)
+            BaseApplicaionContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            _context = context;
+            _appContext = context;
         }
 
         [BindProperty]
@@ -94,7 +94,7 @@ namespace SIP.Areas.Identity.Pages.Account
         {
             ReturnUrl = returnUrl;
 
-            ViewData["IdPersonal"] = new SelectList(_context.Personal.Where(d => d.Email == null), "IdPersonal", "Nama");
+            ViewData["IdPersonal"] = new SelectList(_appContext.Personal.Where(d => d.Email == null), "IdPersonal", "Nama");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
@@ -113,14 +113,14 @@ namespace SIP.Areas.Identity.Pages.Account
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-                    var Personal = _context.Personal.FirstOrDefault(p => p.Id == Input.Id);
+                    var Personal = _appContext.Personal.FirstOrDefault(p => p.Id == Input.Id);
                     Personal.Email = Input.Email;
-                    _context.Personal.Update(Personal);
+                    _appContext.Personal.Update(Personal);
 
-                    var dataUser = _context.AspNetUsers.FirstOrDefault(d => d.Email == Input.Email);
+                    var dataUser = _appContext.AspNetUsers.FirstOrDefault(d => d.Email == Input.Email);
                     dataUser.EmailConfirmed = true;
-                    _context.AspNetUsers.Update(dataUser);
-                    _context.SaveChanges();
+                    _appContext.AspNetUsers.Update(dataUser);
+                    _appContext.SaveChanges();
 
                     TempData["status"] = "create";
                     string link = Url.Action("Index", "UserAccount");

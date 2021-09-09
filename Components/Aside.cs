@@ -12,12 +12,12 @@ namespace SIP.Components
 {
     public class AsideViewComponent : ViewComponent
     {
-        private readonly DB_NewContext _context;
+        private readonly BaseApplicaionContext _appContext;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public AsideViewComponent(DB_NewContext context, UserManager<IdentityUser> userManager)
+        public AsideViewComponent(BaseApplicaionContext context, UserManager<IdentityUser> userManager)
         {
-            _context = context;
+            _appContext = context;
             _userManager = userManager;
 
         }
@@ -27,26 +27,26 @@ namespace SIP.Components
             if (HttpContext.Session.GetString("Nama") == null || HttpContext.Session.GetString("Email") == null)
             {
                 var user = await _userManager.GetUserAsync(HttpContext.User);
-                var Personal = await _context.Personal.FirstOrDefaultAsync(d => d.Email == user.Email);
+                var Personal = await _appContext.Personal.FirstOrDefaultAsync(d => d.Email == user.Email);
 
-                var Position = _context.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
+                var Position = _appContext.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
 
                 HttpContext.Session.SetString("Email", Personal.Email);
                 HttpContext.Session.SetString("Nama", Personal.Nama);
                 HttpContext.Session.SetString("Position", Position);
             }
 
-            var model = _context.Menu.Where(d => d.FlagAktif).OrderBy(d => d.NoUrut).ToList();
+            var model = _appContext.Menu.Where(d => d.FlagAktif).OrderBy(d => d.NoUrut).ToList();
 
-            var menu = _context.Menu.Where(d => d.Controller == controller && d.ActionName == action).FirstOrDefault();
+            var menu = _appContext.Menu.Where(d => d.Controller == controller && d.ActionName == action).FirstOrDefault();
             if (menu != null)
             {
                 if (menu.ParentId != 0)
                 {
-                    var child = _context.Menu.Find(menu.ParentId);
+                    var child = _appContext.Menu.Find(menu.ParentId);
                     if (child.ParentId != 0)
                     {
-                        var sub = _context.Menu.Find(child.ParentId);
+                        var sub = _appContext.Menu.Find(child.ParentId);
                         if (sub.ParentId != 0)
                         {
                             ViewBag.Parent = sub.ParentId;

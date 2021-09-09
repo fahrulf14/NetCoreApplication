@@ -9,7 +9,7 @@ using SIP.Models;
 
 namespace SIP.Migrations
 {
-    [DbContext(typeof(DB_NewContext))]
+    [DbContext(typeof(BaseApplicaionContext))]
     [Migration("20210908130131_PersonalSchema")]
     partial class PersonalSchema
     {

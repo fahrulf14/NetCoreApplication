@@ -13,11 +13,11 @@ namespace SIP.Controllers
 {
     public class PersonalController : Controller
     {
-        private readonly DB_NewContext _context;
+        private readonly BaseApplicaionContext _appContext;
 
-        public PersonalController(DB_NewContext context)
+        public PersonalController(BaseApplicaionContext context)
         {
-            _context = context;
+            _appContext = context;
         }
 
         [Auth(new string[] { "Developers", "Setting" })]
@@ -29,8 +29,8 @@ namespace SIP.Controllers
             ViewBag.L2 = "";
             ViewBag.L3 = "";
 
-            var dB_NewContext = (from a in _context.Personal
-                                 join b in _context.RF_Positions on a.PositionId equals b.Id
+            var dB_NewContext = (from a in _appContext.Personal
+                                 join b in _appContext.RF_Positions on a.PositionId equals b.Id
                                  select new ListAccountDto
                                  {
                                      PersonalId = a.Id,
@@ -41,7 +41,7 @@ namespace SIP.Controllers
                                      IsActive = a.IsActive
                                  });
 
-            ViewBag.Position = _context.RF_Positions.ToList();
+            ViewBag.Position = _appContext.RF_Positions.ToList();
 
             return View(await dB_NewContext.ToListAsync());
         }
@@ -50,7 +50,7 @@ namespace SIP.Controllers
         [AjaxOnly]
         public IActionResult Create()
         {
-            ViewData["PositionId"] = new SelectList(_context.RF_Positions, "Id", "Position");
+            ViewData["PositionId"] = new SelectList(_appContext.RF_Positions, "Id", "Position");
             return PartialView();
         }
 
@@ -61,13 +61,13 @@ namespace SIP.Controllers
             if (ModelState.IsValid)
             {
                 Personal.IsActive = true;
-                _context.Add(Personal);
-                await _context.SaveChangesAsync();
+                _appContext.Add(Personal);
+                await _appContext.SaveChangesAsync();
                 TempData["status"] = "create";
                 string link = Url.Action("Index");
                 return Json(new { success = true, url = link });
             }
-            ViewData["PositionId"] = new SelectList(_context.RF_Positions, "Id", "Position", Personal.PositionId);
+            ViewData["PositionId"] = new SelectList(_appContext.RF_Positions, "Id", "Position", Personal.PositionId);
             return PartialView(Personal);
         }
 
@@ -80,12 +80,12 @@ namespace SIP.Controllers
                 return NotFound();
             }
 
-            var Personal = await _context.Personal.FindAsync(id);
+            var Personal = await _appContext.Personal.FindAsync(id);
             if (Personal == null)
             {
                 return NotFound();
             }
-            ViewData["PositionId"] = new SelectList(_context.RF_Positions, "Id", "Position", Personal.PositionId);
+            ViewData["PositionId"] = new SelectList(_appContext.RF_Positions, "Id", "Position", Personal.PositionId);
             return PartialView(Personal);
         }
 
@@ -100,7 +100,7 @@ namespace SIP.Controllers
 
             if (ModelState.IsValid)
             {
-                var old = _context.Personal.Find(id);
+                var old = _appContext.Personal.Find(id);
                 try
                 {
                     old.IsActive = Personal.IsActive;
@@ -108,8 +108,8 @@ namespace SIP.Controllers
                     old.Nama = Personal.Nama;
                     //old.UserName = Personal.UserName;
                     old.Nip = Personal.Nip;
-                    _context.Personal.Update(old);
-                    await _context.SaveChangesAsync();
+                    _appContext.Personal.Update(old);
+                    await _appContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -126,7 +126,7 @@ namespace SIP.Controllers
                 string link = Url.Action("Index");
                 return Json(new { success = true, url = link });
             }
-            ViewData["PositionId"] = new SelectList(_context.RF_Positions, "Id", "Position", Personal.PositionId);
+            ViewData["PositionId"] = new SelectList(_appContext.RF_Positions, "Id", "Position", Personal.PositionId);
             return PartialView(Personal);
         }
 
@@ -139,7 +139,7 @@ namespace SIP.Controllers
                 return NotFound();
             }
 
-            var Personal = await _context.Personal.FirstOrDefaultAsync(m => m.Id == id);
+            var Personal = await _appContext.Personal.FirstOrDefaultAsync(m => m.Id == id);
             if (Personal == null)
             {
                 return NotFound();
@@ -152,9 +152,9 @@ namespace SIP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var Personal = await _context.Personal.FindAsync(id);
+            var Personal = await _appContext.Personal.FindAsync(id);
 
-            var user = _context.AspNetUsers.FirstOrDefault(d => d.Email == Personal.Email);
+            var user = _appContext.AspNetUsers.FirstOrDefault(d => d.Email == Personal.Email);
             if (user != null)
             {
                 TempData["status"] = "deletefailed";
@@ -164,8 +164,8 @@ namespace SIP.Controllers
 
             try
             {
-                _context.Personal.Remove(Personal);
-                await _context.SaveChangesAsync();
+                _appContext.Personal.Remove(Personal);
+                await _appContext.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
@@ -181,7 +181,7 @@ namespace SIP.Controllers
 
         private bool PersonalExists(int id)
         {
-            return _context.Personal.Any(e => e.Id == id);
+            return _appContext.Personal.Any(e => e.Id == id);
         }
     }
 }

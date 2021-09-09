@@ -15,11 +15,11 @@ namespace SIP.Controllers
     public class RolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly DB_NewContext _context;
-        public RolesController(DB_NewContext context, RoleManager<IdentityRole> roleMgr)
+        private readonly BaseApplicaionContext _appContext;
+        public RolesController(BaseApplicaionContext context, RoleManager<IdentityRole> roleMgr)
         {
             _roleManager = roleMgr;
-            _context = context;
+            _appContext = context;
         }
 
         [Auth(new string[] { "Developers", "Setting" })]
@@ -31,10 +31,10 @@ namespace SIP.Controllers
             ViewBag.L2 = "";
             ViewBag.L3 = "";
 
-            var data = (from role in _context.AspNetRoles
-                        join userrole in _context.AspNetUserRoles on role.Id equals userrole.RoleId
-                        join user in _context.AspNetUsers on userrole.UserId equals user.Id
-                        join Personal in _context.Personal on user.Email equals Personal.Email
+            var data = (from role in _appContext.AspNetRoles
+                        join userrole in _appContext.AspNetUserRoles on role.Id equals userrole.RoleId
+                        join user in _appContext.AspNetUsers on userrole.UserId equals user.Id
+                        join Personal in _appContext.Personal on user.Email equals Personal.Email
                         where role.Name != "Developers"
                         select new 
                         {
@@ -56,7 +56,7 @@ namespace SIP.Controllers
             }
 
             var subselect = (from d in listRole select d.Id).ToList();
-            var sisa = (from role in _context.AspNetRoles
+            var sisa = (from role in _appContext.AspNetRoles
                        where !subselect.Contains(role.Id) && role.Name != "Developers"
                        select role).ToList();
             ViewBag.Sisa = sisa;
@@ -73,10 +73,10 @@ namespace SIP.Controllers
             ViewBag.L2 = "";
             ViewBag.L3 = "";
 
-            var data = (from user in _context.AspNetUsers
-                        join userrole in _context.AspNetUserRoles on user.Id equals userrole.UserId
-                        join role in _context.AspNetRoles on userrole.RoleId equals role.Id
-                        join Personal in _context.Personal on user.Email equals Personal.Email
+            var data = (from user in _appContext.AspNetUsers
+                        join userrole in _appContext.AspNetUserRoles on user.Id equals userrole.UserId
+                        join role in _appContext.AspNetRoles on userrole.RoleId equals role.Id
+                        join Personal in _appContext.Personal on user.Email equals Personal.Email
                         where Personal.Nama != "Developers"
                         select new
                         {
@@ -98,7 +98,7 @@ namespace SIP.Controllers
             }
 
             var subselect = (from d in listUser select d.Id).ToList();
-            var sisa = (from Personal in _context.Personal
+            var sisa = (from Personal in _appContext.Personal
                         where Personal.Email != null && !subselect.Contains(Personal.Id) && Personal.Nama != "Developers"
                         select Personal).ToList();
             ViewBag.Sisa = sisa;
@@ -116,20 +116,20 @@ namespace SIP.Controllers
                     RoleId = role,
                     UserId = user
                 };
-                _context.AspNetUserRoles.Add(aspNetUserRoles);
+                _appContext.AspNetUserRoles.Add(aspNetUserRoles);
             }
             else
             {
-                var aspNetUserRoles = _context.AspNetUserRoles.FirstOrDefault(d => d.RoleId == role && d.UserId == user);
-                _context.Remove(aspNetUserRoles);
+                var aspNetUserRoles = _appContext.AspNetUserRoles.FirstOrDefault(d => d.RoleId == role && d.UserId == user);
+                _appContext.Remove(aspNetUserRoles);
             }
-            _context.SaveChanges();
+            _appContext.SaveChanges();
             return Json(new { success = true });
         }
 
         public JsonResult LoadUsers(string id)
         {
-            var data = (from role in _context.AspNetUserRoles
+            var data = (from role in _appContext.AspNetUserRoles
                         where role.RoleId == id && role.RoleId != "4ac0100f-3192-493b-92b5-3b3336f215ed"
                         select new
                         {
@@ -140,7 +140,7 @@ namespace SIP.Controllers
 
         public JsonResult LoadRoles(string id)
         {
-            var data = (from role in _context.AspNetUserRoles
+            var data = (from role in _appContext.AspNetUserRoles
                         where role.UserId == id where role.RoleId != "4ac0100f-3192-493b-92b5-3b3336f215ed"
                         select new
                         {
@@ -181,7 +181,7 @@ namespace SIP.Controllers
                 return NotFound();
             }
 
-            var aspNetRoles = await _context.AspNetRoles.FindAsync(id);
+            var aspNetRoles = await _appContext.AspNetRoles.FindAsync(id);
             if (aspNetRoles == null)
             {
                 return NotFound();
@@ -194,8 +194,8 @@ namespace SIP.Controllers
             ViewBag.L2 = "";
             ViewBag.L3 = "";
 
-            var data = (from user in _context.AspNetUsers
-                        join Personal in _context.Personal on user.Email equals Personal.Email
+            var data = (from user in _appContext.AspNetUsers
+                        join Personal in _appContext.Personal on user.Email equals Personal.Email
                         where Personal.Nama != "Developers"
                         select new
                         {
@@ -228,7 +228,7 @@ namespace SIP.Controllers
                 return NotFound();
             }
 
-            var Personal = await _context.Personal.FirstOrDefaultAsync(p => p.Id == id);
+            var Personal = await _appContext.Personal.FirstOrDefaultAsync(p => p.Id == id);
             if (Personal == null)
             {
                 return NotFound();
@@ -241,11 +241,11 @@ namespace SIP.Controllers
             ViewBag.L2 = "";
             ViewBag.L3 = "";
 
-            var user = _context.AspNetUsers.FirstOrDefault(d => d.Email == Personal.Email);
+            var user = _appContext.AspNetUsers.FirstOrDefault(d => d.Email == Personal.Email);
 
-            var roles = _context.AspNetRoles.Where(d => d.Name != "Developers").ToList();
+            var roles = _appContext.AspNetRoles.Where(d => d.Name != "Developers").ToList();
 
-            ViewBag.Position = _context.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
+            ViewBag.Position = _appContext.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
 
             ViewBag.IdUser = user.Id;
             ViewBag.Roles = roles;
@@ -262,7 +262,7 @@ namespace SIP.Controllers
                 return NotFound();
             }
 
-            var aspNetRoles = await _context.AspNetRoles
+            var aspNetRoles = await _appContext.AspNetRoles
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (aspNetRoles == null)
             {
@@ -276,11 +276,11 @@ namespace SIP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var aspNetRoles = await _context.AspNetRoles.FindAsync(id);
+            var aspNetRoles = await _appContext.AspNetRoles.FindAsync(id);
             try
             {
-                _context.AspNetRoles.Remove(aspNetRoles);
-                await _context.SaveChangesAsync();
+                _appContext.AspNetRoles.Remove(aspNetRoles);
+                await _appContext.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
@@ -296,7 +296,7 @@ namespace SIP.Controllers
 
         private bool RolesExists(string id)
         {
-            return _context.AspNetRoles.Any(e => e.Id == id);
+            return _appContext.AspNetRoles.Any(e => e.Id == id);
         }
     }
 }

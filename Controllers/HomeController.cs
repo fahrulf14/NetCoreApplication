@@ -13,98 +13,98 @@ namespace SIP.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly DB_NewContext _context;
+        private readonly BaseApplicaionContext _appContext;
 
-        public HomeController(ILogger<HomeController> logger, DB_NewContext context)
+        public HomeController(ILogger<HomeController> logger, BaseApplicaionContext context)
         {
             _logger = logger;
-            _context = context;
+            _appContext = context;
         }
 
         public IActionResult Index()
         {
             ViewBag.Title = "Home";
 
-            //var tlra = _context.TransaksiLra.ToList();
-            //_context.RemoveRange(tlra);
+            //var tlra = _appContext.TransaksiLra.ToList();
+            //_appContext.RemoveRange(tlra);
 
-            //var skpdn = _context.Skpdn.ToList();
-            //_context.RemoveRange(skpdn);
+            //var skpdn = _appContext.Skpdn.ToList();
+            //_appContext.RemoveRange(skpdn);
 
-            //var sts = _context.Sts.Where(d => d.FlagValidasi).ToList();
+            //var sts = _appContext.Sts.Where(d => d.FlagValidasi).ToList();
             //foreach(var item in sts)
             //{
-            //    var data = _context.Sts.FirstOrDefault(d => d.IdSts == item.IdSts);
+            //    var data = _appContext.Sts.FirstOrDefault(d => d.IdSts == item.IdSts);
             //    data.FlagValidasi = false;
-            //    _context.Sts.Update(data);
+            //    _appContext.Sts.Update(data);
             //}
 
-            //var sspd = _context.Sspd.Where(d => d.FlagBayar).ToList();
+            //var sspd = _appContext.Sspd.Where(d => d.FlagBayar).ToList();
             //foreach(var item in sspd)
             //{
-            //    var old = _context.Sspd.FirstOrDefault(d => d.IdSspd == item.IdSspd);
+            //    var old = _appContext.Sspd.FirstOrDefault(d => d.IdSspd == item.IdSspd);
             //    old.FlagBayar = false;
             //    old.TanggalBayar = null;
             //    old.IdBank = null;
             //    old.StatusSetor = false;
-            //    _context.Sspd.Update(old);
+            //    _appContext.Sspd.Update(old);
 
             //    if (old.IdSptpd != null)
             //    {
-            //        var data = _context.Sptpd.FirstOrDefault(d => d.IdSptpd == old.IdSptpd);
+            //        var data = _appContext.Sptpd.FirstOrDefault(d => d.IdSptpd == old.IdSptpd);
             //        data.Sk = "SSPD";
             //        data.Keterangan = 0;
             //        data.KreditPajak = 0;
 
-            //        _context.Sptpd.Update(data);
+            //        _appContext.Sptpd.Update(data);
             //    }
             //    else if (old.IdSkpd != null)
             //    {
-            //        var data = _context.Skpd.Include(d => d.IdSptpdNavigation).FirstOrDefault(d => d.IdSkpd == old.IdSkpd);
+            //        var data = _appContext.Skpd.Include(d => d.IdSptpdNavigation).FirstOrDefault(d => d.IdSkpd == old.IdSkpd);
             //        data.Sk = "SSPD";
             //        data.Keterangan = 0;
             //        data.KreditPajak = 0;
 
-            //        _context.Skpd.Update(data);
+            //        _appContext.Skpd.Update(data);
             //    }
             //    else if (old.IdSkpdkb != null)
             //    {
-            //        var data = _context.Skpdkb.Include(d => d.IdSptpdNavigation).FirstOrDefault(d => d.IdSkpdkb == old.IdSkpdkb);
+            //        var data = _appContext.Skpdkb.Include(d => d.IdSptpdNavigation).FirstOrDefault(d => d.IdSkpdkb == old.IdSkpdkb);
             //        data.Sk = "SSPD";
             //        data.Keterangan = 0;
             //        data.KreditPajak = 0;
 
-            //        _context.Skpdkb.Update(data);
+            //        _appContext.Skpdkb.Update(data);
             //    }
             //    else if (old.IdSkpdkbt != null)
             //    {
-            //        var data = _context.Skpdkbt.Include(d => d.IdSptpdNavigation).FirstOrDefault(d => d.IdSkpdkbt == old.IdSkpdkbt);
+            //        var data = _appContext.Skpdkbt.Include(d => d.IdSptpdNavigation).FirstOrDefault(d => d.IdSkpdkbt == old.IdSkpdkbt);
             //        data.Sk = "SSPD";
             //        data.Keterangan = 0;
             //        data.KreditPajak = 0;
 
-            //        _context.Skpdkbt.Update(data);
+            //        _appContext.Skpdkbt.Update(data);
             //    }
             //    else if (old.IdStpd != null)
             //    {
-            //        var data = _context.Stpd.Include(d => d.IdSkpdNavigation).ThenInclude(d => d.IdSptpdNavigation).FirstOrDefault(d => d.IdStpd == old.IdStpd);
+            //        var data = _appContext.Stpd.Include(d => d.IdSkpdNavigation).ThenInclude(d => d.IdSptpdNavigation).FirstOrDefault(d => d.IdStpd == old.IdStpd);
             //        data.Sk = "SSPD";
             //        data.Keterangan = 0;
             //        data.KreditPajak = 0;
 
-            //        _context.Stpd.Update(data);
+            //        _appContext.Stpd.Update(data);
             //    }
             //}
 
-            //var lra = _context.Lra.Where(d => d.Tahun == 2020).ToList();
+            //var lra = _appContext.Lra.Where(d => d.Tahun == 2020).ToList();
             //foreach (var item in lra)
             //{
-            //    var data = _context.Lra.FirstOrDefault(d => d.IdLra == item.IdLra);
+            //    var data = _appContext.Lra.FirstOrDefault(d => d.IdLra == item.IdLra);
             //    data.Realisasi = 0;
-            //    _context.Lra.Update(data);
+            //    _appContext.Lra.Update(data);
             //}
 
-            //_context.SaveChanges();
+            //_appContext.SaveChanges();
 
             return View();
         }

@@ -13,11 +13,11 @@ namespace SIP.Controllers
 {
     public class AjaxDataController : Controller
     {
-        private readonly DB_NewContext _context;
+        private readonly BaseApplicaionContext _appContext;
 
-        public AjaxDataController(DB_NewContext context)
+        public AjaxDataController(BaseApplicaionContext context)
         {
-            _context = context;
+            _appContext = context;
         }
 
         public JsonResult Modal()

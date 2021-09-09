@@ -12,11 +12,11 @@ namespace SIP.Controllers
 {
     public class PositionController : Controller
     {
-        private readonly DB_NewContext _context;
+        private readonly BaseApplicaionContext _appContext;
 
-        public PositionController(DB_NewContext context)
+        public PositionController(BaseApplicaionContext context)
         {
-            _context = context;
+            _appContext = context;
         }
 
         [Auth(new string[] { "Developers", "Parameter" })]
@@ -28,7 +28,7 @@ namespace SIP.Controllers
             ViewBag.L2 = "";
             ViewBag.L3 = "";
 
-            return View(await _context.RF_Positions.ToListAsync());
+            return View(await _appContext.RF_Positions.ToListAsync());
         }
 
         [Auth(new string[] { "Developers", "Parameter" })]
@@ -44,8 +44,8 @@ namespace SIP.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(refPosition);
-                await _context.SaveChangesAsync();
+                _appContext.Add(refPosition);
+                await _appContext.SaveChangesAsync();
                 TempData["status"] = "create";
                 string link = Url.Action("Index");
                 return Json(new { success = true, url = link });
@@ -62,7 +62,7 @@ namespace SIP.Controllers
                 return NotFound();
             }
 
-            var refPosition = await _context.RF_Positions.FindAsync(id);
+            var refPosition = await _appContext.RF_Positions.FindAsync(id);
             if (refPosition == null)
             {
                 return NotFound();
@@ -83,8 +83,8 @@ namespace SIP.Controllers
             {
                 try
                 {
-                    _context.Update(refPosition);
-                    await _context.SaveChangesAsync();
+                    _appContext.Update(refPosition);
+                    await _appContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -113,7 +113,7 @@ namespace SIP.Controllers
                 return NotFound();
             }
 
-            var refPosition = await _context.RF_Positions
+            var refPosition = await _appContext.RF_Positions
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (refPosition == null)
             {
@@ -127,11 +127,11 @@ namespace SIP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var refPosition = await _context.RF_Positions.FindAsync(id);
+            var refPosition = await _appContext.RF_Positions.FindAsync(id);
             try
             {
-                _context.RF_Positions.Remove(refPosition);
-                await _context.SaveChangesAsync();
+                _appContext.RF_Positions.Remove(refPosition);
+                await _appContext.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
@@ -147,7 +147,7 @@ namespace SIP.Controllers
 
         private bool RefPositionExists(int id)
         {
-            return _context.RF_Positions.Any(e => e.Id == id);
+            return _appContext.RF_Positions.Any(e => e.Id == id);
         }
     }
 }

@@ -16,16 +16,16 @@ namespace SIP.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly DB_NewContext _context;
+        private readonly BaseApplicaionContext _appContext;
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            DB_NewContext context)
+            BaseApplicaionContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _context = context;
+            _appContext = context;
         }
 
         public string Username { get; set; }
@@ -64,8 +64,8 @@ namespace SIP.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            ViewData["Personal"] = await (from a in _context.Personal
-                                          join b in _context.RF_Positions on a.PositionId equals b.Id
+            ViewData["Personal"] = await (from a in _appContext.Personal
+                                          join b in _appContext.RF_Positions on a.PositionId equals b.Id
                                           select new ListAccountDto
                                           {
                                               Nama = a.Nama,

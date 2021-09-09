@@ -48,7 +48,6 @@
     <Compile Remove="Controllers\PajakReklameMController.cs" />
     <Compile Remove="Controllers\Reklame_SalahController.cs" />
     <Compile Remove="Controllers\SKPDMController.cs" />
-    <Compile Remove="Controllers\Tags\CustomAuthAttribute.cs" />
   </ItemGroup>
 
   <ItemGroup>

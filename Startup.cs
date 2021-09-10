@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using SIP.Models;
+using SIP.Models.BaseApplicationContext;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Globalization;
@@ -31,8 +31,8 @@ namespace SIP
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = Configuration.GetConnectionString("SIPConnection");
-            services.AddDbContext<DB_NewContext>(options => options.UseNpgsql(connection));
+            var connection = Configuration.GetConnectionString("ApplicationBase");
+            services.AddDbContext<BaseApplicationContext>(options => options.UseNpgsql(connection));
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.TryAddSingleton<IWebHostEnvironment>();
@@ -43,13 +43,6 @@ namespace SIP
 
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
-                //.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
-
-            var cultureInfo = new CultureInfo("id-ID");
-            cultureInfo.NumberFormat.CurrencySymbol = "Rp. ";
-
-            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             services.AddMvc()
                 .AddNewtonsoftJson();

@@ -6,18 +6,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SIP.Models;
+using SIP.Models.BaseApplicationContext;
 
 namespace SIP.Components
 {
     public class AsideIdentityViewComponent : ViewComponent
     {
-        private readonly DB_NewContext _context;
+        private readonly BaseApplicationContext _appContext;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public AsideIdentityViewComponent(DB_NewContext context, UserManager<IdentityUser> userManager)
+        public AsideIdentityViewComponent(BaseApplicationContext context, UserManager<IdentityUser> userManager)
         {
-            _context = context;
+            _appContext = context;
             _userManager = userManager;
         }
 
@@ -26,13 +26,14 @@ namespace SIP.Components
             if (HttpContext.Session.GetString("Nama") == null || HttpContext.Session.GetString("Email") == null)
             {
                 var user = await _userManager.GetUserAsync(HttpContext.User);
-                var pegawai = await _context.Pegawai.Include(d => d.IdJabatanNavigation).FirstOrDefaultAsync(d => d.Email == user.Email);
-                HttpContext.Session.SetString("Email", pegawai.Email);
-                HttpContext.Session.SetString("Nama", pegawai.Nama);
-                HttpContext.Session.SetString("Jabatan", pegawai.IdJabatanNavigation.Jabatan);
+                var Personal = await _appContext.Personal.FirstOrDefaultAsync(d => d.Email == user.Email);
+                var Position = _appContext.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
+                HttpContext.Session.SetString("Email", Personal.Email);
+                HttpContext.Session.SetString("Nama", Personal.Nama);
+                HttpContext.Session.SetString("Position", Position);
             }
 
-            var model = _context.Menu.Where(d => d.FlagAktif).OrderBy(d => d.NoUrut).ToList();
+            var model = _appContext.Menu.Where(d => d.IsActive).OrderBy(d => d.NoUrut).ToList();
 
             return await Task.FromResult((IViewComponentResult)View("Default", model));
         }

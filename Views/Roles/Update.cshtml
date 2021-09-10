@@ -1,5 +1,4 @@
-﻿@model SIP.Models.Pegawai
-@using SIP.ViewModels
+﻿@model Personal
 
 @{
     ViewBag.SubHeaderTitle = "Akses Modul";
@@ -16,7 +15,7 @@
                 <div class="kt-portlet__head">
                     <div class="kt-portlet__head-label">
                         <h3 class="kt-portlet__head-title">
-                            Detail Pegawai
+                            Detail Personal
                         </h3>
                     </div>
                 </div>
@@ -33,8 +32,8 @@
                                     <span class="kt-widget__data kt-align-right">@Model.Nip</span>
                                 </div>
                                 <div class="kt-widget__contact">
-                                    <span class="kt-widget__label">Jabatan:</span>
-                                    <span class="kt-widget__data kt-align-right">@Model.IdJabatanNavigation.Jabatan</span>
+                                    <span class="kt-widget__label">Position:</span>
+                                    <span class="kt-widget__data kt-align-right">@ViewBag.Position</span>
                                 </div>
                                 <div class="kt-widget__contact">
                                     <span class="kt-widget__label">Email:</span>
@@ -43,7 +42,7 @@
                                 <div class="kt-widget__contact">
                                     <span class="kt-widget__label"></span>
                                     <span class="kt-widget__data kt-align-right">
-                                        @if (Model.Active)
+                                        @if (Model.IsActive)
                                         {
                                             <span><span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">Aktif</span></span>
                                         }

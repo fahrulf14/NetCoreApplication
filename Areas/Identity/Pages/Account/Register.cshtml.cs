@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SIP.Models;
+using SIP.Models.BaseApplicationContext;
 
 namespace SIP.Areas.Identity.Pages.Account
 {
@@ -28,7 +28,7 @@ namespace SIP.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly DB_NewContext _context;
+        private readonly BaseApplicationContext _appContext;
         //private readonly DB_NewContext db = new DB_NewContext();
 
         public RegisterModel(
@@ -36,19 +36,19 @@ namespace SIP.Areas.Identity.Pages.Account
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            DB_NewContext context)
+            BaseApplicationContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            _context = context;
+            _appContext = context;
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public PegawaiModel Pegawais { get; set; }
+        public PersonalModel Personals { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -57,8 +57,8 @@ namespace SIP.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [Display(Name = "Pegawai")]
-            public Guid IdPegawai { get; set; }
+            [Display(Name = "Personal")]
+            public int Id { get; set; }
            
             [Required]
             [EmailAddress]
@@ -77,36 +77,24 @@ namespace SIP.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
-        public class PegawaiModel
+        public class PersonalModel
         {
-            public PegawaiModel()
-            {
-                TandaTangan = new HashSet<TandaTangan>();
-            }
-
             public string Nama { get; set; }
             [StringLength(20)]
             public string Nick { get; set; }
             [Column("NIP")]
             [StringLength(50)]
             public string Nip { get; set; }
-            public int? IdJabatan { get; set; }
+            public int? PositionId { get; set; }
             public bool Active { get; set; }
             public string Email { get; set; }
-            [StringLength(256)]
-
-            [ForeignKey(nameof(IdJabatan))]
-            [InverseProperty(nameof(RefJabatan.Pegawai))]
-            public virtual RefJabatan IdJabatanNavigation { get; set; }
-            [InverseProperty("IdPegawaiNavigation")]
-            public virtual ICollection<TandaTangan> TandaTangan { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
 
-            ViewData["IdPegawai"] = new SelectList(_context.Pegawai.Where(d => d.Email == null), "IdPegawai", "Nama");
+            ViewData["IdPersonal"] = new SelectList(_appContext.Personal.Where(d => d.Email == null), "IdPersonal", "Nama");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
@@ -125,14 +113,14 @@ namespace SIP.Areas.Identity.Pages.Account
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-                    var pegawai = _context.Pegawai.FirstOrDefault(p => p.IdPegawai == Input.IdPegawai);
-                    pegawai.Email = Input.Email;
-                    _context.Pegawai.Update(pegawai);
+                    var Personal = _appContext.Personal.FirstOrDefault(p => p.Id == Input.Id);
+                    Personal.Email = Input.Email;
+                    _appContext.Personal.Update(Personal);
 
-                    var dataUser = _context.AspNetUsers.FirstOrDefault(d => d.Email == Input.Email);
+                    var dataUser = _appContext.AspNetUsers.FirstOrDefault(d => d.Email == Input.Email);
                     dataUser.EmailConfirmed = true;
-                    _context.AspNetUsers.Update(dataUser);
-                    _context.SaveChanges();
+                    _appContext.AspNetUsers.Update(dataUser);
+                    _appContext.SaveChanges();
 
                     TempData["status"] = "create";
                     string link = Url.Action("Index", "UserAccount");

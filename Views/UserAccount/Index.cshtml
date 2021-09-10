@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SIP.ViewModels.UserPegawai>
+﻿@model IEnumerable<UserPersonal>
 
 @{
     ViewBag.Title = "User Account";
@@ -78,7 +78,7 @@
                                 Nama
                             </th>
                             <th>
-                                Jabatan
+                                Position
                             </th>
                             <th>
                                 Email
@@ -104,7 +104,7 @@
                                     @Html.DisplayFor(modelItem => item.Nama)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Jabatan)
+                                    @Html.DisplayFor(modelItem => item.Position)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Email)
@@ -120,7 +120,7 @@
                                 </td>
                                 <td nowrap>
                                     @*<a data-modal asp-action="Edit" asp-route-id="@item.IdUser" class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Edit"><i class="la la-edit"></i></a>*@
-                                    <a mini-modal asp-action="Delete" asp-route-id="@item.IdUser" class="btn btn-sm btn-label-danger btn-icon btn-icon-md" title="Hapus"><i class="la la-trash-o"></i></a>
+                                    <a mini-modal asp-action="Delete" asp-route-id="@item.UserId" class="btn btn-sm btn-label-danger btn-icon btn-icon-md" title="Hapus"><i class="la la-trash-o"></i></a>
                                 </td>
                             </tr>
                         }

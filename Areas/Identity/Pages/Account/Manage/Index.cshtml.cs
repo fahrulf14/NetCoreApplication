@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using SIP.Models;
+using SIP.Models.BaseApplicationContext;
+using SIP.ViewModels.Personal;
 
 namespace SIP.Areas.Identity.Pages.Account.Manage
 {
@@ -15,16 +16,16 @@ namespace SIP.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly DB_NewContext _context;
+        private readonly BaseApplicationContext _appContext;
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            DB_NewContext context)
+            BaseApplicationContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _context = context;
+            _appContext = context;
         }
 
         public string Username { get; set; }
@@ -63,7 +64,15 @@ namespace SIP.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            ViewData["Pegawai"] = await _context.Pegawai.Include(d => d.IdJabatanNavigation).Where(d => d.Email == user.Email).ToListAsync();
+            ViewData["Personal"] = await (from a in _appContext.Personal
+                                          join b in _appContext.RF_Positions on a.PositionId equals b.Id
+                                          select new ListAccountDto
+                                          {
+                                              Nama = a.Nama,
+                                              Nip = a.Nip,
+                                              Email = a.Email,
+                                              Position = b.Position
+                                          }).ToListAsync();
 
             await LoadAsync(user);
             return Page();

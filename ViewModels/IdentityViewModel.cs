@@ -10,12 +10,12 @@ namespace SIP.ViewModels
 
     }
 
-    public partial class UserPegawai
+    public partial class UserPersonal
     {
-        public Guid IdPegawai { get; set; }
-        public string IdUser { get; set; }
+        public int PersonalId { get; set; }
+        public string UserId { get; set; }
         public string Nama { get; set; }
-        public string Jabatan { get; set; }
+        public string Position { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public bool LockoutEnabled { get; set; }

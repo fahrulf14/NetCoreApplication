@@ -17,7 +17,7 @@ namespace SIP.Areas.Identity
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<SIPIdentityContext>(options =>
                     options.UseNpgsql(
-                        context.Configuration.GetConnectionString("SIPIdentityContextConnection")));
+                        context.Configuration.GetConnectionString("ApplicationBase")));
 
                 services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<SIPIdentityContext>();

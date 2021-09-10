@@ -6,48 +6,48 @@ using Attributes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SIP.Models;
+using SIP.Models.BaseApplicationContext;
 using SIP.ViewModels;
 
 namespace SIP.Controllers
 {
     public class UserAccountController : Controller
     {
-        private readonly DB_NewContext _context;
+        private readonly BaseApplicationContext _appContext;
 
-        public UserAccountController(DB_NewContext context)
+        public UserAccountController(BaseApplicationContext context)
         {
-            _context = context;
+            _appContext = context;
         }
 
         [Auth(new string[] { "Developers", "Setting" })]
         public IActionResult Index()
         {
-            var data = (from u in _context.AspNetUsers
-                        join p in _context.Pegawai on u.Email equals p.Email
-                        join j in _context.RefJabatan on p.IdJabatan equals j.IdJabatan
+            var data = (from u in _appContext.AspNetUsers
+                        join p in _appContext.Personal on u.Email equals p.Email
+                        join j in _appContext.RF_Positions on p.PositionId equals j.Id
                         where p.Nama != "Developers"
                         select new
                         {
-                            p.IdPegawai,
+                            p.Id,
                             IdUser = u.Id,
                             p.Nama,
                             p.Email,
                             u.PhoneNumber,
-                            j.Jabatan,
+                            j.Position,
                             u.LockoutEnabled
                         }).ToList();
 
-            List<UserPegawai> List = new List<UserPegawai>();
+            List<UserPersonal> List = new List<UserPersonal>();
 
             foreach (var item in data)
             {
-                List.Add(new UserPegawai
+                List.Add(new UserPersonal
                 {
-                    IdPegawai = item.IdPegawai,
-                    IdUser = item.IdUser,
+                    PersonalId = item.Id,
+                    UserId = item.IdUser,
                     Nama = item.Nama,
-                    Jabatan = item.Jabatan,
+                    Position = item.Position,
                     Email = item.Email,
                     PhoneNumber = item.PhoneNumber,
                     LockoutEnabled = item.LockoutEnabled
@@ -66,7 +66,7 @@ namespace SIP.Controllers
                 return NotFound();
             }
 
-            var aspNetUsers = await _context.AspNetUsers
+            var aspNetUsers = await _appContext.AspNetUsers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (aspNetUsers == null)
             {
@@ -80,15 +80,15 @@ namespace SIP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var aspNetUsers = await _context.AspNetUsers.FindAsync(id);
+            var aspNetUsers = await _appContext.AspNetUsers.FindAsync(id);
             try
             {
-                _context.AspNetUsers.Remove(aspNetUsers);
+                _appContext.AspNetUsers.Remove(aspNetUsers);
 
-                var pegawai = _context.Pegawai.FirstOrDefault(d => d.Email == aspNetUsers.Email);
-                pegawai.Email = null;
-                _context.Pegawai.Update(pegawai);
-                await _context.SaveChangesAsync();
+                var Personal = _appContext.Personal.FirstOrDefault(d => d.Email == aspNetUsers.Email);
+                Personal.Email = null;
+                _appContext.Personal.Update(Personal);
+                await _appContext.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {

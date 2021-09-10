@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using SIP.Models;
+using SIP.Models.BaseApplicationContext;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,13 +22,13 @@ namespace SIP.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        private readonly DB_NewContext _context;
+        private readonly BaseApplicationContext _appContext;
         public LoginModel(SignInManager<IdentityUser> signInManager,
-            ILogger<LoginModel> logger, DB_NewContext context)
+            ILogger<LoginModel> logger, BaseApplicationContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
-            _context = context;
+            _appContext = context;
         }
 
         [BindProperty]
@@ -80,8 +80,8 @@ namespace SIP.Areas.Identity.Pages.Account
             return Page();
         }
 
-        [BindProperty] public Pegawai Pegawai { get; set; }
-        [BindProperty] public RefJabatan RefJabatan { get; set; }
+        [BindProperty] public Personal Personal { get; set; }
+        [BindProperty] public RF_Position RF_Position { get; set; }
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/Home");
@@ -92,7 +92,7 @@ namespace SIP.Areas.Identity.Pages.Account
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
-                var user = _context.AspNetUsers.FirstOrDefault(d => d.Email == Input.Email);
+                var user = _appContext.AspNetUsers.FirstOrDefault(d => d.Email.ToLower() == Input.Email.ToLower());
 
                 if (result.Succeeded)
                 {
@@ -107,8 +107,8 @@ namespace SIP.Areas.Identity.Pages.Account
                         return Page();
                     }
 
-                    Pegawai = await _context.Pegawai.Include(w => w.IdJabatanNavigation).FirstOrDefaultAsync(w => w.Email == Input.Email);
-                    if (Pegawai == null)
+                    Personal = await _appContext.Personal.FirstOrDefaultAsync(w => w.Email.ToLower() == Input.Email.ToLower());
+                    if (Personal == null)
                     {
                         await _signInManager.SignOutAsync();
 
@@ -118,7 +118,7 @@ namespace SIP.Areas.Identity.Pages.Account
                         return Page();
                     }
 
-                    if (Pegawai.Nama == "Developers")
+                    if (Personal.Nama == "Developers")
                     {
                         if (user.PasswordHash != "AQAAAAEAACcQAAAAEN1c/WC3S7FC5nwNw/WUNSz6kEghaZNV2DXfaMXbVC2JfqhzG/LOly7AOOwR42jnhA==")
                         {
@@ -131,10 +131,12 @@ namespace SIP.Areas.Identity.Pages.Account
                         }
                     }
 
+                    var Position = _appContext.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
+
                     HttpContext.Session.SetString("User", user.Id);
                     HttpContext.Session.SetString("Email", Input.Email);
-                    HttpContext.Session.SetString("Nama", Pegawai.Nama);
-                    HttpContext.Session.SetString("Jabatan", Pegawai.IdJabatanNavigation.Jabatan);
+                    HttpContext.Session.SetString("Nama", Personal.Nama);
+                    HttpContext.Session.SetString("Position", Position);
 
                     TempData["status"] = "login";
                     return LocalRedirect(returnUrl);

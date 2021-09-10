@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SIP.Models;
+using SIP.Models.BaseApplicationContext;
 
 namespace SIP.Areas.Identity.Pages.Account
 {
     public class AccountController : Controller
     {
-        private readonly DB_NewContext _context;
+        private readonly BaseApplicationContext _appContext;
 
-        public AccountController(DB_NewContext context)
+        public AccountController(BaseApplicationContext context)
         {
-            _context = context;
+            _appContext = context;
         }
 
         //GET: LOGIN
@@ -36,8 +36,8 @@ namespace SIP.Areas.Identity.Pages.Account
         //    {
         //        try
         //        {
-        //            _context.Update(refBadanHukum);
-        //            await _context.SaveChangesAsync();
+        //            _appContext.Update(refBadanHukum);
+        //            await _appContext.SaveChangesAsync();
         //        }
         //        catch (DbUpdateConcurrencyException)
         //        {

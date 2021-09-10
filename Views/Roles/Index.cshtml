@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SIP.ViewModels.ListRole>
+﻿@model IEnumerable<ListRole>
 
 @{
     ViewBag.Title = "Akses Role";
@@ -88,7 +88,7 @@
                                 </td>
                             </tr>
                         }
-                        @foreach (var item in (List<AspNetRoles>)ViewBag.Sisa)
+                        @foreach (var item in (List<SIP.Models.BaseApplicationContext.AspNetRoles>)ViewBag.Sisa)
                         {
                             <tr>
                                 <td></td>

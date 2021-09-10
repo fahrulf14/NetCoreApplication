@@ -22,11 +22,11 @@
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="kt-portlet__body">
                         <div class="kt-section kt-section--first">
-                            @foreach (var item in (List<SIP.Models.Pegawai>)ViewBag.Pegawai)
+                            @foreach (var item in (List<SIP.ViewModels.Personal.ListAccountDto>)ViewBag.Personal)
                             {
                                 <div class="kt-section__body">
                                     <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">Nama Pegawai</label>
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Nama Personal</label>
                                         <div class="col-lg-9 col-xl-6">
                                             <input class="form-control" type="text" value="@item.Nama" readonly>
                                         </div>
@@ -38,9 +38,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-xl-3 col-lg-3 col-form-label">Jabatan</label>
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Position</label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input class="form-control" type="text" value="@item.IdJabatanNavigation.Jabatan" readonly>
+                                            <input class="form-control" type="text" value="@item.Position" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">

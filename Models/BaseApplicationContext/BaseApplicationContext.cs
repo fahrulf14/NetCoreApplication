@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace SIP.Models
+namespace SIP.Models.BaseApplicationContext
 {
     public partial class BaseApplicationContext : DbContext
     {

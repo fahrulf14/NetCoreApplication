@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using SIP.Models;
+using SIP.Models.BaseApplicationContext;
 using SIP.ViewModels.Personal;
 
 namespace SIP.Areas.Identity.Pages.Account.Manage

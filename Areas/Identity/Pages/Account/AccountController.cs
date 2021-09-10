@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SIP.Models;
+using SIP.Models.BaseApplicationContext;
 
 namespace SIP.Areas.Identity.Pages.Account
 {

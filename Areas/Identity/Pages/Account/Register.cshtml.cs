@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SIP.Models;
+using SIP.Models.BaseApplicationContext;
 
 namespace SIP.Areas.Identity.Pages.Account
 {

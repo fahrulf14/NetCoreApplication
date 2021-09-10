@@ -6,7 +6,7 @@ using Attributes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SIP.Models;
+using SIP.Models.BaseApplicationContext;
 using SIP.ViewModels.Personal;
 
 namespace SIP.Controllers

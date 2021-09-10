@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SIP.Models
+namespace SIP.Models.BaseApplicationContext
 {
     [Table("Personal")]
     public partial class Personal
@@ -23,5 +23,7 @@ namespace SIP.Models
         public string Email { get; set; }
         public byte[] Signature { get; set; }
         public bool IsActive { get; set; }
+
+        //public virtual RF_Position RF_Position { get; set; }
     }
 }

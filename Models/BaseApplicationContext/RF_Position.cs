@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SIP.Models
+namespace SIP.Models.BaseApplicationContext
 {
     [Table("RF_Position")]
     public partial class RF_Position

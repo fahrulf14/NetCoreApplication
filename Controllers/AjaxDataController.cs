@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using SIP.Models;
+using SIP.Models.BaseApplicationContext;
 using SIP.ViewModels;
 
 namespace SIP.Controllers

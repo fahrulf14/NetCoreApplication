@@ -12,10 +12,10 @@ namespace SIP.Components
 {
     public class AsideViewComponent : ViewComponent
     {
-        private readonly BaseApplicaionContext _appContext;
+        private readonly BaseApplicationContext _appContext;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public AsideViewComponent(BaseApplicaionContext context, UserManager<IdentityUser> userManager)
+        public AsideViewComponent(BaseApplicationContext context, UserManager<IdentityUser> userManager)
         {
             _appContext = context;
             _userManager = userManager;
@@ -36,37 +36,37 @@ namespace SIP.Components
                 HttpContext.Session.SetString("Position", Position);
             }
 
-            var model = _appContext.Menu.Where(d => d.FlagAktif).OrderBy(d => d.NoUrut).ToList();
+            var model = _appContext.Menu.Where(d => d.IsActive).OrderBy(d => d.NoUrut).ToList();
 
             var menu = _appContext.Menu.Where(d => d.Controller == controller && d.ActionName == action).FirstOrDefault();
             if (menu != null)
             {
-                if (menu.ParentId != 0)
+                if (menu.Parent != "0")
                 {
-                    var child = _appContext.Menu.Find(menu.ParentId);
-                    if (child.ParentId != 0)
+                    var child = _appContext.Menu.Where(d => d.Code == menu.Parent).FirstOrDefault();
+                    if (child.Parent != "0")
                     {
-                        var sub = _appContext.Menu.Find(child.ParentId);
-                        if (sub.ParentId != 0)
+                        var sub = _appContext.Menu.Where(d => d.Code == child.Parent).FirstOrDefault();
+                        if (sub.Parent != "0")
                         {
-                            ViewBag.Parent = sub.ParentId;
-                            ViewBag.SubParent = child.ParentId;
-                            ViewBag.Sub = menu.ParentId;
+                            ViewBag.Parent = sub.Parent;
+                            ViewBag.SubParent = child.Parent;
+                            ViewBag.Sub = menu.Parent;
                         }
                         else
                         {
-                            ViewBag.Parent = child.ParentId;
-                            ViewBag.SubParent = menu.ParentId;
+                            ViewBag.Parent = child.Parent;
+                            ViewBag.SubParent = menu.Parent;
                         }
                     }
                     else
                     {
-                        ViewBag.Parent = menu.ParentId;
+                        ViewBag.Parent = menu.Parent;
                     }
                 }
                 else
                 {
-                    ViewBag.Parent = 0;
+                    ViewBag.Parent = "0";
                 }
             }
 

@@ -32,7 +32,7 @@ namespace SIP
         public void ConfigureServices(IServiceCollection services)
         {
             var connection = Configuration.GetConnectionString("ApplicationBase");
-            services.AddDbContext<BaseApplicaionContext>(options => options.UseNpgsql(connection));
+            services.AddDbContext<BaseApplicationContext>(options => options.UseNpgsql(connection));
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.TryAddSingleton<IWebHostEnvironment>();

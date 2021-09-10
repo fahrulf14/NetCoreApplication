@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace SIP.Models
 {
-    public partial class BaseApplicaionContext : DbContext
+    public partial class BaseApplicationContext : DbContext
     {
-        public BaseApplicaionContext()
+        public BaseApplicationContext()
         {
         }
 
-        public BaseApplicaionContext(DbContextOptions<BaseApplicaionContext> options)
+        public BaseApplicationContext(DbContextOptions<BaseApplicationContext> options)
             : base(options)
         {
         }

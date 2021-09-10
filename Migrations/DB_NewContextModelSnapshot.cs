@@ -8,7 +8,7 @@ using SIP.Models;
 
 namespace SIP.Migrations
 {
-    [DbContext(typeof(BaseApplicaionContext))]
+    [DbContext(typeof(BaseApplicationContext))]
     partial class DB_NewContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

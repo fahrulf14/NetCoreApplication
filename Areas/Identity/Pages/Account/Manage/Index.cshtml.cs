@@ -16,12 +16,12 @@ namespace SIP.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly BaseApplicaionContext _appContext;
+        private readonly BaseApplicationContext _appContext;
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            BaseApplicaionContext context)
+            BaseApplicationContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;

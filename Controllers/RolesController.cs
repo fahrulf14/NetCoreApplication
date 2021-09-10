@@ -15,8 +15,8 @@ namespace SIP.Controllers
     public class RolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly BaseApplicaionContext _appContext;
-        public RolesController(BaseApplicaionContext context, RoleManager<IdentityRole> roleMgr)
+        private readonly BaseApplicationContext _appContext;
+        public RolesController(BaseApplicationContext context, RoleManager<IdentityRole> roleMgr)
         {
             _roleManager = roleMgr;
             _appContext = context;

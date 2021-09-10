@@ -10,8 +10,8 @@ using SIP.Models;
 namespace SIP.Migrations
 {
     [DbContext(typeof(BaseApplicationContext))]
-    [Migration("20210908130131_PersonalSchema")]
-    partial class PersonalSchema
+    [Migration("20210909153541_MenuSchema")]
+    partial class MenuSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -227,16 +227,19 @@ namespace SIP.Migrations
                         .HasColumnType("character varying(50)")
                         .HasMaxLength(50);
 
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
                     b.Property<string>("Controller")
                         .HasColumnType("character varying(50)")
                         .HasMaxLength(50);
 
-                    b.Property<bool>("FlagAktif")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("IconClass")
                         .HasColumnType("character varying(75)")
                         .HasMaxLength(75);
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsParent")
                         .HasColumnType("boolean");
@@ -248,8 +251,8 @@ namespace SIP.Migrations
                     b.Property<int?>("NoUrut")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Parent")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

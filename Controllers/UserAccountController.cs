@@ -13,9 +13,9 @@ namespace SIP.Controllers
 {
     public class UserAccountController : Controller
     {
-        private readonly BaseApplicaionContext _appContext;
+        private readonly BaseApplicationContext _appContext;
 
-        public UserAccountController(BaseApplicaionContext context)
+        public UserAccountController(BaseApplicationContext context)
         {
             _appContext = context;
         }

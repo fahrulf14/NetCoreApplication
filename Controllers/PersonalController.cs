@@ -13,9 +13,9 @@ namespace SIP.Controllers
 {
     public class PersonalController : Controller
     {
-        private readonly BaseApplicaionContext _appContext;
+        private readonly BaseApplicationContext _appContext;
 
-        public PersonalController(BaseApplicaionContext context)
+        public PersonalController(BaseApplicationContext context)
         {
             _appContext = context;
         }

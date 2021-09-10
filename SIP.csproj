@@ -48,6 +48,8 @@
     <Compile Remove="Controllers\PajakReklameMController.cs" />
     <Compile Remove="Controllers\Reklame_SalahController.cs" />
     <Compile Remove="Controllers\SKPDMController.cs" />
+    <Compile Remove="Migrations\20210909153028_AsideMenu.cs" />
+    <Compile Remove="Migrations\20210909153028_AsideMenu.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

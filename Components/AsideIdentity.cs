@@ -12,10 +12,10 @@ namespace SIP.Components
 {
     public class AsideIdentityViewComponent : ViewComponent
     {
-        private readonly BaseApplicaionContext _appContext;
+        private readonly BaseApplicationContext _appContext;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public AsideIdentityViewComponent(BaseApplicaionContext context, UserManager<IdentityUser> userManager)
+        public AsideIdentityViewComponent(BaseApplicationContext context, UserManager<IdentityUser> userManager)
         {
             _appContext = context;
             _userManager = userManager;
@@ -33,7 +33,7 @@ namespace SIP.Components
                 HttpContext.Session.SetString("Position", Position);
             }
 
-            var model = _appContext.Menu.Where(d => d.FlagAktif).OrderBy(d => d.NoUrut).ToList();
+            var model = _appContext.Menu.Where(d => d.IsActive).OrderBy(d => d.NoUrut).ToList();
 
             return await Task.FromResult((IViewComponentResult)View("Default", model));
         }

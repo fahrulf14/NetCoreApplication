@@ -12,20 +12,20 @@
             </li>
             @foreach (var item in Model.OrderBy(d => d.NoUrut))
             {
-                if (item.IsParent == false && item.ParentId == 0)
+                if (item.IsParent == false && item.Parent == "0")
                 {
                     <li class="kt-menu__item @(ViewBag.Ctrl == item.Controller && ViewBag.Act == item.ActionName ? " kt-menu__item--active" : string.Empty)" aria-haspopup="true">
                         <a asp-controller="@item.Controller" asp-action="@item.ActionName" class="kt-menu__link "><i class="kt-menu__link-icon @item.IconClass"></i><span class="kt-menu__link-text">@item.Nama</span></a>
                     </li>
                 }
-                else if (item.IsParent == true && item.ParentId == 0)
+                else if (item.IsParent == true && item.Parent == "0")
                 {
-                    <li class="kt-menu__item kt-menu__item--submenu @(ViewBag.Parent == item.Id ? " kt-menu__item--open kt-menu__item--here" : string.Empty)" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <li class="kt-menu__item kt-menu__item--submenu @(ViewBag.Parent == item.Code ? " kt-menu__item--open kt-menu__item--here" : string.Empty)" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                         <a href="javascript:;" class="kt-menu__link kt-menu__toggle"><i class="kt-menu__link-icon @item.IconClass"></i><span class="kt-menu__link-text">@item.Nama</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
                         <div class="kt-menu__submenu ">
                             <span class="kt-menu__arrow"></span>
                             <ul class="kt-menu__subnav">
-                                @foreach (var child in Model.Where(p => p.ParentId == item.Id && p.FlagAktif).OrderBy(d => d.NoUrut))
+                                @foreach (var child in Model.Where(p => p.Parent == item.Code && p.IsActive).OrderBy(d => d.NoUrut))
                                 {
                                     var liChild = 0;
                                     if (ViewBag.Ctrl == child.Controller && ViewBag.Act == child.ActionName && liChild == 0)
@@ -43,7 +43,7 @@
                                             <div class="kt-menu__submenu ">
                                                 <span class="kt-menu__arrow"></span>
                                                 <ul class="kt-menu__subnav">
-                                                    @foreach (var child2 in Model.Where(p => p.ParentId == child.Id).OrderBy(d => d.NoUrut))
+                                                    @foreach (var child2 in Model.Where(p => p.Parent == child.Code).OrderBy(d => d.NoUrut))
                                                     {
                                                         if (child2.IsParent == true)
                                                         {
@@ -55,7 +55,7 @@
                                                                 <div class="kt-menu__submenu ">
                                                                     <span class="kt-menu__arrow"></span>
                                                                     <ul class="kt-menu__subnav">
-                                                                        @foreach (var child3 in Model.Where(p => p.ParentId == child2.Id).OrderBy(d => d.NoUrut))
+                                                                        @foreach (var child3 in Model.Where(p => p.Parent == child2.Code).OrderBy(d => d.NoUrut))
                                                                         {
                                                                             <li class="kt-menu__item @(ViewBag.Ctrl == child3.Controller && ViewBag.Act == child3.ActionName ? " kt-menu__item--active" : string.Empty)" aria-haspopup="true">
                                                                                 <a asp-controller="@child3.Controller" asp-action="@child3.ActionName" class="kt-menu__link ">

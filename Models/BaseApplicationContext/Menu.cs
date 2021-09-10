@@ -9,6 +9,8 @@ namespace SIP.Models
     {
         [Key]
         public int Id { get; set; }
+        public string Code { get; set; }
+
         [StringLength(100)]
         public string Nama { get; set; }
         [StringLength(50)]
@@ -18,8 +20,8 @@ namespace SIP.Models
         [StringLength(75)]
         public string IconClass { get; set; }
         public bool IsParent { get; set; }
-        public int? ParentId { get; set; }
+        public string Parent { get; set; }
         public int? NoUrut { get; set; }
-        public bool FlagAktif { get; set; }
+        public bool IsActive { get; set; }
     }
 }

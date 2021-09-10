@@ -28,7 +28,7 @@ namespace SIP.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly BaseApplicaionContext _appContext;
+        private readonly BaseApplicationContext _appContext;
         //private readonly DB_NewContext db = new DB_NewContext();
 
         public RegisterModel(
@@ -36,7 +36,7 @@ namespace SIP.Areas.Identity.Pages.Account
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            BaseApplicaionContext context)
+            BaseApplicationContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;

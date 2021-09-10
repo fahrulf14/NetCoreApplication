@@ -10,6 +10,7 @@ namespace SIP.Models
     {
         [Key]
         public int Id { get; set; }
+        //public string PersonalCode { get; set; }
         [StringLength(50)]
         public string Nama { get; set; }
         [StringLength(20)]

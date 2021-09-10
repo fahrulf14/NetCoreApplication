@@ -9,9 +9,9 @@ namespace SIP.Areas.Identity.Pages.Account
 {
     public class AccountController : Controller
     {
-        private readonly BaseApplicaionContext _appContext;
+        private readonly BaseApplicationContext _appContext;
 
-        public AccountController(BaseApplicaionContext context)
+        public AccountController(BaseApplicationContext context)
         {
             _appContext = context;
         }

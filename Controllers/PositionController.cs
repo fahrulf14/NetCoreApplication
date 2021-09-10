@@ -12,9 +12,9 @@ namespace SIP.Controllers
 {
     public class PositionController : Controller
     {
-        private readonly BaseApplicaionContext _appContext;
+        private readonly BaseApplicationContext _appContext;
 
-        public PositionController(BaseApplicaionContext context)
+        public PositionController(BaseApplicationContext context)
         {
             _appContext = context;
         }
@@ -40,7 +40,7 @@ namespace SIP.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Position,FlagAktif")] RF_Position refPosition)
+        public async Task<IActionResult> Create([Bind("Id,Position,IsActive")] RF_Position refPosition)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace SIP.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Position,FlagAktif")] RF_Position refPosition)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Position,IsActive")] RF_Position refPosition)
         {
             if (id != refPosition.Id)
             {

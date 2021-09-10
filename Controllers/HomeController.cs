@@ -13,9 +13,9 @@ namespace SIP.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly BaseApplicaionContext _appContext;
+        private readonly BaseApplicationContext _appContext;
 
-        public HomeController(ILogger<HomeController> logger, BaseApplicaionContext context)
+        public HomeController(ILogger<HomeController> logger, BaseApplicationContext context)
         {
             _logger = logger;
             _appContext = context;

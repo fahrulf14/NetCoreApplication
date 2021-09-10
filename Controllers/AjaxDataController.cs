@@ -13,9 +13,9 @@ namespace SIP.Controllers
 {
     public class AjaxDataController : Controller
     {
-        private readonly BaseApplicaionContext _appContext;
+        private readonly BaseApplicationContext _appContext;
 
-        public AjaxDataController(BaseApplicaionContext context)
+        public AjaxDataController(BaseApplicationContext context)
         {
             _appContext = context;
         }

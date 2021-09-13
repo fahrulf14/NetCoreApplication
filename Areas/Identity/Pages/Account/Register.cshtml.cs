@@ -17,9 +17,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SIP.Models.BaseApplicationContext;
+using NUNA.Models.BaseApplicationContext;
 
-namespace SIP.Areas.Identity.Pages.Account
+namespace NUNA.Areas.Identity.Pages.Account
 {
     [Auth(new string[] { "Developers", "Setting" })]
     public class RegisterModel : PageModel

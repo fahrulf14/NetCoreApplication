@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SIP.Models.BaseApplicationContext;
+using NUNA.Models.BaseApplicationContext;
 
-namespace SIP.Components
+namespace NUNA.Components
 {
     public class AsideIdentityViewComponent : ViewComponent
     {

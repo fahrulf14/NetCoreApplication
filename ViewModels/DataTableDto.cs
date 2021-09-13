@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SIP.ViewModels
+namespace NUNA.ViewModels
 {
     public class DataTableDto
     {

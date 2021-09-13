@@ -6,13 +6,13 @@ using Attributes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SIP.Models;
-using SIP.Models.BaseApplicationContext;
-using SIP.Services;
-using SIP.ViewModels;
-using SIP.ViewModels.UserAccount;
+using NUNA.Models;
+using NUNA.Models.BaseApplicationContext;
+using NUNA.Services;
+using NUNA.ViewModels;
+using NUNA.ViewModels.UserAccount;
 
-namespace SIP.Controllers
+namespace NUNA.Controllers
 {
     public class UserAccountController : Controller
     {

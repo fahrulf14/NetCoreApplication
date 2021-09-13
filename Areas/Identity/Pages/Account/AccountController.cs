@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SIP.Models.BaseApplicationContext;
+using NUNA.Models.BaseApplicationContext;
 
-namespace SIP.Areas.Identity.Pages.Account
+namespace NUNA.Areas.Identity.Pages.Account
 {
     public class AccountController : Controller
     {

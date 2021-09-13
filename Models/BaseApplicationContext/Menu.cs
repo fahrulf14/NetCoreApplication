@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SIP.Models.BaseApplicationContext
+namespace NUNA.Models.BaseApplicationContext
 {
     public partial class Menu
     {

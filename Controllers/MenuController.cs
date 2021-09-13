@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SIP.Controllers
+namespace NUNA.Controllers
 {
     public class MenuController : Controller
     {

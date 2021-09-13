@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SIP.Models.BaseApplicationContext
+namespace NUNA.Models.BaseApplicationContext
 {
     [Table("RF_Position")]
     public partial class RF_Position

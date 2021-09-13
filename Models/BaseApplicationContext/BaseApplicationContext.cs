@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace SIP.Models.BaseApplicationContext
+namespace NUNA.Models.BaseApplicationContext
 {
     public partial class BaseApplicationContext : DbContext
     {

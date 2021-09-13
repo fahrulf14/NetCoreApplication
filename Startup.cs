@@ -9,17 +9,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using SIP.Models.BaseApplicationContext;
+using NUNA.Models.BaseApplicationContext;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Globalization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using FluentValidation.AspNetCore;
-using SIP.Services;
-using SIP.Helpers;
+using NUNA.Services;
+using NUNA.Helpers;
 
-namespace SIP
+namespace NUNA
 {
     public class Startup
     {

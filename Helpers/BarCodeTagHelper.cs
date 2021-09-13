@@ -8,7 +8,7 @@ using ZXing.QrCode;
 using System.Drawing;
 using System.IO;
 
-namespace SIP.Controllers.Tags
+namespace NUNA.Controllers.Tags
 {
     [HtmlTargetElement("barcode")]
     public class BarCodeTagHelper : TagHelper

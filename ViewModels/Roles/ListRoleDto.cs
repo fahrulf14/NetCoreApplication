@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SIP.ViewModels.Roles
+namespace NUNA.ViewModels.Roles
 {
     public class ListRoleDto
     {

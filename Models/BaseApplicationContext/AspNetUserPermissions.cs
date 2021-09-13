@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SIP.Models.BaseApplicationContext
+namespace NUNA.Models.BaseApplicationContext
 {
     public partial class AspNetUserPermissions
     {

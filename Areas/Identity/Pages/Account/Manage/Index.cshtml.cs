@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using SIP.Models.BaseApplicationContext;
-using SIP.ViewModels.Personal;
+using NUNA.Models.BaseApplicationContext;
+using NUNA.ViewModels.Personal;
 
-namespace SIP.Areas.Identity.Pages.Account.Manage
+namespace NUNA.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {

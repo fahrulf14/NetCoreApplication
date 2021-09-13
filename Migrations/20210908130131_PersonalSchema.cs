@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace SIP.Migrations
+namespace NUNA.Migrations
 {
     public partial class PersonalSchema : Migration
     {

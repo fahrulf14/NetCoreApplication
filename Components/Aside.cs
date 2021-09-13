@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SIP.Models;
-using SIP.Models.BaseApplicationContext;
-using SIP.Services;
-using SIP.ViewModels;
-using static SIP.Models.MenuAccess;
+using NUNA.Models;
+using NUNA.Models.BaseApplicationContext;
+using NUNA.Services;
+using NUNA.ViewModels;
+using static NUNA.Models.MenuAccess;
 
-namespace SIP.Components
+namespace NUNA.Components
 {
     public class AsideViewComponent : ViewComponent
     {

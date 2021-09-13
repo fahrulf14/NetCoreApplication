@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SIP.Migrations
+namespace NUNA.Migrations
 {
     public partial class AddMenuPermission : Migration
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SIP.ViewModels.UserAccount
+namespace NUNA.ViewModels.UserAccount
 {
     public class UserPermissionDto
     {

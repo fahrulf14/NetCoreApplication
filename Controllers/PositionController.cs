@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SIP.Helpers;
-using SIP.Models.BaseApplicationContext;
-using SIP.Services;
+using NUNA.Helpers;
+using NUNA.Models.BaseApplicationContext;
+using NUNA.Services;
 
-namespace SIP.Controllers
+namespace NUNA.Controllers
 {
     public class PositionController : Controller
     {

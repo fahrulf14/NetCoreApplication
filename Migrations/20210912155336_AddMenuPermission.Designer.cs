@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using SIP.Models.BaseApplicationContext;
+using NUNA.Models.BaseApplicationContext;
 
-namespace SIP.Migrations
+namespace NUNA.Migrations
 {
     [DbContext(typeof(BaseApplicationContext))]
     [Migration("20210912155336_AddMenuPermission")]
@@ -22,7 +22,7 @@ namespace SIP.Migrations
                 .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetRoleClaims", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetRoleClaims", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,7 +46,7 @@ namespace SIP.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetRoleMenus", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetRoleMenus", b =>
                 {
                     b.Property<string>("RoleId")
                         .HasColumnType("character varying(36)")
@@ -63,7 +63,7 @@ namespace SIP.Migrations
                     b.ToTable("AspNetRoleMenus");
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetRolePermissions", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetRolePermissions", b =>
                 {
                     b.Property<string>("RoleId")
                         .HasColumnType("character varying(36)")
@@ -80,7 +80,7 @@ namespace SIP.Migrations
                     b.ToTable("AspNetRolePermissions");
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetRoles", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetRoles", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -105,7 +105,7 @@ namespace SIP.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUserClaims", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserClaims", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -129,7 +129,7 @@ namespace SIP.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUserLogins", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserLogins", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("character varying(128)")
@@ -153,7 +153,7 @@ namespace SIP.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUserMenus", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserMenus", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("character varying(36)")
@@ -170,7 +170,7 @@ namespace SIP.Migrations
                     b.ToTable("AspNetUserMenus");
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUserPermissions", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserPermissions", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("character varying(36)")
@@ -187,7 +187,7 @@ namespace SIP.Migrations
                     b.ToTable("AspNetUserPermissions");
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUserRoles", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserRoles", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("text");
@@ -202,7 +202,7 @@ namespace SIP.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUserTokens", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserTokens", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("text");
@@ -223,7 +223,7 @@ namespace SIP.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUsers", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUsers", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -286,7 +286,7 @@ namespace SIP.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.Menu", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.Menu", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -331,7 +331,7 @@ namespace SIP.Migrations
                     b.ToTable("Menu");
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.Personal", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.Personal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -380,7 +380,7 @@ namespace SIP.Migrations
                     b.ToTable("Personal");
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.RF_Position", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.RF_Position", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -399,7 +399,7 @@ namespace SIP.Migrations
                     b.ToTable("RF_Position");
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.UserSetting", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.UserSetting", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -421,96 +421,96 @@ namespace SIP.Migrations
                     b.ToTable("UserSetting");
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetRoleClaims", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetRoleClaims", b =>
                 {
-                    b.HasOne("SIP.Models.BaseApplicationContext.AspNetRoles", "Role")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetRoles", "Role")
                         .WithMany("AspNetRoleClaims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetRoleMenus", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetRoleMenus", b =>
                 {
-                    b.HasOne("SIP.Models.BaseApplicationContext.AspNetRoles", "Role")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetRoles", "Role")
                         .WithMany("AspNetRoleMenus")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetRolePermissions", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetRolePermissions", b =>
                 {
-                    b.HasOne("SIP.Models.BaseApplicationContext.AspNetRoles", "Role")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetRoles", "Role")
                         .WithMany("AspNetRolePermissions")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUserClaims", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserClaims", b =>
                 {
-                    b.HasOne("SIP.Models.BaseApplicationContext.AspNetUsers", "User")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetUsers", "User")
                         .WithMany("AspNetUserClaims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUserLogins", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserLogins", b =>
                 {
-                    b.HasOne("SIP.Models.BaseApplicationContext.AspNetUsers", "User")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetUsers", "User")
                         .WithMany("AspNetUserLogins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUserMenus", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserMenus", b =>
                 {
-                    b.HasOne("SIP.Models.BaseApplicationContext.AspNetUsers", "User")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetUsers", "User")
                         .WithMany("AspNetUserMenus")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUserPermissions", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserPermissions", b =>
                 {
-                    b.HasOne("SIP.Models.BaseApplicationContext.AspNetUsers", "User")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetUsers", "User")
                         .WithMany("AspNetUserPermissions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUserRoles", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserRoles", b =>
                 {
-                    b.HasOne("SIP.Models.BaseApplicationContext.AspNetRoles", "Role")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetRoles", "Role")
                         .WithMany("AspNetUserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SIP.Models.BaseApplicationContext.AspNetUsers", "User")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetUsers", "User")
                         .WithMany("AspNetUserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUserTokens", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserTokens", b =>
                 {
-                    b.HasOne("SIP.Models.BaseApplicationContext.AspNetUsers", "User")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetUsers", "User")
                         .WithMany("AspNetUserTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.Personal", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.Personal", b =>
                 {
-                    b.HasOne("SIP.Models.BaseApplicationContext.RF_Position", "RF_Position")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.RF_Position", "RF_Position")
                         .WithMany("Personals")
                         .HasForeignKey("RF_PositionId");
                 });

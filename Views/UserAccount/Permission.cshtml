@@ -1,0 +1,275 @@
+﻿@model SIP.ViewModels.UserAccount.UserPermissionDto
+
+@{
+    ViewBag.Title = "Setting Permission";
+    ViewBag.SubHeaderTitle = "User Account";
+    ViewBag.S1 = "Permission";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row justify-content-center" style="padding-bottom:20px;">
+        <div class="col-lg-11">
+            <div class="kt-portlet kt-portlet--last kt-portlet--head-lg kt-portlet--responsive-mobile" id="kt_page_portlet">
+                <div class="kt-portlet__head kt-portlet__head--lg">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">Setting Permission & Menu Access <small>By User</small></h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <a asp-action="Index" class="btn btn-clean kt-margin-r-10">
+                            <i class="la la-arrow-left"></i>
+                            <span class="kt-hidden-mobile">Back</span>
+                        </a>
+                        <button type="button" onclick="save()" class="btn btn-success">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-3">
+            <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            Detail Personal
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-group">
+                            <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row row-space">
+                        <div class="col-sm-4 display-list">
+                            Nama
+                        </div>
+                        <div class="col-sm-8 display-list">
+                            <span class="kt-font-bold">
+                                @Model.Nama
+                            </span>
+                        </div>
+                        <div class="col-sm-4 display-list">
+                            Position
+                        </div>
+                        <div class="col-sm-8 display-list">
+                            <span class="kt-font-bold">
+                                @Model.Position
+                            </span>
+                        </div>
+                        <div class="col-sm-4 display-list">
+                            Email
+                        </div>
+                        <div class="col-sm-8 display-list">
+                            <span class="kt-font-bold">
+                                @Model.Email
+                            </span>
+                        </div>
+                        <div class="col-sm-4 display-list">
+                            Role
+                        </div>
+                        <div class="col-sm-8 display-list">
+                            @foreach (var item in Model.Role)
+                            {
+                                <span><span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">@item</span></span>
+                            }
+                        </div>
+                        <div class="col-sm-4 display-list">
+                            Status
+                        </div>
+                        <div class="col-sm-8 display-list">
+                            @if (Model.IsActive)
+                            {
+                                <span><span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">Aktif</span></span>
+                            }
+                            else
+                            {
+                                <span><span class="kt-badge kt-badge--danger kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-danger">Non Aktif</span></span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <!--begin::Portlet-->
+            <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_menu">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            Setting Menu Access
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-group">
+                            <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div id="menu_tree" class="tree-demo"></div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+        </div>
+        <div class="col-lg-4">
+            <!--begin::Portlet-->
+            <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_permission">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            @ViewBag.Title
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-group">
+                            <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div id="permission_tree" class="tree-demo"></div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+
+        function save() {
+            var permissionId = [];
+
+            let selectedPermissionId = $('#permission_tree').jstree('get_selected', true);
+            for (let i = 0; i < selectedPermissionId.length; i++) {
+                permissionId.push(selectedPermissionId[i].id);
+            }
+
+            var menuId = [];
+
+            let selectedMenuId = $('#menu_tree').jstree('get_selected', true);
+            for (let i = 0; i < selectedMenuId.length; i++) {
+                menuId.push(selectedMenuId[i].id);
+            }
+
+            var input = {};
+            input.id = "@Model.UserId";
+            input.permission = permissionId;
+            input.menu = menuId;
+            debugger
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdatePermission", "UserAccount")',
+                data: JSON.stringify(input),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    toastr.success("Hak Akses berhasil diubah!");
+                },
+                error: function () {
+                    alert("Error while inserting data");
+                }
+            });
+            return false;
+        }
+
+        var KTTreeview = function () {
+            var permission_tree = function (json) {
+                $('#permission_tree').jstree({
+                    'plugins': ["wholerow", "checkbox", "types"],
+                    'core': {
+                        "themes": {
+                            "responsive": false
+                        },
+                        'data': json
+                    },
+                    "types": {
+                        "default": {
+                            "icon": "fa fa-folder kt-font-info"
+                        },
+                        "file": {
+                            "icon": "fa fa-file  kt-font-info"
+                        }
+                    },
+                    "plugins": ["types", "checkbox"]
+                });
+            }
+
+            var menu_tree = function (json) {
+                $('#menu_tree').jstree({
+                    'plugins': ["wholerow", "checkbox", "types"],
+                    'core': {
+                        "themes": {
+                            "responsive": false
+                        },
+                        'data': json
+                    },
+                    "types": {
+                        "default": {
+                            "icon": "fa fa-folder kt-font-warning"
+                        },
+                        "file": {
+                            "icon": "fa fa-file  kt-font-warning"
+                        }
+                    },
+                    "plugins": ["types", "checkbox"]
+                });
+            }
+
+            return {
+                //main function to initiate the module
+                init: function () {
+                    $(function () {
+                        $.ajax({
+                            async: true,
+                            type: "GET",
+                            url: "@Url.Action("GetPermission", "UserAccount")",
+                            dataType: "json",
+
+                            success: function (json) {
+                                permission_tree(json);
+                            },
+
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                alert(xhr.status);
+                                alert(thrownError);
+                            }
+                        });
+                    });
+
+                    $(function () {
+                        $.ajax({
+                            async: true,
+                            type: "GET",
+                            url: "@Url.Action("GetMenuAccess", "UserAccount")",
+                            dataType: "json",
+
+                            success: function (json) {
+                                menu_tree(json);
+                            },
+
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                alert(xhr.status);
+                                alert(thrownError);
+                            }
+                        });
+                    });
+                }
+            };
+        }();
+
+        jQuery(document).ready(function () {
+            $('#permission_tree').jstree('destroy');
+            KTTreeview.init();
+        });
+
+    </script>
+}

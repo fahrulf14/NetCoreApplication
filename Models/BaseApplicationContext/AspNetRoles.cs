@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,6 +10,8 @@ namespace SIP.Models.BaseApplicationContext
         {
             AspNetRoleClaims = new HashSet<AspNetRoleClaims>();
             AspNetUserRoles = new HashSet<AspNetUserRoles>();
+            AspNetRolePermissions = new HashSet<AspNetRolePermissions>();
+            AspNetRoleMenus = new HashSet<AspNetRoleMenus>();
         }
 
         [Key]
@@ -25,5 +26,8 @@ namespace SIP.Models.BaseApplicationContext
         public virtual ICollection<AspNetRoleClaims> AspNetRoleClaims { get; set; }
         [InverseProperty("Role")]
         public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
+
+        public virtual ICollection<AspNetRolePermissions> AspNetRolePermissions { get; set; }
+        public virtual ICollection<AspNetRoleMenus> AspNetRoleMenus { get; set; }
     }
 }

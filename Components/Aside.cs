@@ -6,7 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SIP.Models;
 using SIP.Models.BaseApplicationContext;
+using SIP.Services;
+using SIP.ViewModels;
+using static SIP.Models.MenuAccess;
 
 namespace SIP.Components
 {
@@ -14,6 +18,7 @@ namespace SIP.Components
     {
         private readonly BaseApplicationContext _appContext;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly MenuService _menuService = new MenuService();
 
         public AsideViewComponent(BaseApplicationContext context, UserManager<IdentityUser> userManager)
         {
@@ -30,13 +35,59 @@ namespace SIP.Components
                 var Personal = await _appContext.Personal.FirstOrDefaultAsync(d => d.Email == user.Email);
 
                 var Position = _appContext.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
+                var permission = (from a in _appContext.AspNetUserPermissions
+                                  where a.UserId == user.Id
+                                  select a.Permission).ToList();
 
                 HttpContext.Session.SetString("Email", Personal.Email);
                 HttpContext.Session.SetString("Nama", Personal.Nama);
                 HttpContext.Session.SetString("Position", Position);
+                HttpContext.Session.SetString("Permission", string.Join("|", permission));
             }
 
+            var userId = await _userManager.GetUserAsync(HttpContext.User);
+
+            var access = (from a in _appContext.AspNetUserMenus
+                          where a.UserId == userId.Id
+                          select a).ToList();
+
             var model = _appContext.Menu.Where(d => d.IsActive).OrderBy(d => d.NoUrut).ToList();
+
+
+
+            var menuList = (from a in model
+                            select new MenuAccess
+                            {
+                                Code = a.Code,
+                                Parent = a.Parent,
+                                Nama = a.Nama
+                            }).ToList();
+
+            var menuAccess = (from a in model
+                              join b in access on _menuService.GetMenuAccessName(a.Code, menuList).Nama equals b.Menu
+                              select new MenuAccess
+                              {
+                                  Code = a.Code,
+                                  Parent = a.Parent,
+                                  Nama = b.Menu
+                              }).ToList();
+
+            List<string> parent = new List<string>(); 
+            foreach(var item in menuAccess)
+            {
+                var data = item.Nama.Split(".");
+                if(data != null) { parent.AddRange(data); }
+            }
+
+            var parentMenu = (from a in model
+                              where parent.Contains(a.Nama)
+                              select a).Distinct().ToList();
+
+            var cekPermission = (from a in model
+                                 join b in menuAccess on a.Code equals b.Code
+                                 select a).ToList();
+
+            cekPermission.AddRange(parentMenu);
 
             var menu = _appContext.Menu.Where(d => d.Controller == controller && d.ActionName == action).FirstOrDefault();
             if (menu != null)
@@ -70,7 +121,7 @@ namespace SIP.Components
                 }
             }
 
-            return await Task.FromResult((IViewComponentResult)View("Default", model));
+            return await Task.FromResult((IViewComponentResult)View("Default", cekPermission.Distinct().ToList()));
         }
     }
 }

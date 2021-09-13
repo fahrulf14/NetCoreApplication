@@ -16,6 +16,8 @@ using System.Globalization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using FluentValidation.AspNetCore;
+using SIP.Services;
+using SIP.Helpers;
 
 namespace SIP
 {
@@ -38,7 +40,7 @@ namespace SIP
             services.TryAddSingleton<IWebHostEnvironment>();
             services.AddDistributedMemoryCache();
             services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(60);//You can set Time   
+                options.IdleTimeout = TimeSpan.FromMinutes(20);//You can set Time   
             });
 
             services.AddControllersWithViews()
@@ -46,6 +48,9 @@ namespace SIP
 
             services.AddMvc()
                 .AddNewtonsoftJson();
+
+            services.AddHttpContextAccessor();
+            services.AddSingleton<SessionHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +70,8 @@ namespace SIP
             app.UseAuthentication();
             app.UseSession();
             app.UseRouting();
+
+            SessionService.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
 
             app.UseAuthorization();
 

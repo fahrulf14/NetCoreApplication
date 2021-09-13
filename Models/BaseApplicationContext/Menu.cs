@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SIP.Models.BaseApplicationContext
 {
@@ -9,17 +6,19 @@ namespace SIP.Models.BaseApplicationContext
     {
         [Key]
         public int Id { get; set; }
+        [StringLength(12)]
         public string Code { get; set; }
 
-        [StringLength(100)]
+        [StringLength(50)]
         public string Nama { get; set; }
-        [StringLength(50)]
+        [StringLength(30)]
         public string Controller { get; set; }
-        [StringLength(50)]
+        [StringLength(30)]
         public string ActionName { get; set; }
-        [StringLength(75)]
+        [StringLength(100)]
         public string IconClass { get; set; }
         public bool IsParent { get; set; }
+        [StringLength(10)]
         public string Parent { get; set; }
         public int? NoUrut { get; set; }
         public bool IsActive { get; set; }

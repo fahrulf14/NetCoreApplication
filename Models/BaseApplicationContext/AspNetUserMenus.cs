@@ -3,17 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SIP.Models.BaseApplicationContext
 {
-    public partial class AspNetUserClaims
+    public partial class AspNetUserMenus
     {
         [Key]
-        public int Id { get; set; }
-        [Required]
+        [StringLength(36)]
         public string UserId { get; set; }
-        public string ClaimType { get; set; }
-        public string ClaimValue { get; set; }
-
+        [Key]
+        [StringLength(100)]
+        public string Menu { get; set; }
         [ForeignKey(nameof(UserId))]
-        [InverseProperty(nameof(AspNetUsers.AspNetUserClaims))]
         public virtual AspNetUsers User { get; set; }
+
     }
 }

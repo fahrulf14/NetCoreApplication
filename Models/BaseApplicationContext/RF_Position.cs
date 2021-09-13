@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,5 +12,6 @@ namespace SIP.Models.BaseApplicationContext
         [StringLength(50)]
         public string Position { get; set; }
         public bool IsActive { get; set; }
+        public virtual ICollection<Personal> Personals { get; set; }
     }
 }

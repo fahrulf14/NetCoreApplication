@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SIP.Models.BaseApplicationContext
 {
@@ -9,7 +6,7 @@ namespace SIP.Models.BaseApplicationContext
     {
         [Key]
         public string Id { get; set; }
-        [StringLength(256)]
+        [StringLength(75)]
         public string Email { get; set; }
         [StringLength(50)]
         public string Theme { get; set; }

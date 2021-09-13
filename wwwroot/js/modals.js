@@ -4,7 +4,7 @@
     $("a[mini-modal]").on("click", function (e) {
         $.ajax({
             type: 'POST',
-            url: '/AjaxData/Modal',
+            url: '/Session/Modal',
             dataType: 'json'
         });
 
@@ -48,7 +48,7 @@ $(function () {
         //$(e.target).closest('.btn-group').children('.dropdown-toggle').dropdown('toggle');
         $.ajax({
             type: 'POST',
-            url: '/AjaxData/Modal',
+            url: '/Session/Modal',
             dataType: 'json'
         });
         $('#myModalContent').load(this.href, function () {

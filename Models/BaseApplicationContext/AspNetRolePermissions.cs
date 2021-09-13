@@ -3,17 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SIP.Models.BaseApplicationContext
 {
-    public partial class AspNetRoleClaims
+    public partial class AspNetRolePermissions
     {
         [Key]
-        public int Id { get; set; }
-        [Required]
+        [StringLength(36)]
         public string RoleId { get; set; }
-        public string ClaimType { get; set; }
-        public string ClaimValue { get; set; }
-
+        [Key]
+        [StringLength(100)]
+        public string Permission { get; set; }
         [ForeignKey(nameof(RoleId))]
-        [InverseProperty(nameof(AspNetRoles.AspNetRoleClaims))]
         public virtual AspNetRoles Role { get; set; }
+
     }
 }

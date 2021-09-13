@@ -133,10 +133,15 @@ namespace SIP.Areas.Identity.Pages.Account
 
                     var Position = _appContext.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
 
+                    var permission = (from a in _appContext.AspNetUserPermissions
+                                      where a.UserId == user.Id
+                                      select a.Permission).ToList();
+
                     HttpContext.Session.SetString("User", user.Id);
                     HttpContext.Session.SetString("Email", Input.Email);
                     HttpContext.Session.SetString("Nama", Personal.Nama);
                     HttpContext.Session.SetString("Position", Position);
+                    HttpContext.Session.SetString("Permission", string.Join("|", permission));
 
                     TempData["status"] = "login";
                     return LocalRedirect(returnUrl);

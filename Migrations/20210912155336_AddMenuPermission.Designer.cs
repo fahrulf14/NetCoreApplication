@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SIP.Models.BaseApplicationContext;
@@ -9,9 +10,10 @@ using SIP.Models.BaseApplicationContext;
 namespace SIP.Migrations
 {
     [DbContext(typeof(BaseApplicationContext))]
-    partial class BaseApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210912155336_AddMenuPermission")]
+    partial class AddMenuPermission
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

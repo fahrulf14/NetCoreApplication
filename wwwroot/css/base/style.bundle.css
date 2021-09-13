@@ -13850,7 +13850,7 @@ code {
 
 .jstree-default .jstree-clicked {
   border: 0;
-  background: #f7f8fa;
+  /*background: #f7f8fa;*/
   -webkit-box-shadow: none;
   box-shadow: none; }
 
@@ -13862,9 +13862,9 @@ code {
 
 .jstree-default .jstree-wholerow-clicked,
 .jstree-default .jstree-wholerow-clicked {
-  background: #ebedf2;
+  /*background: #ebedf2;
   -webkit-box-shadow: none;
-  box-shadow: none; }
+  box-shadow: none;*/ }
 
 .jstree-default .jstree-wholerow-hovered,
 .jstree-default.jstree-wholerow .jstree-wholerow-hovered {

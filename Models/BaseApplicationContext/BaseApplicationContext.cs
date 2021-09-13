@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace SIP.Models.BaseApplicationContext
 {
@@ -16,9 +14,13 @@ namespace SIP.Models.BaseApplicationContext
         }
 
         public virtual DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
+        public virtual DbSet<AspNetRoleMenus> AspNetRoleMenus { get; set; }
+        public virtual DbSet<AspNetRolePermissions> AspNetRolePermissions { get; set; }
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserMenus> AspNetUserMenus { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUserPermissions> AspNetUserPermissions { get; set; }
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
@@ -36,6 +38,20 @@ namespace SIP.Models.BaseApplicationContext
                 entity.HasIndex(e => e.RoleId);
             });
 
+            modelBuilder.Entity<AspNetRoleMenus>(entity =>
+            {
+                entity.HasKey(e => new { e.RoleId, e.Menu });
+
+                entity.HasIndex(e => e.RoleId);
+            });
+
+            modelBuilder.Entity<AspNetRolePermissions>(entity =>
+            {
+                entity.HasKey(e => new { e.RoleId, e.Permission });
+
+                entity.HasIndex(e => e.RoleId);
+            });
+
             modelBuilder.Entity<AspNetRoles>(entity =>
             {
                 entity.HasIndex(e => e.NormalizedName)
@@ -48,9 +64,24 @@ namespace SIP.Models.BaseApplicationContext
                 entity.HasIndex(e => e.UserId);
             });
 
+
             modelBuilder.Entity<AspNetUserLogins>(entity =>
             {
                 entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
+
+                entity.HasIndex(e => e.UserId);
+            });
+
+            modelBuilder.Entity<AspNetUserMenus>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.Menu });
+
+                entity.HasIndex(e => e.UserId);
+            });
+
+            modelBuilder.Entity<AspNetUserPermissions>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.Permission });
 
                 entity.HasIndex(e => e.UserId);
             });
@@ -79,14 +110,19 @@ namespace SIP.Models.BaseApplicationContext
 
             modelBuilder.Entity<Menu>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id);
             });
 
             modelBuilder.Entity<Personal>(entity =>
             {
                 entity.HasIndex(e => e.PositionId);
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id);
+            });
+
+            modelBuilder.Entity<RF_Position>(entity =>
+            {
+                entity.Property(e => e.Id);
             });
 
             OnModelCreatingPartial(modelBuilder);

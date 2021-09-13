@@ -119,7 +119,7 @@
                                     @Html.DisplayFor(modelItem => item.LockoutEnabled)
                                 </td>
                                 <td nowrap>
-                                    @*<a data-modal asp-action="Edit" asp-route-id="@item.IdUser" class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Edit"><i class="la la-edit"></i></a>*@
+                                    <a asp-action="Permission" asp-route-id="@item.UserId" class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Permission"><i class="la la-user-secret"></i></a>
                                     <a mini-modal asp-action="Delete" asp-route-id="@item.UserId" class="btn btn-sm btn-label-danger btn-icon btn-icon-md" title="Hapus"><i class="la la-trash-o"></i></a>
                                 </td>
                             </tr>

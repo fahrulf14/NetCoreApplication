@@ -38,6 +38,7 @@
     <!--begin::Page Style -->
     <link href="~/css/style.css" rel="stylesheet" type="text/css" />
     <link href="~/lib/vendors/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/lib/vendors/jstree/jstree.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Page Style -->
     <!--begin::Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="~/media/favicon/apple-touch-icon.png">
@@ -138,6 +139,7 @@
     <script src="~/lib/vendors.bundle.js" type="text/javascript"></script>
     <script src="~/js/base/scripts.bundle.js" type="text/javascript"></script>
     <script src="~/lib/vendors/datatables/datatables.bundle.js" type="text/javascript"></script>
+    <script src="~/lib/vendors/jstree/jstree.bundle.js" type="text/javascript"></script>
     <!--end::Global Theme Bundle -->
     <!--begin::Page Scripts -->
     <script src="~/js/modals.js" type="text/javascript"></script>
@@ -246,7 +248,7 @@
             }
             $.ajax({
                 type: 'POST',
-                url: '/AjaxData/Menu',
+                url: '/Session/Menu',
                 dataType: 'json',
                 data: {
                     id: menu

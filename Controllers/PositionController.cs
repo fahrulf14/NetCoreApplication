@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Attributes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SIP.Helpers;
 using SIP.Models.BaseApplicationContext;
+using SIP.Services;
 
 namespace SIP.Controllers
 {
     public class PositionController : Controller
     {
         private readonly BaseApplicationContext _appContext;
+        private readonly SessionHandler _session;
 
-        public PositionController(BaseApplicationContext context)
+        public PositionController(BaseApplicationContext context, SessionHandler session)
         {
             _appContext = context;
+            _session = session;
         }
 
         [Auth(new string[] { "Developers", "Parameter" })]
@@ -27,6 +32,9 @@ namespace SIP.Controllers
             ViewBag.L1 = "";
             ViewBag.L2 = "";
             ViewBag.L3 = "";
+
+            _session.Set("Key", "Testing");
+            _session.Get("Key");
 
             return View(await _appContext.RF_Positions.ToListAsync());
         }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SIP.Models.BaseApplicationContext;
@@ -9,9 +10,10 @@ using SIP.Models.BaseApplicationContext;
 namespace SIP.Migrations
 {
     [DbContext(typeof(BaseApplicationContext))]
-    partial class BaseApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210912140745_AddPermission")]
+    partial class AddPermission
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,23 +44,6 @@ namespace SIP.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetRoleMenus", b =>
-                {
-                    b.Property<string>("RoleId")
-                        .HasColumnType("character varying(36)")
-                        .HasMaxLength(36);
-
-                    b.Property<string>("Menu")
-                        .HasColumnType("character varying(100)")
-                        .HasMaxLength(100);
-
-                    b.HasKey("RoleId", "Menu");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleMenus");
                 });
 
             modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetRolePermissions", b =>
@@ -149,23 +134,6 @@ namespace SIP.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserLogins");
-                });
-
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUserMenus", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("character varying(36)")
-                        .HasMaxLength(36);
-
-                    b.Property<string>("Menu")
-                        .HasColumnType("character varying(100)")
-                        .HasMaxLength(100);
-
-                    b.HasKey("UserId", "Menu");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserMenus");
                 });
 
             modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUserPermissions", b =>
@@ -428,15 +396,6 @@ namespace SIP.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetRoleMenus", b =>
-                {
-                    b.HasOne("SIP.Models.BaseApplicationContext.AspNetRoles", "Role")
-                        .WithMany("AspNetRoleMenus")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetRolePermissions", b =>
                 {
                     b.HasOne("SIP.Models.BaseApplicationContext.AspNetRoles", "Role")
@@ -459,15 +418,6 @@ namespace SIP.Migrations
                 {
                     b.HasOne("SIP.Models.BaseApplicationContext.AspNetUsers", "User")
                         .WithMany("AspNetUserLogins")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SIP.Models.BaseApplicationContext.AspNetUserMenus", b =>
-                {
-                    b.HasOne("SIP.Models.BaseApplicationContext.AspNetUsers", "User")
-                        .WithMany("AspNetUserMenus")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

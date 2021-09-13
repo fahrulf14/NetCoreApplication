@@ -6,7 +6,10 @@ using Attributes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SIP.Models;
 using SIP.Models.BaseApplicationContext;
+using SIP.Services;
+using SIP.ViewModels;
 using SIP.ViewModels.Personal;
 
 namespace SIP.Controllers
@@ -14,13 +17,14 @@ namespace SIP.Controllers
     public class PersonalController : Controller
     {
         private readonly BaseApplicationContext _appContext;
+        private readonly MenuService _menuService = new MenuService();
 
         public PersonalController(BaseApplicationContext context)
         {
             _appContext = context;
         }
 
-        [Auth(new string[] { "Developers", "Setting" })]
+        [Authorization(Permission.Personal)]
         public async Task<IActionResult> Index()
         {
             //Link
@@ -46,7 +50,57 @@ namespace SIP.Controllers
             return View(await dB_NewContext.ToListAsync());
         }
 
-        [Auth(new string[] { "Developers", "Setting" })]
+        public async Task<IActionResult> Views()
+        {
+            //Link
+            ViewBag.L = Url.Action("Views");
+            ViewBag.L1 = "";
+            ViewBag.L2 = "";
+            ViewBag.L3 = "";
+
+            var dB_NewContext = (from a in _appContext.Personal
+                                 join b in _appContext.RF_Positions on a.PositionId equals b.Id
+                                 select new ListAccountDto
+                                 {
+                                     PersonalId = a.Id,
+                                     Nama = a.Nama,
+                                     Nip = a.Nip,
+                                     Email = a.Email,
+                                     Position = b.Position,
+                                     IsActive = a.IsActive
+                                 });
+
+            ViewBag.Position = _appContext.RF_Positions.ToList();
+
+            return View(await dB_NewContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> ViewsMenu()
+        {
+            //Link
+            ViewBag.L = Url.Action("Views");
+            ViewBag.L1 = "";
+            ViewBag.L2 = "";
+            ViewBag.L3 = "";
+
+            var dB_NewContext = (from a in _appContext.Personal
+                                 join b in _appContext.RF_Positions on a.PositionId equals b.Id
+                                 select new ListAccountDto
+                                 {
+                                     PersonalId = a.Id,
+                                     Nama = a.Nama,
+                                     Nip = a.Nip,
+                                     Email = a.Email,
+                                     Position = b.Position,
+                                     IsActive = a.IsActive
+                                 });
+
+            ViewBag.Position = _appContext.RF_Positions.ToList();
+
+            return View(await dB_NewContext.ToListAsync());
+        }
+
+        [Authorization(Permission.Personal_Crate)]
         [AjaxOnly]
         public IActionResult Create()
         {
@@ -71,7 +125,7 @@ namespace SIP.Controllers
             return PartialView(Personal);
         }
 
-        [Auth(new string[] { "Developers", "Setting" })]
+        [Authorization(Permission.Personal_Edit)]
         [AjaxOnly]
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -130,7 +184,7 @@ namespace SIP.Controllers
             return PartialView(Personal);
         }
 
-        [Auth(new string[] { "Developers", "Setting" })]
+        [Authorization(Permission.Personal_Delete)]
         [AjaxOnly]
         public async Task<IActionResult> Delete(int id)
         {

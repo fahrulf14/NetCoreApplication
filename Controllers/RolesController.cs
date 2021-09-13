@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SIP.Models.BaseApplicationContext;
 using SIP.ViewModels;
+using SIP.ViewModels.Roles;
 
 namespace SIP.Controllers
 {
@@ -43,11 +44,11 @@ namespace SIP.Controllers
                             User = Personal.Nama
                         });
 
-            List<ListRole> listRole = new List<ListRole>();
+            List<ListRoleDto> listRole = new List<ListRoleDto>();
 
             foreach (var item in data)
             {
-                listRole.Add(new ListRole
+                listRole.Add(new ListRoleDto
                 {
                     Id = item.Id,
                     Role = item.Role,
@@ -85,11 +86,11 @@ namespace SIP.Controllers
                             User = Personal.Nama
                         });
 
-            List<ListUser> listUser = new List<ListUser>();
+            List<ListUserDto> listUser = new List<ListUserDto>();
 
             foreach (var item in data)
             {
-                listUser.Add(new ListUser
+                listUser.Add(new ListUserDto
                 {
                     Id = item.Id,
                     Role = item.Role,
@@ -203,11 +204,11 @@ namespace SIP.Controllers
                             Personal.Nama
                         });
 
-            List<UserRoleEdit> ListUser = new List<UserRoleEdit>();
+            List<UserRoleEditDto> ListUser = new List<UserRoleEditDto>();
 
             foreach (var item in data)
             {
-                ListUser.Add(new UserRoleEdit
+                ListUser.Add(new UserRoleEditDto
                 {
                     UserId = item.UserId,
                     Nama = item.Nama

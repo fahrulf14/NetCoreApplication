@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SIP.ViewModels
 {
-    public class DataTableViewModel
-    {
-
-    }
-
-    public class JQueryDataTableParamModel
+    public class DataTableDto
     {
         /// Request sequence number sent by DataTable, same value must be returned in response
         public string sEcho { get; set; }
@@ -43,7 +35,7 @@ namespace SIP.ViewModels
         public bool? status { get; set; }
 
         // Type Filter
-        public string tipe { get; set; }
+        public string tipe1 { get; set; }
 
         public string tipe2 { get; set; }
 

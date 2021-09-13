@@ -42,11 +42,11 @@ namespace SIP.Controllers
                             u.LockoutEnabled
                         }).ToList();
 
-            List<UserPersonal> List = new List<UserPersonal>();
+            List<PersonalAccountDto> List = new List<PersonalAccountDto>();
 
             foreach (var item in data)
             {
-                List.Add(new UserPersonal
+                List.Add(new PersonalAccountDto
                 {
                     PersonalId = item.Id,
                     UserId = item.IdUser,

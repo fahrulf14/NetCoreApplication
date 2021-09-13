@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SIP.ViewModels
+namespace SIP.ViewModels.UserAccount
 {
-    public class IdentityViewModel
-    {
-
-    }
-
-    public partial class UserPersonal
+    public class PersonalAccountDto
     {
         public int PersonalId { get; set; }
         public string UserId { get; set; }

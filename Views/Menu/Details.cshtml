@@ -1,0 +1,52 @@
+﻿@model Menu
+
+<div class="kt-portlet__body">
+    <div class="row row-space">
+        <div class="col-sm-4 display-list">
+            Icon Class
+        </div>
+        <div class="col-sm-8 display-list">
+            @if (!string.IsNullOrEmpty(Model.IconClass))
+            {
+                <i class="@Model.IconClass la-lg"></i>
+            }
+        </div>
+        <div class="col-sm-4 display-list">
+            Menu
+        </div>
+        <div class="col-sm-8 display-list">
+            <span class="kt-font-bold">
+                @Model.Nama
+            </span>
+        </div>
+        <div class="col-sm-4 display-list">
+            Controller
+        </div>
+        <div class="col-sm-8 display-list">
+            <span class="kt-font-bold">
+                @Model.Controller
+            </span>
+        </div>
+        <div class="col-sm-4 display-list">
+            Action
+        </div>
+        <div class="col-sm-8 display-list">
+            <span class="kt-font-bold">
+                @Model.ActionName
+            </span>
+        </div>
+        <div class="col-sm-4 display-list">
+            Status
+        </div>
+        <div class="col-sm-8 display-list">
+            @if (Model.IsActive)
+            {
+                <span><span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">Aktif</span></span>
+            }
+            else
+            {
+                <span><span class="kt-badge kt-badge--danger kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-danger">Non Aktif</span></span>
+            }
+        </div>
+    </div>
+</div>

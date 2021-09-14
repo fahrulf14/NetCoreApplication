@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Attributes;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using NUNA.Models;
 using NUNA.Models.BaseApplicationContext;
 using NUNA.Services;
-using NUNA.ViewModels;
+using NUNA.ViewModels.Menu;
 using NUNA.ViewModels.UserAccount;
 
 namespace NUNA.Controllers
@@ -116,7 +113,7 @@ namespace NUNA.Controllers
                                                   {
                                                       id = x,
                                                       text = x.Split(".")[1],
-                                                      icon = x.Split(".")[1] == "Create" ? "fa fa-plus-square kt - font-default" :
+                                                      icon = x.Split(".")[1] == "Create" ? "fa fa-plus-square kt-font-default" :
                                                                 x.Split(".")[1] == "Edit" ? "fa fa-pen-square kt-font-default" :
                                                                 x.Split(".")[1] == "Delete" ? "fa fa-minus-square kt-font-default" : "fa fa-check-square kt-font-default",
                                                       state = new
@@ -284,7 +281,7 @@ namespace NUNA.Controllers
         public List<string> GetMenuList()
         {
             var menu = (from a in _appContext.Menu
-                        select new MenuAccess
+                        select new MenuAccessDto
                         {
                             Nama = a.Nama,
                             Code = a.Code,

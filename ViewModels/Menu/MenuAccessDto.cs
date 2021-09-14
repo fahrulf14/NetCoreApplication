@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NUNA.Models
+namespace NUNA.ViewModels.Menu
 {
-    public class MenuAccess
+    public class MenuAccessDto
     {
         public string Nama { get; set; }
         public string Code { get; set; }

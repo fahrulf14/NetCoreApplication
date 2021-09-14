@@ -164,7 +164,6 @@
             input.id = "@Model.UserId";
             input.permission = permissionId;
             input.menu = menuId;
-            debugger
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("UpdatePermission", "UserAccount")',

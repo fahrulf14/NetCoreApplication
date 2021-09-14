@@ -1,5 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using NUNA.Models.BaseApplicationContext;
+using NUNA.Services;
+using NUNA.ViewModels.Menu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,67 +14,226 @@ namespace NUNA.Controllers
 {
     public class MenuController : Controller
     {
-        // GET: MenuController
-        public ActionResult Index()
+        private readonly BaseApplicationContext _appContext;
+        private readonly UserManager<IdentityUser> _userManager;
+        public MenuController(BaseApplicationContext context, UserManager<IdentityUser> userManager)
         {
+            _appContext = context;
+            _userManager = userManager;
+        }
+        public IActionResult Index()
+        {
+            //Link
+            ViewBag.L = Url.Action("Index");
+            ViewBag.L1 = "";
+            ViewBag.L2 = "";
+            ViewBag.L3 = "";
+
             return View();
         }
 
-        // GET: MenuController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var result = (from a in _appContext.Menu
+                          where a.Id == id
+                          select a).FirstOrDefault();
+
+            return PartialView(result);
         }
 
-        // GET: MenuController/Create
-        public ActionResult Create()
+        public JsonResult GetMenuAccess()
         {
-            return View();
+            List<string> root = new List<string> { "Menu" };
+
+            var menu = (from a in _appContext.Menu
+                        select a).ToList();
+
+            var listPermission = (from x in root
+                                  select new
+                                  {
+                                      id = "0",
+                                      text = x,
+                                      children = (from a in menu
+                                                  where a.Parent == "0"
+                                                  orderby a.NoUrut
+                                                  select new
+                                                  {
+                                                      id = a.Id.ToString(),
+                                                      text = a.Nama,
+                                                      icon = a.IsActive ? "" : "fa fa-folder kt-font-default",
+                                                      children = (from b in menu
+                                                                   where b.Parent == a.Code
+                                                                   orderby b.NoUrut
+                                                                   select new
+                                                                   {
+                                                                       id = b.Id.ToString(),
+                                                                       text = b.Nama,
+                                                                       icon = b.IsActive ? "" : "fa fa-folder kt-font-default",
+                                                                       children = (from c in menu
+                                                                                    where c.Parent == b.Code
+                                                                                    orderby c.NoUrut
+                                                                                    select new
+                                                                                    {
+                                                                                        id = c.Id.ToString(),
+                                                                                        text = c.Nama,
+                                                                                        icon = c.IsActive ? "" : "fa fa-folder kt-font-default",
+                                                                                        children = (from d in menu
+                                                                                                    where d.Parent == c.Code
+                                                                                                    orderby d.NoUrut
+                                                                                                    select new
+                                                                                                    {
+                                                                                                        id = d.Id.ToString(),
+                                                                                                        text = d.Nama,
+                                                                                                        icon = d.IsActive ? "" : "fa fa-folder kt-font-default"
+                                                                                                    }).ToList()
+                                                                                    }).ToList()
+                                                                   }).ToList()
+                                                  }).ToList()
+                                  }).ToList();
+
+            return Json(listPermission);
         }
 
-        // POST: MenuController/Create
+        public ActionResult Create(int id)
+        {
+            if (id == 0)
+            {
+                ViewBag.Parent = "0";
+
+                return PartialView();
+            }
+            var result = (from a in _appContext.Menu
+                          where a.Id == id
+                          select a).FirstOrDefault();
+
+            ViewBag.Parent = result.Code;
+
+            return PartialView();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Menu input)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                var code = "";
+                var menu = (from a in _appContext.Menu
+                            where a.Parent == input.Parent
+                            select a).ToList();
+
+                var lastNumber = menu.Select(d => d.Code).OrderByDescending(d => d).FirstOrDefault();
+
+                if (lastNumber == null)
+                {
+                    code = input.Parent + "01";
+                }
+                else
+                {
+                    if (lastNumber.Length == 2)
+                    {
+                        var number = lastNumber.Substring(0, 1) == "0" ? lastNumber.Substring(1) : lastNumber;
+                        code = (int.Parse(number) + 1).ToString().PadLeft(2, '0');
+                    }
+                    else if (lastNumber.Length == 4)
+                    {
+                        var number = lastNumber.Substring(2, 1) == "0" ? lastNumber.Substring(3) : lastNumber;
+                        code = lastNumber.Substring(0, 2) + (int.Parse(number) + 1).ToString().PadLeft(2, '0');
+                    }
+                    else if (lastNumber.Length == 6)
+                    {
+                        var number = lastNumber.Substring(4, 1) == "0" ? lastNumber.Substring(5) : lastNumber;
+                        code = lastNumber.Substring(0, 4) + (int.Parse(number) + 1).ToString().PadLeft(2, '0');
+                    }
+                    else if (lastNumber.Length == 8)
+                    {
+                        var number = lastNumber.Substring(6, 1) == "0" ? lastNumber.Substring(7) : lastNumber;
+                        code = lastNumber.Substring(0, 6) + (int.Parse(number) + 1).ToString().PadLeft(2, '0');
+                    }
+                }
+
+                Menu insert = new Menu
+                {
+                    ActionName = input.ActionName,
+                    Controller = input.ActionName != null ? input.Controller : null,
+                    Code = code,
+                    IconClass = input.IconClass,
+                    IsActive = true,
+                    IsParent = input.IsParent,
+                    Nama = input.Nama,
+                    Parent = input.Parent,
+                    NoUrut = menu.Max(d => d.NoUrut) + 1
+                };
+
+                _appContext.Add(insert);
+                _appContext.SaveChanges();
+
+                TempData["status"] = "success|Data Berhasil Disimpan";
+                string link = Url.Action("Index");
+                return Json(new { success = true, url = link });
             }
-            catch
-            {
-                return View();
-            }
+
+            ViewBag.Parent = input.Parent;
+
+            return PartialView(input);
         }
 
-        // GET: MenuController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var result = (from a in _appContext.Menu
+                          where a.Id == id
+                          select a).FirstOrDefaultAsync();
+
+            return PartialView(await result);
         }
 
-        // POST: MenuController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, Menu input)
         {
-            try
+            if (id != input.Id)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
+
+            if (ModelState.IsValid)
             {
-                return View();
+                var update = _appContext.Menu.Find(id);
+                update.Controller = input.ActionName != null ? input.Controller : null;
+                update.ActionName = input.ActionName;
+                update.IconClass = input.IconClass;
+                update.IsActive = input.IsActive;
+                update.IsParent = input.IsParent;
+                update.Nama = input.Nama;
+                try 
+                {
+                    _appContext.Update(update);
+                    await _appContext.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!MenuExists(input.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                TempData["status"] = "success|Data Berhasil Disimpan";
+                string link = Url.Action("Index");
+                return Json(new { success = true, url = link });
             }
+            
+            return PartialView(input);
         }
 
-        // GET: MenuController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: MenuController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
@@ -82,6 +246,11 @@ namespace NUNA.Controllers
             {
                 return View();
             }
+        }
+
+        private bool MenuExists(int id)
+        {
+            return _appContext.Menu.Any(e => e.Id == id);
         }
     }
 }

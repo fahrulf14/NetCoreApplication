@@ -148,3 +148,7 @@ body {
 .length {
     max-width: 75px!important;
 }
+
+.icon-select {
+    cursor: pointer;
+}

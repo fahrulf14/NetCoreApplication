@@ -9,8 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using NUNA.Models;
 using NUNA.Models.BaseApplicationContext;
 using NUNA.Services;
-using NUNA.ViewModels;
-using static NUNA.Models.MenuAccess;
+using NUNA.ViewModels.Menu;
 
 namespace NUNA.Components
 {
@@ -56,7 +55,7 @@ namespace NUNA.Components
 
 
             var menuList = (from a in model
-                            select new MenuAccess
+                            select new MenuAccessDto
                             {
                                 Code = a.Code,
                                 Parent = a.Parent,
@@ -65,7 +64,7 @@ namespace NUNA.Components
 
             var menuAccess = (from a in model
                               join b in access on _menuService.GetMenuAccessName(a.Code, menuList).Nama equals b.Menu
-                              select new MenuAccess
+                              select new MenuAccessDto
                               {
                                   Code = a.Code,
                                   Parent = a.Parent,

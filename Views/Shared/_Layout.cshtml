@@ -146,117 +146,61 @@
     <script src="~/js/script.js" type="text/javascript"></script>
     <!--end::Page Scripts -->
     @RenderSection("Scripts", required: false)
-    <script>
+<script>
 
-        var status = "@TempData["status"]";
-        if (status == "login") {
-            toastr.success("Login Berhasil!");
-        }
-        else if (status == "loginAlready") {
-            toastr.error("Anda Sudah Login!");
-        }
-        else if (status == "edit") {
-            toastr.success("Data Berhasil Diedit!");
-        }
-        else if (status == "create") {
-            toastr.success("Data Berhasil Ditambahkan!");
-        }
-        else if (status == "delete") {
-            toastr.success("Data Berhasil Dihapus!");
-        }
-        else if (status == "deletefailed") {
-        toastr.error("Data Tidak Bisa Dihapus!");
-        }
-        else if (status == "valid") {
-            toastr.success("Data Berhasil Divalidasi!");
-        }
-        else if (status == "validbatal") {
-            toastr.success("Validasi dibatalkan!");
-        }
-        else if (status == "sudahvalid") {
-            toastr.error("Data sudah divalidasi!");
-        }
-        else if (status == "validbatalerror") {
-            toastr.error("Validasi Tidak Dapat Dibatalkan!");
-        }
-        else if (status == "validlspoperror") {
-            toastr.error("Data LSPOP Belum Divalidasi!");
-        }
-        else if (status == "ubahpassword") {
-            toastr.success("Password Berhasil Diubah!");
-        }
-        else if (status == "salah") {
-            toastr.error("Terjadi Kesalahan!");
-        }
-        else if (status == "denyaccess") {
-            toastr.error("Anda Tidak Memiliki Hak Akses!");
-        }
-        else if (status == "nik") {
-            toastr.error("NIK Sudah Terdaftar dalam Sistem!");
-        }
-        else if (status == "npwp") {
-            toastr.error("NPWP Sudah Terdaftar dalam Sistem!");
-        }
-        else if (status == "nop") {
-            toastr.error("NOP Sudah Terdaftar dalam Sistem!");
-        }
-        else if (status == "nopsalah") {
-            toastr.error("NOP Tidak Sesuai!");
-        }
-        else if (status == "cetakNull") {
-            toastr.error("Pilih Data yang Akan Dicetak!");
-        }
-        else if (status == "DPP0") {
-            toastr.error("Error! Harap input data dengan Benar!");
-        }
-        else if (status == "HargaNull") {
-            toastr.error("Input Harga Pasar!");
-        }
-        else if (status == "HargaDuplicate") {
-            var uraian = "@TempData["uraian"]";
-            toastr.error("Harga Pasar " + uraian + " Sudah Ada!");
-        }
-            else if (status == "LraDuplicate") {
-            var uraian = "@TempData["uraian"]";
-            toastr.error("Anggaran " + uraian + " Sudah Ada!");
-        }
-        else if (status == "HargaMin") {
-            var harga = "@TempData["Harga"]";
-            toastr.error("Harga Jual < " + harga);
-        }
-            else if (status == "AnggaranMax") {
-            var jumlah = "@TempData["Jumlah"]";
-            toastr.error("Total Anggaran Melebihi " + jumlah);
-        }
-        else if (status == "TarifNull") {
-            toastr.error("Input Tarif Pajak " + "@TempData["Coa"]" + " Sesuai Masa Berlaku");
-        }
-        else if (status == "fiskal") {
-            toastr.error("Wajib Pajak Masih Memiliki " + "@TempData["surat"]" + " Belum Lunas!");
-        }
-        else if (status == "RegStsNull") {
-            toastr.error("Data STS Tidak Ditemukan!");
-        }
+    var notification = "@TempData["status"]";
 
-        $('#kt_aside_toggler').click(function () {
-            var menu;
-            if ($("body").hasClass("kt-aside--minimize")) {
-                menu = "kt-aside--minimize";
-            }
-            else {
-                menu = "head";
-            }
-            $.ajax({
-                type: 'POST',
-                url: '/Session/Menu',
-                dataType: 'json',
-                data: {
-                    id: menu
+    var Toastr = function () {
+        return {
+            init: function () {
+                if (notification != null) {
+                    var status = notification.split('|')[0];
+                    var message = notification.split('|')[1];
+
+                    switch (status) {
+                        case 'success':
+                            toastr.success(message);
+                            break;
+                        case 'info':
+                            toastr.info(message);
+                            break;
+                        case 'warning':
+                            toastr.warning(message);
+                            break;
+                        case 'error':
+                            toastr.error(message);
+                            break;
+                        default:
+                        // executed default
+                    }
                 }
-            });
-        });
+            }
+        };
+    }();
 
-    </script>
+    jQuery(document).ready(function () {
+        Toastr.init();
+    });
+
+    $('#kt_aside_toggler').click(function () {
+        var menu;
+        if ($("body").hasClass("kt-aside--minimize")) {
+            menu = "kt-aside--minimize";
+        }
+        else {
+            menu = "head";
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/Session/Menu',
+            dataType: 'json',
+            data: {
+                id: menu
+            }
+        });
+    });
+
+</script>
 </body>
 <!-- end::Body -->
 </html>

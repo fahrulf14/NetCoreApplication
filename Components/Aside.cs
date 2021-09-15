@@ -52,8 +52,6 @@ namespace NUNA.Components
 
             var model = _appContext.Menu.Where(d => d.IsActive).OrderBy(d => d.NoUrut).ToList();
 
-
-
             var menuList = (from a in model
                             select new MenuAccessDto
                             {

@@ -109,7 +109,6 @@
                     "plugins": ["types"]
                 }).on('changed.jstree', function (e, data) {
                     try {
-                        debugger
                         var id = data.node.id;
                         if (id === "0") {
                             $('#create-botton').removeClass("disabled").attr("href", "/Menu/Create/0");

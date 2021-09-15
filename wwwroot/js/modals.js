@@ -14,13 +14,13 @@
                 keyboard: true
             }, 'show');
             $('.kt-selectpicker').selectpicker();
-            bindForm(this);
+            bindFormMini(this);
         });
         return false;
     });
 });
 
-function bindForm(dialog) {
+function bindFormMini(dialog) {
     $('form', dialog).submit(function () {
         $.ajax({
             url: this.action,
@@ -31,8 +31,7 @@ function bindForm(dialog) {
                     $('#minModal').modal('hide');
                     window.location.href = result.url;
                 } else {
-                    $('#minModalContent').html(result);
-                    bindForm(dialog);
+                    throwMessage(result);
                 }
             }
         });
@@ -74,8 +73,7 @@ function bindForm(dialog) {
                     $('#myModal').modal('hide');
                     window.location.href = result.url;
                 } else {
-                    $('#myModalContent').html(result);
-                    bindForm(dialog);
+                    throwMessage(result);
                 }
             }
         });
@@ -86,18 +84,23 @@ function bindForm(dialog) {
 $(function () {
     $.ajaxSetup({ cache: false });
     $("a[big-modal]").on("click", function (e) {
+        $.ajax({
+            type: 'POST',
+            url: '/Session/Modal',
+            dataType: 'json'
+        });
         $('#bigModalContent').load(this.href, function () {
             $('#bigModal').modal({
                 keyboard: true
             }, 'show');
             $('.kt-selectpicker').selectpicker();
-            bindForm2(this);
+            bindFormBig(this);
         });
         return false;
     });
 });
 
-function bindForm2(dialog) {
+function bindFormBig(dialog) {
     $('form', dialog).submit(function () {
         $.ajax({
             url: this.action,
@@ -108,13 +111,30 @@ function bindForm2(dialog) {
                     $('#bigModal').modal('hide');
                     window.location.href = result.url;
                 } else {
-                    $('#bigModalContent').html(result);
-                    bindForm(dialog);
+                    throwMessage(result);
                 }
             }
         });
         return false;
     });
+}
+
+function throwMessage(result) {
+    switch (result.type) {
+        case 'success':
+            toastr.success(result.message);
+            break;
+        case 'info':
+            toastr.info(result.message);
+            break;
+        case 'warning':
+            toastr.warning(result.message);
+            break;
+        case 'error':
+            toastr.error(result.message);
+            break;
+        default:
+    }
 }
 
 $(document).on("ajaxComplete", function (e) {

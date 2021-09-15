@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NUNA.Helpers;
 using NUNA.Models.BaseApplicationContext;
 using NUNA.Services;
-using NUNA.ViewModels.Menu;
-using System;
+using NUNA.ViewModels.Toastr;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +16,7 @@ namespace NUNA.Controllers
     {
         private readonly BaseApplicationContext _appContext;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly JsonResultService _result = new JsonResultService();
         public MenuController(BaseApplicationContext context, UserManager<IdentityUser> userManager)
         {
             _appContext = context;
@@ -32,7 +33,7 @@ namespace NUNA.Controllers
             return View();
         }
 
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             var result = (from a in _appContext.Menu
                           where a.Id == id
@@ -94,7 +95,7 @@ namespace NUNA.Controllers
             return Json(listPermission);
         }
 
-        public ActionResult Create(int id)
+        public IActionResult Create(int id)
         {
             if (id == 0)
             {
@@ -113,7 +114,7 @@ namespace NUNA.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Menu input)
+        public IActionResult Create(Menu input)
         {
             if (ModelState.IsValid)
             {
@@ -132,50 +133,53 @@ namespace NUNA.Controllers
                 {
                     if (lastNumber.Length == 2)
                     {
-                        var number = lastNumber.Substring(0, 1) == "0" ? lastNumber.Substring(1) : lastNumber;
+                        var number = lastNumber.Substring(0, 1) == "0" ? lastNumber[1..] : lastNumber;
                         code = (int.Parse(number) + 1).ToString().PadLeft(2, '0');
                     }
                     else if (lastNumber.Length == 4)
                     {
-                        var number = lastNumber.Substring(2, 1) == "0" ? lastNumber.Substring(3) : lastNumber;
+                        var number = lastNumber.Substring(2, 1) == "0" ? lastNumber[3..] : lastNumber;
                         code = lastNumber.Substring(0, 2) + (int.Parse(number) + 1).ToString().PadLeft(2, '0');
                     }
                     else if (lastNumber.Length == 6)
                     {
-                        var number = lastNumber.Substring(4, 1) == "0" ? lastNumber.Substring(5) : lastNumber;
+                        var number = lastNumber.Substring(4, 1) == "0" ? lastNumber[5..] : lastNumber;
                         code = lastNumber.Substring(0, 4) + (int.Parse(number) + 1).ToString().PadLeft(2, '0');
                     }
                     else if (lastNumber.Length == 8)
                     {
-                        var number = lastNumber.Substring(6, 1) == "0" ? lastNumber.Substring(7) : lastNumber;
+                        var number = lastNumber.Substring(6, 1) == "0" ? lastNumber[7..] : lastNumber;
                         code = lastNumber.Substring(0, 6) + (int.Parse(number) + 1).ToString().PadLeft(2, '0');
                     }
                 }
 
-                Menu insert = new Menu
+                try
                 {
-                    ActionName = input.ActionName,
-                    Controller = input.ActionName != null ? input.Controller : null,
-                    Code = code,
-                    IconClass = input.IconClass,
-                    IsActive = true,
-                    IsParent = input.IsParent,
-                    Nama = input.Nama,
-                    Parent = input.Parent,
-                    NoUrut = menu.Max(d => d.NoUrut) + 1
-                };
+                    Menu insert = new Menu
+                    {
+                        ActionName = input.ActionName,
+                        Controller = input.ActionName != null ? input.Controller : null,
+                        Code = code,
+                        IconClass = input.IconClass,
+                        IsActive = true,
+                        IsParent = input.IsParent,
+                        Nama = input.Nama,
+                        Parent = input.Parent,
+                        NoUrut = menu.Max(d => d.NoUrut) + 1
+                    };
 
-                _appContext.Add(insert);
-                _appContext.SaveChanges();
+                    _appContext.Add(insert);
+                    _appContext.SaveChanges();
+                }
+                catch
+                {
+                    return Json(_result.Error(Message.ErrorSave));
+                }
 
-                TempData["status"] = "success|Data Berhasil Disimpan";
-                string link = Url.Action("Index");
-                return Json(new { success = true, url = link });
+                return Json(_result.Success(Url.Action("Index"))).WithSuccess(Message.Save);
             }
 
-            ViewBag.Parent = input.Parent;
-
-            return PartialView(input);
+            return Json(_result.Error(Message.InvalidForm));
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -193,7 +197,7 @@ namespace NUNA.Controllers
         {
             if (id != input.Id)
             {
-                return NotFound();
+                return Json(_result.Error(Message.NotFound));
             }
 
             if (ModelState.IsValid)
@@ -214,29 +218,28 @@ namespace NUNA.Controllers
                 {
                     if (!MenuExists(input.Id))
                     {
-                        return NotFound();
+                        return Json(_result.Error(Message.NotExist));
                     }
                     else
                     {
-                        throw;
+                        return Json(_result.Error(Message.ErrorUpdate));
                     }
                 }
-                TempData["status"] = "success|Data Berhasil Disimpan";
-                string link = Url.Action("Index");
-                return Json(new { success = true, url = link });
+
+                return Json(_result.Success(Url.Action("Index"))).WithSuccess(Message.Update);
             }
-            
-            return PartialView(input);
+
+            return Json(_result.Error(Message.InvalidForm));
         }
 
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult Delete(int id, IFormCollection collection)
         {
             try
             {

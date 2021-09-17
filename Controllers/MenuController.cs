@@ -6,7 +6,12 @@ using NUNA.Helpers;
 using NUNA.Models.BaseApplicationContext;
 using NUNA.Services;
 using NUNA.ViewModels.Toastr;
+using QRCoder;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,6 +34,18 @@ namespace NUNA.Controllers
             ViewBag.L1 = "";
             ViewBag.L2 = "";
             ViewBag.L3 = "";
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                QRCodeData qrCodeData = qrGenerator.CreateQrCode("Fahrul Firdaus", QRCodeGenerator.ECCLevel.Q);
+                QRCode qrCode = new QRCode(qrCodeData);
+                using (Bitmap bitMap = qrCode.GetGraphic(20))
+                {
+                    bitMap.Save(ms, ImageFormat.Png);
+                    ViewBag.QRCodeImage = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+                }
+            }
 
             return View();
         }

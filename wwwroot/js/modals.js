@@ -141,10 +141,10 @@ $(document).on("ajaxComplete", function (e) {
     $(".check").change(function () {
         var id = event.srcElement.id;
         if ($('#' + id).is(":checked")) {
-            document.getElementById(id + "_Status").innerHTML = "Aktif";
+            document.getElementById(id + "_Status").innerHTML = "Active";
         }
         else {
-            document.getElementById(id + "_Status").innerHTML = "Non Aktif";
+            document.getElementById(id + "_Status").innerHTML = "Inactive";
         }
     });
 });
@@ -153,10 +153,10 @@ $(document).on("ajaxComplete", function (e) {
     $(".check2").change(function () {
         var id = event.srcElement.id;
         if ($('#' + id).is(":checked")) {
-            document.getElementById(id + "_Status").innerHTML = "Ya";
+            document.getElementById(id + "_Status").innerHTML = "Yes";
         }
         else {
-            document.getElementById(id + "_Status").innerHTML = "Tidak";
+            document.getElementById(id + "_Status").innerHTML = "No";
         }
     });
 });

@@ -120,10 +120,7 @@
                                 @Html.DisplayFor(modelItem => item.IsActive)
                             </td>
                             <td nowrap>
-                                @if (PermissionHelper.IsAuthorized("Personal.Edit"))
-                                {
-                                    <a data-modal asp-action="Edit" asp-route-id="@item.PersonalId" class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Edit"><i class="la la-edit"></i></a>
-                                }
+                                <a data-modal asp-action="Edit" asp-route-id="@item.PersonalId" asp-authorized="Personal.Edit" class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Edit"><i class="la la-edit"></i></a>
                                 <a mini-modal asp-action="Delete" asp-route-id="@item.PersonalId" class="btn btn-sm btn-label-danger btn-icon btn-icon-md" title="Hapus"><i class="la la-trash-o"></i></a>
                             </td>
                         </tr>

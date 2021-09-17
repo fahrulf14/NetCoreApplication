@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,10 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using NUNA.Models.BaseApplicationContext;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System.Globalization;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc;
-using FluentValidation.AspNetCore;
 using NUNA.Services;
 using NUNA.Helpers;
 
@@ -26,8 +18,8 @@ namespace NUNA
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            configuration.GetSection("AppSettings").Bind(AppSettingHelper.GetValue);
         }
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.

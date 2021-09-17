@@ -6,21 +6,35 @@ namespace NUNA.Models.BaseApplicationContext
     {
         [Key]
         public int Id { get; set; }
+
         [StringLength(12)]
         public string Code { get; set; }
 
+
         [StringLength(50)]
+        [Display(Name = "Menu Name")]
         public string Nama { get; set; }
+
         [StringLength(30)]
         public string Controller { get; set; }
+
         [StringLength(30)]
+        [Display(Name = "Action")]
         public string ActionName { get; set; }
+
         [StringLength(100)]
+        [Display(Name = "Icon Class", Prompt = "Icon Class")]
         public string IconClass { get; set; }
+
+        [Display(Name = "Is Parent")]
         public bool IsParent { get; set; }
         [StringLength(10)]
         public string Parent { get; set; }
+
+        [Display(Name = "Sqeuence Number")]
         public int? NoUrut { get; set; }
+
+        [Display(Name = "Status")]
         public bool IsActive { get; set; }
     }
 }

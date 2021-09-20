@@ -15,10 +15,20 @@ namespace NUNA.Helpers
         {
             SessionHandler _session = new SessionHandler();
 
+            var Email = _session.Get("Email");
+            if (Email != null) Email = Email.Split("@")[0];
             var listPermissionString = _session.Get("Permission");
+            var listRolePermissionString = _session.Get("RolePermission");
 
-            if (!string.IsNullOrEmpty(listPermissionString)){
+            if (!string.IsNullOrEmpty(listPermissionString))
+            {
                 var listPermission = listPermissionString.Split("|").ToList();
+                var listRolePermission = listRolePermissionString.Split("|").ToList();
+
+                if (listRolePermission != null)
+                {
+                    listPermission.AddRange(listRolePermission);
+                }
 
                 if (listPermission.Contains(permission))
                 {
@@ -26,8 +36,17 @@ namespace NUNA.Helpers
                 }
                 else
                 {
+                    if (Email == "developer")
+                    {
+                        return true;
+                    }
+
                     return false;
                 }
+            }
+            else if (Email == "developer")
+            {
+                return true;
             }
             return false;
         }

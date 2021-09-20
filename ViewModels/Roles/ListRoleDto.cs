@@ -9,7 +9,8 @@ namespace NUNA.ViewModels.Roles
     {
         public string Id { get; set; }
         public string Role { get; set; }
-        public string User { get; set; }
+        public int UserCount { get; set; }
+        public int AccessCount { get; set; }
     }
 
     public partial class ListUserDto
@@ -23,5 +24,13 @@ namespace NUNA.ViewModels.Roles
     {
         public string UserId { get; set; }
         public string Nama { get; set; }
+    }
+
+    public partial class RolePermissionDto
+    {
+        public string RoleId { get; set; }
+        public string Role { get; set; }
+        public int UserCount { get; set; }
+        public int AccessCount { get; set; }
     }
 }

@@ -12,16 +12,16 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row">
             <div class="col-md-12 form-group">
-                <label asp-for="Nama" class="control-label"></label>
+                <label asp-for="Nama" class="control-label required"></label>
                 <input asp-for="Nama" class="form-control" required />
                 <span asp-validation-for="Nama" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 form-group">
-                <label asp-for="IconClass" class="control-label"></label>
                 @if (ViewBag.Parent != "0")
                 {
+                    <label asp-for="IconClass" class="control-label"></label>
                     <div class="input-group">
                         <input asp-for="IconClass" disabled class="form-control" aria-describedby="icon-addon">
                         <div class="input-group-append">
@@ -31,6 +31,7 @@
                 }
                 else
                 {
+                    <label asp-for="IconClass" class="control-label required"></label>
                     <div class="input-group">
                         <input asp-for="IconClass" required class="form-control" placeholder="Icon Class" aria-describedby="icon-addon">
                         <div class="input-group-append">

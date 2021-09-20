@@ -20,6 +20,7 @@ namespace Attributes
 
             SessionHandler _session = new SessionHandler();
             var listPermissionString = _session.Get("Permission");
+            var rolePermissionString = _session.Get("RolePermission");
 
             if (!string.IsNullOrEmpty(listPermissionString))
             {
@@ -27,17 +28,31 @@ namespace Attributes
                 var parentPermission = (from a in listPermission
                                         where a.Contains(".")
                                         select a.Split(".")[0]).Distinct().ToList();
-                if(parentPermission.Any())
+                if (parentPermission.Any())
                 {
                     listPermission.AddRange(parentPermission);
                 }
+
+                var listRolePermission = listPermissionString.Split("|").ToList();
+                var parentRolePermission = (from a in listPermission
+                                        where a.Contains(".")
+                                        select a.Split(".")[0]).Distinct().ToList();
+                if (parentRolePermission.Any())
+                {
+                    listRolePermission.AddRange(parentRolePermission);
+                }
+
+                listPermission.AddRange(listRolePermission);
 
                 isAuthorized = (from a in listPermission
                                 where a.Contains(_permission)
                                 select a).Any();
             }
-
-            if (!isAuthorized)
+            if (filterContext.HttpContext.User.IsInRole("Developers"))
+            {
+                base.OnResultExecuting(filterContext);
+            }
+            else if (!isAuthorized)
             {
                 filterContext.Result = new RedirectToRouteResult(new { action = "AccessDenied", controller = "Error" });
             }

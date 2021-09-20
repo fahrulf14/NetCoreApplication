@@ -1,0 +1,186 @@
+﻿@model NUNA.ViewModels.UserAccount.UserPermissionDto
+
+@{
+    ViewBag.Title = "Setting User Roles";
+    ViewBag.SubHeaderTitle = "User Account";
+    ViewBag.S1 = "Roles";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row justify-content-center" style="padding-bottom:20px;">
+        <div class="col-lg-7">
+            <div class="kt-portlet kt-portlet--last kt-portlet--head-lg kt-portlet--responsive-mobile" id="kt_page_portlet">
+                <div class="kt-portlet__head kt-portlet__head--lg">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">Setting User Roles</h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <a asp-action="Index" class="btn btn-clean kt-margin-r-10">
+                            <i class="la la-arrow-left"></i>
+                            <span class="kt-hidden-mobile">Back</span>
+                        </a>
+                        <button type="button" onclick="save()" class="btn btn-success">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-3">
+            <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            User Details
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-group">
+                            <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div class="row">
+                        <div asp-displayfor="Nama" class="col-sm-4 display-list">Name</div>
+                        <div class="col-sm-8 display-list">
+                            <span class="kt-font-bold">
+                                @Model.Nama
+                            </span>
+                        </div>
+                        <div asp-displayfor="Position" class="col-sm-4 display-list"></div>
+                        <div class="col-sm-8 display-list">
+                            <span class="kt-font-bold">
+                                @Model.Position
+                            </span>
+                        </div>
+                        <div asp-displayfor="Email" class="col-sm-4 display-list"></div>
+                        <div class="col-sm-8 display-list">
+                            <span class="kt-font-bold">
+                                @Model.Email
+                            </span>
+                        </div>
+                        <div class="col-sm-4 display-list">
+                            Status
+                        </div>
+                        <div asp-badge="IsActive" class="col-sm-8 display-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <!--begin::Portlet-->
+            <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_role">
+                <div class="kt-portlet__head">
+                    <div class="kt-portlet__head-label">
+                        <h3 class="kt-portlet__head-title">
+                            Setting Roles
+                        </h3>
+                    </div>
+                    <div class="kt-portlet__head-toolbar">
+                        <div class="kt-portlet__head-group">
+                            <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kt-portlet__body">
+                    <div id="role_tree" class="tree-demo"></div>
+                </div>
+            </div>
+            <!--end::Portlet-->
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+
+        function save() {
+            var roleId = [];
+
+            let selectedRoleId = $('#role_tree').jstree('get_selected', true);
+            for (let i = 0; i < selectedRoleId.length; i++) {
+                roleId.push(selectedRoleId[i].id);
+            }
+
+            var input = {};
+            input.id = "@Model.UserId";
+            input.role = roleId;
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateRoles", "UserAccount")',
+                data: JSON.stringify(input),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result.success) {
+                        window.location.href = result.url;
+                    } else {
+                        throwMessage(result);
+                    }
+                },
+                error: function () {
+                    alert("Error while inserting data");
+                }
+            });
+            return false;
+        }
+
+        var KTTreeview = function () {
+            var role_tree = function (json) {
+                $('#role_tree').jstree({
+                    'plugins': ["wholerow", "checkbox", "types"],
+                    'core': {
+                        "themes": {
+                            "responsive": false
+                        },
+                        'data': json
+                    },
+                    "types": {
+                        "default": {
+                            "icon": "fa fa-folder kt-font-success"
+                        },
+                        "file": {
+                            "icon": "fa fa-file  kt-font-success"
+                        }
+                    },
+                    "plugins": ["types", "checkbox"]
+                });
+            }
+
+            return {
+                //main function to initiate the module
+                init: function () {
+                    $(function () {
+                        $.ajax({
+                            async: true,
+                            type: "GET",
+                            url: "@Url.Action("GetRoleAccess", "UserAccount")",
+                            dataType: "json",
+
+                            success: function (json) {
+                                role_tree(json);
+                            },
+
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                alert(xhr.status);
+                                alert(thrownError);
+                            }
+                        });
+                    });
+                }
+            };
+        }();
+
+        jQuery(document).ready(function () {
+            $('#role_tree').jstree('destroy');
+            KTTreeview.init();
+        });
+
+    </script>
+}

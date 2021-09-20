@@ -22,7 +22,7 @@
                 </div>
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-group">
-                        <a data-modal asp-area="Identity" asp-page="/Account/Register" class="btn btn-bold btn-label-brand btn-sm"><i class="la la-plus"></i> Tambah Data</a>
+                        <a data-modal asp-action="Create" class="btn btn-bold btn-label-brand btn-sm"><i class="la la-plus"></i> Create User</a>
                         <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
                     </div>
                 </div>
@@ -120,7 +120,8 @@
                                     @Html.DisplayFor(modelItem => item.LockoutEnabled)
                                 </td>
                                 <td nowrap>
-                                    <a asp-action="Permission" asp-route-id="@item.UserId" class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Permission"><i class="la la-user-secret"></i></a>
+                                    <a asp-action="Roles" asp-route-id="@item.UserId" class="btn btn-sm btn-label-info btn-icon btn-icon-md" title="Roles"><i class="la la-registered"></i></a>
+                                    <a asp-action="Permission" asp-route-id="@item.UserId" class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Permission"><i class="la la-cog"></i></a>
                                     <a mini-modal asp-action="Delete" asp-route-id="@item.UserId" class="btn btn-sm btn-label-danger btn-icon btn-icon-md" title="Hapus"><i class="la la-trash-o"></i></a>
                                 </td>
                             </tr>

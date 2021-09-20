@@ -22,8 +22,7 @@
                 </div>
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-group">
-                        <a data-modal asp-action="Create" class="btn btn-bold btn-label-brand btn-sm"><i class="la la-plus"></i> Tambah Data</a>
-                        <a asp-action="Modul" class="btn btn-bold btn-label-success btn-sm"> List User</a>
+                        <a data-modal asp-action="Create" class="btn btn-bold btn-label-brand btn-sm"><i class="la la-plus"></i> Create Data</a>
                         <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
                     </div>
                 </div>
@@ -65,37 +64,24 @@
                             <th>
                                 Role
                             </th>
-                            <th>User</th>
-                            <th>Kelola</th>
+                            <th>Details</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.GroupBy(d => d.Id))
+                        @foreach (var item in Model)
                         {
                             <tr>
                                 <td></td>
                                 <td>
-                                    @item.FirstOrDefault().Role
+                                    @item.Role
                                 </td>
                                 <td>
-                                    @foreach (var role in Model.Where(d => d.Id == item.FirstOrDefault().Id))
-                                    {
-                                        <span class="kt-badge kt-badge--primary kt-badge--dot"></span><span class="kt-margin-r-5"> @role.User</span>
-                                    }
+                                    <span class="kt-badge kt-badge--primary kt-badge--dot"></span><span class="kt-margin-r-5"> @item.AccessCount Permission Access</span>
+                                    <span class="kt-badge kt-badge--success kt-badge--dot"></span><span class="kt-margin-r-5"> @item.UserCount Users</span>
                                 </td>
                                 <td nowrap>
-                                    <a asp-action="Edit" asp-route-id="@item.FirstOrDefault().Id" class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Edit"><i class="la la-edit"></i></a>
-                                    <a mini-modal asp-action="Delete" asp-route-id="@item.FirstOrDefault().Id" class="btn btn-sm btn-label-danger btn-icon btn-icon-md" title="Hapus"><i class="la la-trash"></i></a>
-                                </td>
-                            </tr>
-                        }
-                        @foreach (var item in (List<NUNA.Models.BaseApplicationContext.AspNetRoles>)ViewBag.Sisa)
-                        {
-                            <tr>
-                                <td></td>
-                                <td>@item.Name</td>
-                                <td></td>
-                                <td nowrap>
+                                    <a asp-action="Permission" asp-route-id="@item.Id" class="btn btn-sm btn-label-info btn-icon btn-icon-md" title="Permission"><i class="la la-user-secret"></i></a>
                                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Edit"><i class="la la-edit"></i></a>
                                     <a mini-modal asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-label-danger btn-icon btn-icon-md" title="Hapus"><i class="la la-trash"></i></a>
                                 </td>

@@ -16,5 +16,6 @@ namespace NUNA.ViewModels.Toastr
         public const string ErrorDelete = "An error occurred while deleting data!";
         public const string NotFound = "Data not found!";
         public const string NotExist = "Data already doesn't exist!";
+        public const string UserExist = "Username already exist! Please change your email address.";
     }
 }

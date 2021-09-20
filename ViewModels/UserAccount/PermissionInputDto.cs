@@ -10,5 +10,6 @@ namespace NUNA.ViewModels.UserAccount
         public string id { get; set; }
         public List<string> menu { get; set; }
         public List<string> permission { get; set; }
+        public List<string> role { get; set; }
     }
 }

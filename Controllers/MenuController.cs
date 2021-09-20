@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Attributes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NUNA.Helpers;
+using NUNA.Models;
 using NUNA.Models.BaseApplicationContext;
 using NUNA.Services;
 using NUNA.ViewModels.Toastr;
@@ -27,6 +29,8 @@ namespace NUNA.Controllers
             _appContext = context;
             _userManager = userManager;
         }
+
+        [Authorization(Permission.Menu)]
         public IActionResult Index()
         {
             //Link
@@ -112,6 +116,7 @@ namespace NUNA.Controllers
             return Json(listPermission);
         }
 
+        [Authorization(Permission.Menu_Create)]
         public IActionResult Create(int id)
         {
             if (id == 0)
@@ -199,6 +204,7 @@ namespace NUNA.Controllers
             return Json(_result.Error(Message.InvalidForm));
         }
 
+        [Authorization(Permission.Menu_Edit)]
         public async Task<IActionResult> Edit(int id)
         {
             var result = (from a in _appContext.Menu

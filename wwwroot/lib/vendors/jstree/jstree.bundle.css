@@ -340,7 +340,7 @@
   box-shadow: none; }
 
 .jstree-default .jstree-disabled.jstree-clicked {
-  background: #efefef; }
+  /*background: #efefef;*/ }
 
 .jstree-default .jstree-disabled > .jstree-icon {
   opacity: 0.8;
@@ -464,7 +464,7 @@
   background: transparent; }
 
 .jstree-default .jstree-disabled.jstree-clicked {
-  background: #efefef; }
+  /*background: #efefef;*/ }
 
 .jstree-default .jstree-checkbox {
   background-position: -164px -4px; }

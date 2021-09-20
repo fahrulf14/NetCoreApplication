@@ -51,6 +51,8 @@ namespace NUNA.Areas.Identity.Pages.Account
         public PersonalModel Personals { get; set; }
 
         public string ReturnUrl { get; set; }
+        public List<SelectListItem> ListPersonal { get; set; }
+        public bool IsValid { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
@@ -58,7 +60,7 @@ namespace NUNA.Areas.Identity.Pages.Account
         {
             [Required]
             [Display(Name = "Personal")]
-            public int Id { get; set; }
+            public int IdPersonal { get; set; }
            
             [Required]
             [EmailAddress]
@@ -93,8 +95,16 @@ namespace NUNA.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+            IsValid = true;
 
-            ViewData["IdPersonal"] = new SelectList(_appContext.Personal.Where(d => d.Email == null), "IdPersonal", "Nama");
+            ListPersonal = (from a in _appContext.Personal
+                            where a.Email == null
+                            select new SelectListItem
+                            {
+                                Value = a.Id.ToString(),
+                                Text = a.Nama
+                            }).ToList();
+
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
@@ -113,7 +123,7 @@ namespace NUNA.Areas.Identity.Pages.Account
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-                    var Personal = _appContext.Personal.FirstOrDefault(p => p.Id == Input.Id);
+                    var Personal = _appContext.Personal.FirstOrDefault(p => p.Id == Input.IdPersonal);
                     Personal.Email = Input.Email;
                     _appContext.Personal.Update(Personal);
 
@@ -132,7 +142,7 @@ namespace NUNA.Areas.Identity.Pages.Account
                 }
             }
 
-            // If we got this far, something failed, redisplay form
+            IsValid = false;
             return Page();
         }
     }

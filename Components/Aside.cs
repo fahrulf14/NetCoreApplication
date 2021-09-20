@@ -31,7 +31,7 @@ namespace NUNA.Components
             if (HttpContext.Session.GetString("Nama") == null || HttpContext.Session.GetString("Email") == null)
             {
                 var user = await _userManager.GetUserAsync(HttpContext.User);
-                var Personal = await _appContext.Personal.FirstOrDefaultAsync(d => d.Email == user.Email);
+                var Personal = await _appContext.Personal.FirstOrDefaultAsync(d => d.Email.ToLower() == user.Email.ToLower());
 
                 var Position = _appContext.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
                 var permission = (from a in _appContext.AspNetUserPermissions

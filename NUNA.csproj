@@ -66,6 +66,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Shared\_header-base-mobile-public.cshtml" />
     <Content Remove="Views\Shared\_header-menu.cshtml" />
   </ItemGroup>
 
@@ -139,6 +140,7 @@
     <None Include="Views\Shared\_aside-identity.cshtml" />
     <None Include="Views\Shared\_delete.cshtml" />
     <None Include="Views\Shared\_deletevalid.cshtml" />
+    <None Include="Views\Shared\_header-base-mobile-public.cshtml" />
     <None Include="Views\Shared\_header-menu.cshtml" />
     <None Include="Views\Shared\_Layout-error.cshtml" />
     <None Include="Views\Shared\_Layout-home.cshtml" />

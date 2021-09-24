@@ -1,8 +1,8 @@
-﻿@model Personal
+﻿@model Personals
 
 <form asp-action="Edit">
     <div class="modal-header">
-        <h5 class="modal-title" id="ModalTitle">Ubah Data Personal</h5>
+        <h5 class="modal-title" id="ModalTitle">Update Personals</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true" class="la la-remove"></span>
         </button>
@@ -12,22 +12,9 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row">
             <div class="col-md-12 form-group">
-                <label asp-for="Nama" class="control-label"></label>
-                <input asp-for="Nama" class="form-control" required />
-                <span asp-validation-for="Nama" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 form-group">
-                <label asp-for="Nip" class="control-label">NIP</label>
-                <input asp-for="Nip" class="form-control" required />
-                <span asp-validation-for="Nip" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 form-group">
-                <label asp-for="PositionId" class="control-label">Position</label>
-                <select asp-for="PositionId" class="form-control kt-selectpicker" title="Pilih Position..." required asp-items="ViewBag.PositionId"></select>
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
@@ -35,7 +22,7 @@
                 <label asp-for="IsActive" class="control-label">Status</label>
                 <div class="kt-checkbox-inline">
                     <label class="kt-checkbox">
-                        <input class="check" asp-for="IsActive" /> <p id="@Html.DisplayNameFor(model => model.IsActive)_Status">@(Model.IsActive ? "Aktif" : "Tidak Aktif")</p>
+                        <input class="check" asp-for="IsActive" /> <p id="@Html.IdFor(model => model.IsActive)_Status">@(Model.IsActive ? "Active" : "Inactive")</p>
                         <span></span>
                     </label>
                 </div>
@@ -44,6 +31,6 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" value="Simpan" class="btn btn-success" />
+        <input type="submit" value="Save" class="btn btn-success" />
     </div>
 </form>

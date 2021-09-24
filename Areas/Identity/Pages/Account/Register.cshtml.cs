@@ -97,12 +97,12 @@ namespace NUNA.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
             IsValid = true;
 
-            ListPersonal = (from a in _appContext.Personal
-                            where a.Email == null
+            ListPersonal = (from a in _appContext.Personals
+                            where a.UserName == null
                             select new SelectListItem
                             {
                                 Value = a.Id.ToString(),
-                                Text = a.Nama
+                                Text = a.Name
                             }).ToList();
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -114,7 +114,8 @@ namespace NUNA.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var userName = Input.Email.Split("@")[0];
+                var user = new IdentityUser { UserName = userName, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -123,9 +124,9 @@ namespace NUNA.Areas.Identity.Pages.Account
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-                    var Personal = _appContext.Personal.FirstOrDefault(p => p.Id == Input.IdPersonal);
-                    Personal.Email = Input.Email;
-                    _appContext.Personal.Update(Personal);
+                    var Personal = _appContext.Personals.FirstOrDefault(p => p.Id == Input.IdPersonal);
+                    Personal.UserName = userName;
+                    _appContext.Personals.Update(Personal);
 
                     var dataUser = _appContext.AspNetUsers.FirstOrDefault(d => d.Email == Input.Email);
                     dataUser.EmailConfirmed = true;

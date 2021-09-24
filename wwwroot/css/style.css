@@ -152,3 +152,22 @@ body {
 .icon-select {
     cursor: pointer;
 }
+
+.popular-search {
+    margin-right: 10px;
+}
+
+.btn-varian {
+    width: 100%;
+    margin: 5px 0;
+}
+
+.public-subheader {
+    margin-left: 180px;
+}
+
+@media screen and (max-width: 1080px) {
+    .public-subheader {
+        margin-left: 50px;
+    }
+}

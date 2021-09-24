@@ -64,14 +64,13 @@ namespace NUNA.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            ViewData["Personal"] = await (from a in _appContext.Personal
-                                          join b in _appContext.RF_Positions on a.PositionId equals b.Id
+            ViewData["Personal"] = await (from a in _appContext.Personals
+                                          where a.UserName == user.UserName
                                           select new ListAccountDto
                                           {
-                                              Nama = a.Nama,
-                                              Nip = a.Nip,
-                                              Email = a.Email,
-                                              Position = b.Position
+                                              Name = a.Name,
+                                              Username = a.UserName,
+                                              Email = user.Email
                                           }).ToListAsync();
 
             await LoadAsync(user);

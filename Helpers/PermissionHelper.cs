@@ -15,8 +15,7 @@ namespace NUNA.Helpers
         {
             SessionHandler _session = new SessionHandler();
 
-            var Email = _session.Get("Email");
-            if (Email != null) Email = Email.Split("@")[0];
+            var Username = _session.Get("Username");
             var listPermissionString = _session.Get("Permission");
             var listRolePermissionString = _session.Get("RolePermission");
 
@@ -36,7 +35,7 @@ namespace NUNA.Helpers
                 }
                 else
                 {
-                    if (Email == "developer")
+                    if (Username == "developer.nuna")
                     {
                         return true;
                     }
@@ -44,7 +43,7 @@ namespace NUNA.Helpers
                     return false;
                 }
             }
-            else if (Email == "developer")
+            else if (Username == "developer.nuna")
             {
                 return true;
             }

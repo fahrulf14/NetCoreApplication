@@ -14,23 +14,38 @@ namespace NUNA.Components
     {
         private readonly BaseApplicationContext _appContext;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ISession _session;
 
-        public AsideIdentityViewComponent(BaseApplicationContext context, UserManager<IdentityUser> userManager)
+        public AsideIdentityViewComponent(BaseApplicationContext context, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _appContext = context;
             _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+            _session = _httpContextAccessor.HttpContext.Session;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            if (HttpContext.Session.GetString("Nama") == null || HttpContext.Session.GetString("Email") == null)
+            if (_session.GetString("Nama") == null || _session.GetString("Email") == null || _session.GetString("Permission") == null)
             {
                 var user = await _userManager.GetUserAsync(HttpContext.User);
-                var Personal = await _appContext.Personal.FirstOrDefaultAsync(d => d.Email == user.Email);
-                var Position = _appContext.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
-                HttpContext.Session.SetString("Email", Personal.Email);
-                HttpContext.Session.SetString("Nama", Personal.Nama);
-                HttpContext.Session.SetString("Position", Position);
+                var role = await _appContext.AspNetUserRoles.Where(d => d.UserId == user.Id).Select(d => d.RoleId).ToListAsync();
+                var Personal = await _appContext.Personals.FirstOrDefaultAsync(d => d.UserName.ToLower() == user.UserName.ToLower());
+
+                var permission = (from a in _appContext.AspNetUserPermissions
+                                  where a.UserId == user.Id
+                                  select a.Permission).ToList();
+
+                var rolePermission = (from a in _appContext.AspNetRolePermissions
+                                      where role.Contains(a.RoleId)
+                                      select a.Permission).ToList();
+
+                _session.SetString("Email", user.Email);
+                _session.SetString("Username", user.UserName);
+                _session.SetString("Nama", Personal.Name);
+                _session.SetString("Permission", string.Join("|", permission));
+                _session.SetString("RolePermission", string.Join("|", rolePermission));
             }
 
             var model = _appContext.Menu.Where(d => d.IsActive).OrderBy(d => d.NoUrut).ToList();

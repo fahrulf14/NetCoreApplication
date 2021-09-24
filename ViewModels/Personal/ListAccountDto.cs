@@ -8,10 +8,10 @@ namespace NUNA.ViewModels.Personal
     public class ListAccountDto
     {
         public int PersonalId { get; set; }
-        public string Nama { get; set; }
-        public string Nip { get; set; }
-        public string Position { get; set; }
+        public string Name { get; set; }
+        public string Username { get; set; }
         public string Email { get; set; }
+        public string Gender { get; set; }
         public bool IsActive { get; set; }
     }
 }

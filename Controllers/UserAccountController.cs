@@ -39,9 +39,8 @@ namespace NUNA.Controllers
         public async Task<IActionResult> Index()
         {
             var data = (from u in _appContext.AspNetUsers
-                        join p in _appContext.Personal on u.Email equals p.Email
-                        join j in _appContext.RF_Positions on p.PositionId equals j.Id
-                        where p.Nama != "Developers"
+                        join p in _appContext.Personals on u.UserName equals p.UserName
+                        where p.Name != "Developers"
                         select new
                         {
                             p.Id,
@@ -49,7 +48,6 @@ namespace NUNA.Controllers
                             p.Nama,
                             p.Email,
                             u.PhoneNumber,
-                            j.Position,
                             u.LockoutEnabled
                         }).ToListAsync();
 

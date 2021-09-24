@@ -33,10 +33,7 @@ namespace NUNA.Controllers
             ViewBag.L2 = "";
             ViewBag.L3 = "";
 
-            _session.Set("Key", "Testing");
-            _session.Get("Key");
-
-            return View(await _appContext.RF_Positions.ToListAsync());
+            return View(await _appContext.MS_Position.ToListAsync());
         }
 
         [Auth(new string[] { "Developers", "Parameter" })]
@@ -48,7 +45,7 @@ namespace NUNA.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Position,IsActive")] RF_Position refPosition)
+        public async Task<IActionResult> Create([Bind("Id,Position,IsActive")] MS_Position refPosition)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +67,7 @@ namespace NUNA.Controllers
                 return NotFound();
             }
 
-            var refPosition = await _appContext.RF_Positions.FindAsync(id);
+            var refPosition = await _appContext.MS_Position.FindAsync(id);
             if (refPosition == null)
             {
                 return NotFound();
@@ -80,7 +77,7 @@ namespace NUNA.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Position,IsActive")] RF_Position refPosition)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Position,IsActive")] MS_Position refPosition)
         {
             if (id != refPosition.Id)
             {
@@ -121,7 +118,7 @@ namespace NUNA.Controllers
                 return NotFound();
             }
 
-            var refPosition = await _appContext.RF_Positions
+            var refPosition = await _appContext.MS_Position
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (refPosition == null)
             {
@@ -135,10 +132,10 @@ namespace NUNA.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var refPosition = await _appContext.RF_Positions.FindAsync(id);
+            var refPosition = await _appContext.MS_Position.FindAsync(id);
             try
             {
-                _appContext.RF_Positions.Remove(refPosition);
+                _appContext.MS_Position.Remove(refPosition);
                 await _appContext.SaveChangesAsync();
             }
             catch (DbUpdateException)
@@ -155,7 +152,7 @@ namespace NUNA.Controllers
 
         private bool RefPositionExists(int id)
         {
-            return _appContext.RF_Positions.Any(e => e.Id == id);
+            return _appContext.MS_Position.Any(e => e.Id == id);
         }
     }
 }

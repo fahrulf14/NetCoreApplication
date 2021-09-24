@@ -33,19 +33,18 @@ namespace NUNA.Controllers
             ViewBag.L2 = "";
             ViewBag.L3 = "";
 
-            var dB_NewContext = (from a in _appContext.Personal
-                                 join b in _appContext.RF_Positions on a.PositionId equals b.Id
+            var dB_NewContext = (from a in _appContext.Personals
+                                 join b in _appContext.AspNetUsers on a.UserName equals b.UserName into user
+                                 from b in user.DefaultIfEmpty()
                                  select new ListAccountDto
                                  {
                                      PersonalId = a.Id,
-                                     Nama = a.Nama,
-                                     Nip = a.Nip,
-                                     Email = a.Email,
-                                     Position = b.Position,
+                                     Name = a.Name,
+                                     Username = a.UserName,
+                                     Email = b.Email != null ? b.Email : "-",
+                                     Gender = a.Gender == "L" ? "Male" : "Female",
                                      IsActive = a.IsActive
                                  });
-
-            ViewBag.Position = _appContext.RF_Positions.ToList();
 
             return View(await dB_NewContext.ToListAsync());
         }
@@ -58,44 +57,17 @@ namespace NUNA.Controllers
             ViewBag.L2 = "";
             ViewBag.L3 = "";
 
-            var dB_NewContext = (from a in _appContext.Personal
-                                 join b in _appContext.RF_Positions on a.PositionId equals b.Id
+            var dB_NewContext = (from a in _appContext.Personals
+                                 join b in _appContext.AspNetUsers on a.UserName equals b.UserName into user
+                                 from b in user.DefaultIfEmpty()
                                  select new ListAccountDto
                                  {
                                      PersonalId = a.Id,
-                                     Nama = a.Nama,
-                                     Nip = a.Nip,
-                                     Email = a.Email,
-                                     Position = b.Position,
+                                     Name = a.Name,
+                                     Email = b.Email != null ? b.Email : "-",
+                                     Gender = a.Gender == "L" ? "Male" : "Female",
                                      IsActive = a.IsActive
                                  });
-
-            ViewBag.Position = _appContext.RF_Positions.ToList();
-
-            return View(await dB_NewContext.ToListAsync());
-        }
-
-        public async Task<IActionResult> ViewsMenu()
-        {
-            //Link
-            ViewBag.L = Url.Action("Views");
-            ViewBag.L1 = "";
-            ViewBag.L2 = "";
-            ViewBag.L3 = "";
-
-            var dB_NewContext = (from a in _appContext.Personal
-                                 join b in _appContext.RF_Positions on a.PositionId equals b.Id
-                                 select new ListAccountDto
-                                 {
-                                     PersonalId = a.Id,
-                                     Nama = a.Nama,
-                                     Nip = a.Nip,
-                                     Email = a.Email,
-                                     Position = b.Position,
-                                     IsActive = a.IsActive
-                                 });
-
-            ViewBag.Position = _appContext.RF_Positions.ToList();
 
             return View(await dB_NewContext.ToListAsync());
         }
@@ -104,13 +76,12 @@ namespace NUNA.Controllers
         [AjaxOnly]
         public IActionResult Create()
         {
-            ViewData["PositionId"] = new SelectList(_appContext.RF_Positions, "Id", "Position");
             return PartialView();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nama,UserName,Nip,PositionId,IsActive")] Personal Personal)
+        public async Task<IActionResult> Create(Personals Personal)
         {
             if (ModelState.IsValid)
             {
@@ -121,7 +92,6 @@ namespace NUNA.Controllers
                 string link = Url.Action("Index");
                 return Json(new { success = true, url = link });
             }
-            ViewData["PositionId"] = new SelectList(_appContext.RF_Positions, "Id", "Position", Personal.PositionId);
             return PartialView(Personal);
         }
 
@@ -134,18 +104,17 @@ namespace NUNA.Controllers
                 return NotFound();
             }
 
-            var Personal = await _appContext.Personal.FindAsync(id);
+            var Personal = await _appContext.Personals.FindAsync(id);
             if (Personal == null)
             {
                 return NotFound();
             }
-            ViewData["PositionId"] = new SelectList(_appContext.RF_Positions, "Id", "Position", Personal.PositionId);
             return PartialView(Personal);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nama,UserName,Nip,PositionId,IsActive")] Personal Personal)
+        public async Task<IActionResult> Edit(int id, Personals Personal)
         {
             if (id != Personal.Id)
             {
@@ -154,15 +123,13 @@ namespace NUNA.Controllers
 
             if (ModelState.IsValid)
             {
-                var old = _appContext.Personal.Find(id);
+                var old = _appContext.Personals.Find(id);
                 try
                 {
                     old.IsActive = Personal.IsActive;
-                    old.PositionId = Personal.PositionId;
-                    old.Nama = Personal.Nama;
+                    old.Name = Personal.Name;
                     //old.UserName = Personal.UserName;
-                    old.Nip = Personal.Nip;
-                    _appContext.Personal.Update(old);
+                    _appContext.Update(old);
                     await _appContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -180,7 +147,6 @@ namespace NUNA.Controllers
                 string link = Url.Action("Index");
                 return Json(new { success = true, url = link });
             }
-            ViewData["PositionId"] = new SelectList(_appContext.RF_Positions, "Id", "Position", Personal.PositionId);
             return PartialView(Personal);
         }
 
@@ -193,7 +159,7 @@ namespace NUNA.Controllers
                 return NotFound();
             }
 
-            var Personal = await _appContext.Personal.FirstOrDefaultAsync(m => m.Id == id);
+            var Personal = await _appContext.Personals.FirstOrDefaultAsync(m => m.Id == id);
             if (Personal == null)
             {
                 return NotFound();
@@ -206,9 +172,9 @@ namespace NUNA.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var Personal = await _appContext.Personal.FindAsync(id);
+            var Personal = await _appContext.Personals.FindAsync(id);
 
-            var user = _appContext.AspNetUsers.FirstOrDefault(d => d.Email == Personal.Email);
+            var user = _appContext.AspNetUsers.FirstOrDefault(d => d.UserName == Personal.UserName);
             if (user != null)
             {
                 TempData["status"] = "deletefailed";
@@ -218,7 +184,7 @@ namespace NUNA.Controllers
 
             try
             {
-                _appContext.Personal.Remove(Personal);
+                _appContext.Personals.Remove(Personal);
                 await _appContext.SaveChangesAsync();
             }
             catch (DbUpdateException)
@@ -235,7 +201,7 @@ namespace NUNA.Controllers
 
         private bool PersonalExists(int id)
         {
-            return _appContext.Personal.Any(e => e.Id == id);
+            return _appContext.Personals.Any(e => e.Id == id);
         }
     }
 }

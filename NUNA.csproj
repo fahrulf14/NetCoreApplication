@@ -9,8 +9,11 @@
     <Compile Remove="ModelScafold\**" />
     <Compile Remove="Views\Default\**" />
     <Compile Remove="Views\PajakReklameM\**" />
+    <Compile Remove="Views\Position\**" />
     <Compile Remove="Views\Reklame - Old\**" />
+    <Compile Remove="Views\Roles\**" />
     <Compile Remove="Views\SKPDM\**" />
+    <Compile Remove="Views\UserAccount\**" />
     <Compile Remove="wwwroot\lib\bootstrap\**" />
     <Compile Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <Compile Remove="wwwroot\lib\jquery-validation\**" />
@@ -18,8 +21,11 @@
     <Content Remove="ModelScafold\**" />
     <Content Remove="Views\Default\**" />
     <Content Remove="Views\PajakReklameM\**" />
+    <Content Remove="Views\Position\**" />
     <Content Remove="Views\Reklame - Old\**" />
+    <Content Remove="Views\Roles\**" />
     <Content Remove="Views\SKPDM\**" />
+    <Content Remove="Views\UserAccount\**" />
     <Content Remove="wwwroot\lib\bootstrap\**" />
     <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <Content Remove="wwwroot\lib\jquery-validation\**" />
@@ -27,8 +33,11 @@
     <EmbeddedResource Remove="ModelScafold\**" />
     <EmbeddedResource Remove="Views\Default\**" />
     <EmbeddedResource Remove="Views\PajakReklameM\**" />
+    <EmbeddedResource Remove="Views\Position\**" />
     <EmbeddedResource Remove="Views\Reklame - Old\**" />
+    <EmbeddedResource Remove="Views\Roles\**" />
     <EmbeddedResource Remove="Views\SKPDM\**" />
+    <EmbeddedResource Remove="Views\UserAccount\**" />
     <EmbeddedResource Remove="wwwroot\lib\bootstrap\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <EmbeddedResource Remove="wwwroot\lib\jquery-validation\**" />
@@ -36,8 +45,11 @@
     <None Remove="ModelScafold\**" />
     <None Remove="Views\Default\**" />
     <None Remove="Views\PajakReklameM\**" />
+    <None Remove="Views\Position\**" />
     <None Remove="Views\Reklame - Old\**" />
+    <None Remove="Views\Roles\**" />
     <None Remove="Views\SKPDM\**" />
+    <None Remove="Views\UserAccount\**" />
     <None Remove="wwwroot\lib\bootstrap\**" />
     <None Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
     <None Remove="wwwroot\lib\jquery-validation\**" />
@@ -48,8 +60,13 @@
     <Compile Remove="Controllers\PajakReklameMController.cs" />
     <Compile Remove="Controllers\Reklame_SalahController.cs" />
     <Compile Remove="Controllers\SKPDMController.cs" />
+    <Compile Remove="Controllers\UserAccountController.cs" />
     <Compile Remove="Migrations\20210909153028_AsideMenu.cs" />
     <Compile Remove="Migrations\20210909153028_AsideMenu.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\_header-menu.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -115,20 +132,18 @@
     <None Include="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\Identity\Pages\_ViewImports.cshtml" />
     <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
-    <None Include="Views\Roles\Create.cshtml" />
-    <None Include="Views\Roles\Edit.cshtml" />
-    <None Include="Views\Roles\Index.cshtml" />
+    <None Include="Views\Personal\Create.cshtml" />
+    <None Include="Views\Personal\Edit.cshtml" />
+    <None Include="Views\Personal\Index.cshtml" />
     <None Include="Views\Shared\Components\Aside\Default.cshtml" />
     <None Include="Views\Shared\_aside-identity.cshtml" />
     <None Include="Views\Shared\_delete.cshtml" />
     <None Include="Views\Shared\_deletevalid.cshtml" />
+    <None Include="Views\Shared\_header-menu.cshtml" />
     <None Include="Views\Shared\_Layout-error.cshtml" />
     <None Include="Views\Shared\_Layout-home.cshtml" />
     <None Include="Views\Shared\_Layout-login.cshtml" />
     <None Include="Views\Shared\_LoginPartial.cshtml" />
-    <None Include="Views\UserAccount\Create.cshtml" />
-    <None Include="Views\UserAccount\Edit.cshtml" />
-    <None Include="Views\UserAccount\Index.cshtml" />
     <None Include="Views\Shared\Components\AsideIdentity\Default.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <None Include="Views\Shared\_aside-base.cshtml" />
@@ -233,6 +248,10 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

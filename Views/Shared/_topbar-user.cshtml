@@ -4,7 +4,7 @@
         <div class="kt-header__topbar-user">
             <span class="kt-header__topbar-welcome kt-hidden-mobile">Hi,</span> <span class="kt-header__topbar-username kt-hidden-mobile">@Context.Session.GetString("Nama")</span> 
             <!--<img class="kt-hidden" alt="Pic" src="~/Assets/media/users/300_25.jpg" />-->
-            <span class="kt-badge kt-badge--username kt-badge--unified-brand kt-badge--lg kt-badge--rounded kt-badge--bold">@Context.Session.GetString("Nama").Substring(0,1).ToUpper()</span> 
+                                                                                <span class="kt-badge kt-badge--username kt-badge--unified-brand kt-badge--lg kt-badge--rounded kt-badge--bold">@(Context.Session.GetString("Nama") != null ? Context.Session.GetString("Nama").Substring(0,1).ToUpper() : "A")</span> 
         </div>
     </div>
     <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">

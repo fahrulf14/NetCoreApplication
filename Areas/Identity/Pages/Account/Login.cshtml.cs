@@ -83,8 +83,7 @@ namespace NUNA.Areas.Identity.Pages.Account
             return Page();
         }
 
-        [BindProperty] public Personal Personal { get; set; }
-        [BindProperty] public RF_Position RF_Position { get; set; }
+        [BindProperty] public Personals Personals { get; set; }
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/Home");
@@ -109,8 +108,8 @@ namespace NUNA.Areas.Identity.Pages.Account
                         return Page();
                     }
 
-                    Personal = await _appContext.Personal.FirstOrDefaultAsync(w => w.Email.ToLower() == Input.Email.ToLower());
-                    if (Personal == null)
+                    Personals = await _appContext.Personals.FirstOrDefaultAsync(w => w.UserName.ToLower() == userName.ToLower());
+                    if (Personals == null)
                     {
                         await _signInManager.SignOutAsync();
 
@@ -120,20 +119,18 @@ namespace NUNA.Areas.Identity.Pages.Account
                         return Page();
                     }
 
-                    if (Personal.Nama == "Developers")
-                    {
-                        if (user.PasswordHash != "AQAAAAEAACcQAAAAEN1c/WC3S7FC5nwNw/WUNSz6kEghaZNV2DXfaMXbVC2JfqhzG/LOly7AOOwR42jnhA==")
-                        {
-                            await _signInManager.SignOutAsync();
+                    //if (Personals.Name == "Developers")
+                    //{
+                    //    if (user.PasswordHash != "AQAAAAEAACcQAAAAEN1c/WC3S7FC5nwNw/WUNSz6kEghaZNV2DXfaMXbVC2JfqhzG/LOly7AOOwR42jnhA==")
+                    //    {
+                    //        await _signInManager.SignOutAsync();
 
-                            HttpContext.Session.Clear();
-                            ModelState.AddModelError(string.Empty, "Sorry You Cannot Hack Me!");
-                            TempData["status"] = "hack";
-                            return Page();
-                        }
-                    }
-
-                    var Position = _appContext.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
+                    //        HttpContext.Session.Clear();
+                    //        ModelState.AddModelError(string.Empty, "Sorry You Cannot Hack Me!");
+                    //        TempData["status"] = "hack";
+                    //        return Page();
+                    //    }
+                    //}
 
                     var permission = (from a in _appContext.AspNetUserPermissions
                                       where a.UserId == user.Id
@@ -148,8 +145,8 @@ namespace NUNA.Areas.Identity.Pages.Account
 
                     HttpContext.Session.SetString("User", user.Id);
                     HttpContext.Session.SetString("Email", Input.Email);
-                    HttpContext.Session.SetString("Nama", Personal.Nama);
-                    HttpContext.Session.SetString("Position", Position);
+                    HttpContext.Session.SetString("Username", userName);
+                    HttpContext.Session.SetString("Nama", Personals.Name);
                     HttpContext.Session.SetString("Permission", string.Join("|", permission));
                     HttpContext.Session.SetString("RolePermission", string.Join("|", rolePermission));
 

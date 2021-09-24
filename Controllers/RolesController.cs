@@ -62,13 +62,13 @@ namespace NUNA.Controllers
             var data = (from user in _appContext.AspNetUsers
                         join userrole in _appContext.AspNetUserRoles on user.Id equals userrole.UserId
                         join role in _appContext.AspNetRoles on userrole.RoleId equals role.Id
-                        join Personal in _appContext.Personal on user.Email equals Personal.Email
-                        where Personal.Nama != "Developers"
+                        join Personal in _appContext.Personals on user.UserName equals Personal.UserName
+                        where Personal.Name != "Developers"
                         select new
                         {
                             Personal.Id,
                             Role = role.Name,
-                            User = Personal.Nama
+                            User = Personal.Name
                         });
 
             List<ListUserDto> listUser = new List<ListUserDto>();
@@ -84,8 +84,8 @@ namespace NUNA.Controllers
             }
 
             var subselect = (from d in listUser select d.Id).ToList();
-            var sisa = (from Personal in _appContext.Personal
-                        where Personal.Email != null && !subselect.Contains(Personal.Id) && Personal.Nama != "Developers"
+            var sisa = (from Personal in _appContext.Personals
+                        where Personal.UserName != null && !subselect.Contains(Personal.Id) && Personal.Name != "Developers"
                         select Personal).ToList();
             ViewBag.Sisa = sisa;
 
@@ -163,7 +163,7 @@ namespace NUNA.Controllers
                                                                 x.Split(".")[1] == "Delete" ? "fa fa-minus-square kt-font-default" : "fa fa-check-square kt-font-default",
                                                       state = new
                                                       {
-                                                          selected = y != null ? true : false
+                                                          selected = y != null
                                                       }
                                                   })
                                   }).ToList();
@@ -264,7 +264,7 @@ namespace NUNA.Controllers
                                       text = a.Nama,
                                       state = new
                                       {
-                                          selected = x != null ? true : false
+                                          selected = x != null
                                       },
                                       children = (from b in menuAccess.Where(d => d.Code.Length == 4)
                                                   join y in access on b.Nama equals y.Menu into yb
@@ -276,7 +276,7 @@ namespace NUNA.Controllers
                                                       text = b.Nama.Split(".")[1],
                                                       state = new
                                                       {
-                                                          selected = y != null ? true : false
+                                                          selected = y != null
                                                       },
                                                       children = (from c in menuAccess.Where(d => d.Code.Length == 6)
                                                                   join z in access on c.Nama equals z.Menu into zc
@@ -288,7 +288,7 @@ namespace NUNA.Controllers
                                                                       text = c.Nama.Split(".")[2],
                                                                       state = new
                                                                       {
-                                                                          selected = z != null ? true : false
+                                                                          selected = z != null
                                                                       },
                                                                       children = (from d in menuAccess.Where(d => d.Code.Length == 8)
                                                                                   join v in access on d.Nama equals v.Menu into vd
@@ -300,7 +300,7 @@ namespace NUNA.Controllers
                                                                                       text = d.Nama.Split(".")[2],
                                                                                       state = new
                                                                                       {
-                                                                                          selected = v != null ? true : false
+                                                                                          selected = v != null
                                                                                       }
                                                                                   }).ToList()
                                                                   }).ToList()
@@ -364,12 +364,12 @@ namespace NUNA.Controllers
             ViewBag.L3 = "";
 
             var data = (from user in _appContext.AspNetUsers
-                        join Personal in _appContext.Personal on user.Email equals Personal.Email
-                        where Personal.Nama != "Developers"
+                        join Personal in _appContext.Personals on user.UserName equals Personal.UserName
+                        where Personal.Name != "Developers"
                         select new
                         {
                             UserId = user.Id,
-                            Personal.Nama
+                            Personal.Name
                         });
 
             List<UserRoleEditDto> ListUser = new List<UserRoleEditDto>();
@@ -379,7 +379,7 @@ namespace NUNA.Controllers
                 ListUser.Add(new UserRoleEditDto
                 {
                     UserId = item.UserId,
-                    Nama = item.Nama
+                    Nama = item.Name
                 });
 
             }
@@ -396,24 +396,22 @@ namespace NUNA.Controllers
                 return NotFound();
             }
 
-            var Personal = await _appContext.Personal.FirstOrDefaultAsync(p => p.Id == id);
+            var Personal = await _appContext.Personals.FirstOrDefaultAsync(p => p.Id == id);
             if (Personal == null)
             {
                 return NotFound();
             }
 
             //Link
-            ViewBag.Title = "Ubah Akses " + Personal.Nama;
+            ViewBag.Title = "Ubah Akses " + Personal.Name;
             ViewBag.L = Url.Action("Modul");
             ViewBag.L1 = Url.Action("Update", new { id });
             ViewBag.L2 = "";
             ViewBag.L3 = "";
 
-            var user = _appContext.AspNetUsers.FirstOrDefault(d => d.Email == Personal.Email);
+            var user = _appContext.AspNetUsers.FirstOrDefault(d => d.UserName == Personal.UserName);
 
             var roles = _appContext.AspNetRoles.Where(d => d.Name != "Developers").ToList();
-
-            ViewBag.Position = _appContext.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
 
             ViewBag.IdUser = user.Id;
             ViewBag.Roles = roles;

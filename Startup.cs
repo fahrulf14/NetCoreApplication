@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NUNA.Services;
 using NUNA.Helpers;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace NUNA
 {
@@ -38,12 +39,17 @@ namespace NUNA
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
 
-            services.AddMvc()
+            services.AddMvc(options => options.EnableEndpointRouting = false)
                 .AddNewtonsoftJson();
 
             services.AddHttpContextAccessor();
             services.AddSingleton<SessionHandler>();
             services.AddTransient<UserService>();
+
+            services.Configure<RazorViewEngineOptions>(opt =>
+            {
+                opt.ViewLocationExpanders.Add(new ComponentViewLocationExpander());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +74,14 @@ namespace NUNA
 
             app.UseAuthorization();
 
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                  name: "areas",
+                  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -75,15 +89,23 @@ namespace NUNA
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(
-                    name: "MyArea",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
-                endpoints.MapControllerRoute(
                      name: "defaultWithoutAction",
                      pattern: "{controller}/{id?}",
                      defaults: new { action = "Index" },
                      constraints: new { id = @"\d+" }
                    );
+
+                endpoints.MapControllerRoute(
+                    name: "admin",
+                    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                     name: "defaultAdmin",
+                     pattern: "Admin/{controller}/{id?}",
+                     defaults: new { action = "Index" },
+                     constraints: new { id = @"\d+" }
+                   );
+
                 endpoints.MapRazorPages();
             });
         }

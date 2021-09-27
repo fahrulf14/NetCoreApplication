@@ -3,71 +3,54 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <ApplicationIcon>wwwroot\media\favicon\favicon.ico</ApplicationIcon>
+    <UserSecretsId>911d815e-4516-4bc0-b3fd-826acd9a0533</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="ModelScafold\**" />
-    <Compile Remove="Views\Default\**" />
-    <Compile Remove="Views\PajakReklameM\**" />
     <Compile Remove="Views\Position\**" />
-    <Compile Remove="Views\Reklame - Old\**" />
-    <Compile Remove="Views\Roles\**" />
-    <Compile Remove="Views\SKPDM\**" />
     <Compile Remove="Views\UserAccount\**" />
-    <Compile Remove="wwwroot\lib\bootstrap\**" />
-    <Compile Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
-    <Compile Remove="wwwroot\lib\jquery-validation\**" />
-    <Compile Remove="wwwroot\lib\jquery\**" />
-    <Content Remove="ModelScafold\**" />
-    <Content Remove="Views\Default\**" />
-    <Content Remove="Views\PajakReklameM\**" />
     <Content Remove="Views\Position\**" />
-    <Content Remove="Views\Reklame - Old\**" />
-    <Content Remove="Views\Roles\**" />
-    <Content Remove="Views\SKPDM\**" />
     <Content Remove="Views\UserAccount\**" />
-    <Content Remove="wwwroot\lib\bootstrap\**" />
-    <Content Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
-    <Content Remove="wwwroot\lib\jquery-validation\**" />
-    <Content Remove="wwwroot\lib\jquery\**" />
-    <EmbeddedResource Remove="ModelScafold\**" />
-    <EmbeddedResource Remove="Views\Default\**" />
-    <EmbeddedResource Remove="Views\PajakReklameM\**" />
     <EmbeddedResource Remove="Views\Position\**" />
-    <EmbeddedResource Remove="Views\Reklame - Old\**" />
-    <EmbeddedResource Remove="Views\Roles\**" />
-    <EmbeddedResource Remove="Views\SKPDM\**" />
     <EmbeddedResource Remove="Views\UserAccount\**" />
-    <EmbeddedResource Remove="wwwroot\lib\bootstrap\**" />
-    <EmbeddedResource Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
-    <EmbeddedResource Remove="wwwroot\lib\jquery-validation\**" />
-    <EmbeddedResource Remove="wwwroot\lib\jquery\**" />
-    <None Remove="ModelScafold\**" />
-    <None Remove="Views\Default\**" />
-    <None Remove="Views\PajakReklameM\**" />
     <None Remove="Views\Position\**" />
-    <None Remove="Views\Reklame - Old\**" />
-    <None Remove="Views\Roles\**" />
-    <None Remove="Views\SKPDM\**" />
     <None Remove="Views\UserAccount\**" />
-    <None Remove="wwwroot\lib\bootstrap\**" />
-    <None Remove="wwwroot\lib\jquery-validation-unobtrusive\**" />
-    <None Remove="wwwroot\lib\jquery-validation\**" />
-    <None Remove="wwwroot\lib\jquery\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\PajakReklameMController.cs" />
-    <Compile Remove="Controllers\Reklame_SalahController.cs" />
-    <Compile Remove="Controllers\SKPDMController.cs" />
     <Compile Remove="Controllers\UserAccountController.cs" />
-    <Compile Remove="Migrations\20210909153028_AsideMenu.cs" />
-    <Compile Remove="Migrations\20210909153028_AsideMenu.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Shared\_header-base-mobile-public.cshtml" />
-    <Content Remove="Views\Shared\_header-menu.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\Components\AsideIdentity\Default.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\Components\Aside\Default.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_aside-base.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_aside-brand.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_aside-identity.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_delete.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_deletevalid.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_dropdown-my-cart.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_dropdown-notifications.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_dropdown-quick-actions.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_dropdown-user.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_footer-base.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_header-base-mobile.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_header-base.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_layout-quick-panel.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_layout-scrolltop.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_layout-toolbar.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_subheader.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_topbar-base.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_topbar-my-cart.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_topbar-notifications.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_topbar-quick-actions.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_topbar-quick-panel.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_topbar-search.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_topbar-user.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <Content Remove="ViewComponents\Subheader\Default.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -85,7 +68,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.18" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
     <PackageReference Include="QRCoder" Version="1.4.1" />
@@ -94,6 +77,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Areas\Admin\Views\Shared\Components\AsideIdentity\Default.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\Components\Aside\Default.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_aside-base.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_aside-brand.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_aside-identity.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_delete.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_deletevalid.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_dropdown-my-cart.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_dropdown-notifications.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_dropdown-quick-actions.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_dropdown-user.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_footer-base.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_header-base-mobile.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_header-base.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_layout-quick-panel.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_layout-scrolltop.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_layout-toolbar.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_subheader.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_topbar-base.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_topbar-my-cart.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_topbar-notifications.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_topbar-quick-actions.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_topbar-quick-panel.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_topbar-search.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_topbar-user.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
     <None Include="Areas\Identity\Pages\Account\ConfirmEmail.cshtml" />
     <None Include="Areas\Identity\Pages\Account\ConfirmEmailChange.cshtml" />
@@ -136,17 +147,15 @@
     <None Include="Views\Personal\Create.cshtml" />
     <None Include="Views\Personal\Edit.cshtml" />
     <None Include="Views\Personal\Index.cshtml" />
-    <None Include="Views\Shared\Components\Aside\Default.cshtml" />
+    <None Include="ViewComponents\Aside\Default.cshtml" />
+    <None Include="ViewComponents\Subheader\Default.cshtml" />
     <None Include="Views\Shared\_aside-identity.cshtml" />
     <None Include="Views\Shared\_delete.cshtml" />
     <None Include="Views\Shared\_deletevalid.cshtml" />
     <None Include="Views\Shared\_header-base-mobile-public.cshtml" />
     <None Include="Views\Shared\_header-menu.cshtml" />
-    <None Include="Views\Shared\_Layout-error.cshtml" />
-    <None Include="Views\Shared\_Layout-home.cshtml" />
-    <None Include="Views\Shared\_Layout-login.cshtml" />
     <None Include="Views\Shared\_LoginPartial.cshtml" />
-    <None Include="Views\Shared\Components\AsideIdentity\Default.cshtml" />
+    <None Include="ViewComponents\AsideIdentity\Default.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <None Include="Views\Shared\_aside-base.cshtml" />
     <None Include="Views\Shared\_aside-brand.cshtml" />
@@ -160,9 +169,6 @@
     <None Include="Views\Shared\_layout-quick-panel.cshtml" />
     <None Include="Views\Shared\_layout-scrolltop.cshtml" />
     <None Include="Views\Shared\_layout-toolbar.cshtml" />
-    <None Include="Views\Shared\_Layout.cshtml" />
-    <None Include="Views\Shared\_Layout-print.cshtml" />
-    <None Include="Views\Shared\_subheader.cshtml" />
     <None Include="Views\Shared\_topbar-base.cshtml" />
     <None Include="Views\Shared\_topbar-my-cart.cshtml" />
     <None Include="Views\Shared\_topbar-notifications.cshtml" />
@@ -202,8 +208,6 @@
     <None Include="wwwroot\lib\fonts\roboto\Roboto-Regular-latin.woff2" />
     <None Include="wwwroot\lib\fonts\socicon\socicon.svg" />
     <None Include="wwwroot\lib\vendors\datatables\datatables.bundle.js" />
-    <None Include="wwwroot\media\favicon\safari-pinned-tab.svg" />
-    <None Include="wwwroot\media\favicon\site.webmanifest" />
     <None Include="wwwroot\media\files\css.svg" />
     <None Include="wwwroot\media\files\csv.svg" />
     <None Include="wwwroot\media\files\doc.svg" />
@@ -253,7 +257,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Views\Shared\Components\" />
   </ItemGroup>
 
 </Project>

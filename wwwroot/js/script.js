@@ -136,3 +136,9 @@ $(document).ajaxStart(function () {
 $(document).ajaxStop(function () {
     KTApp.unblockPage();
 });
+
+$('.home-full-width').width($(window).width())
+
+$(window).resize(function () {
+    $('.home-full-width').width($(window).width())
+});

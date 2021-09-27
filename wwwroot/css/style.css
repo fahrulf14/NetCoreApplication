@@ -162,6 +162,28 @@ body {
     margin: 5px 0;
 }
 
+.home-full-width {
+    margin-left: -25px;
+}
+
+.nav-icon {
+    margin: 0 10px;
+}
+
+.search-icon {
+    color: #ececec !important;
+}
+
+.home-icon {
+    padding: 15px 10px !important;
+}
+
+@media screen and (max-width: 1080px) {
+    .home-icon {
+        padding: 5px 10px !important;
+    }
+}
+
 .public-subheader {
     margin-left: 180px;
 }

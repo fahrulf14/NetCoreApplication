@@ -34,6 +34,12 @@ namespace NUNA.Models.BaseApplicationContext
         [Display(Name = "Sqeuence Number")]
         public int? NoUrut { get; set; }
 
+        [StringLength(10)]
+        public string Badge { get; set; }
+
+        [StringLength(20)]
+        public string BadgeStates { get; set; }
+
         [Display(Name = "Status")]
         public bool IsActive { get; set; }
     }

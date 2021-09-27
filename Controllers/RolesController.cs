@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Attributes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,6 +19,7 @@ using NUNA.ViewModels.UserAccount;
 
 namespace NUNA.Controllers
 {
+    [Authorize]
     public class RolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

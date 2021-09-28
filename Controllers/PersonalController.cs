@@ -17,7 +17,7 @@ namespace NUNA.Controllers
     public class PersonalController : Controller
     {
         private readonly BaseApplicationContext _appContext;
-        private readonly MenuService _menuService = new MenuService();
+        private readonly MenuService _menuService = new();
 
         public PersonalController(BaseApplicationContext context)
         {
@@ -41,7 +41,7 @@ namespace NUNA.Controllers
                                      PersonalId = a.Id,
                                      Name = a.Name,
                                      Username = a.UserName,
-                                     Email = b.Email != null ? b.Email : "-",
+                                     Email = b.Email ?? "-",
                                      Gender = a.Gender == "L" ? "Male" : "Female",
                                      IsActive = a.IsActive
                                  });
@@ -64,7 +64,7 @@ namespace NUNA.Controllers
                                  {
                                      PersonalId = a.Id,
                                      Name = a.Name,
-                                     Email = b.Email != null ? b.Email : "-",
+                                     Email = b.Email ?? "-",
                                      Gender = a.Gender == "L" ? "Male" : "Female",
                                      IsActive = a.IsActive
                                  });

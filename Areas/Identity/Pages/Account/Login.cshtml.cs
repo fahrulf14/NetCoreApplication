@@ -22,15 +22,13 @@ namespace NUNA.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ILogger<LoginModel> _logger;
         private readonly BaseApplicationContext _appContext;
         public LoginModel(SignInManager<IdentityUser> signInManager,
             UserManager<IdentityUser> userManager,
-            ILogger<LoginModel> logger, BaseApplicationContext context)
+            BaseApplicationContext context)
         {
             _signInManager = signInManager;
             _userManager = userManager;
-            _logger = logger;
             _appContext = context;
         }
 

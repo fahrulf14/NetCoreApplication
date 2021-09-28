@@ -23,7 +23,7 @@ namespace NUNA.Controllers
     {
         private readonly BaseApplicationContext _appContext;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly JsonResultService _result = new JsonResultService();
+        private readonly JsonResultService _result = new();
         public MenuController(BaseApplicationContext context, UserManager<IdentityUser> userManager)
         {
             _appContext = context;
@@ -39,16 +39,14 @@ namespace NUNA.Controllers
             ViewBag.L2 = "";
             ViewBag.L3 = "";
 
-            using (MemoryStream ms = new MemoryStream())
+            using (MemoryStream ms = new())
             {
-                QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                QRCodeGenerator qrGenerator = new();
                 QRCodeData qrCodeData = qrGenerator.CreateQrCode("Fahrul Firdaus", QRCodeGenerator.ECCLevel.Q);
-                QRCode qrCode = new QRCode(qrCodeData);
-                using (Bitmap bitMap = qrCode.GetGraphic(20))
-                {
-                    bitMap.Save(ms, ImageFormat.Png);
-                    ViewBag.QRCodeImage = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
-                }
+                QRCode qrCode = new(qrCodeData);
+                using Bitmap bitMap = qrCode.GetGraphic(20);
+                bitMap.Save(ms, ImageFormat.Png);
+                ViewBag.QRCodeImage = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
             }
 
             return View();
@@ -65,7 +63,7 @@ namespace NUNA.Controllers
 
         public JsonResult GetMenuAccess()
         {
-            List<string> root = new List<string> { "Menu" };
+            List<string> root = new() { "Menu" };
 
             var menu = (from a in _appContext.Menu
                         select a).ToList();
@@ -177,7 +175,7 @@ namespace NUNA.Controllers
 
                 try
                 {
-                    Menu insert = new Menu
+                    Menu insert = new()
                     {
                         ActionName = input.ActionName,
                         Controller = input.ActionName != null ? input.Controller : null,
@@ -257,6 +255,10 @@ namespace NUNA.Controllers
 
         public IActionResult Delete(int id)
         {
+            if (id == 0)
+            {
+
+            }
             return View();
         }
 

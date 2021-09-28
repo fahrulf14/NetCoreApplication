@@ -26,9 +26,9 @@ namespace NUNA.Areas.Identity.Pages.Account
         {
         }
 
-        public async Task<IActionResult> OnPost(string returnUrl = null)
+        public async Task<IActionResult> OnPost(string returnUrl)
         {
-            returnUrl = Url.Content("~/Home");
+            returnUrl ??= Url.Content("~/Home");
             TempData["status"] = "logout";
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");

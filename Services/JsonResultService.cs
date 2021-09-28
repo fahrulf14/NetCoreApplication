@@ -4,7 +4,7 @@
     {
         public JsonResultDto Success(string url)
         {
-            JsonResultDto model = new JsonResultDto
+            JsonResultDto model = new()
             {
                 success = true,
                 url = url,
@@ -15,7 +15,7 @@
 
         public JsonResultDto Warning(string message)
         {
-            JsonResultDto model = new JsonResultDto
+            JsonResultDto model = new()
             {
                 success = false,
                 message = message,
@@ -26,7 +26,7 @@
 
         public JsonResultDto Error(string message)
         {
-            JsonResultDto model = new JsonResultDto
+            JsonResultDto model = new()
             {
                 success = false,
                 message = message,

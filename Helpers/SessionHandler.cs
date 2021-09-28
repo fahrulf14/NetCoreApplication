@@ -14,9 +14,9 @@ namespace NUNA.Helpers
             {
                 return SessionService.Current.Session.Get<string>(key);
             }
-            catch(Exception ex)
+            catch
             {
-                var a = ex.Message;
+                
             }
             return "";
         }

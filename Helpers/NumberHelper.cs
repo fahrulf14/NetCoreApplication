@@ -17,18 +17,22 @@ namespace NUNA.Helpers
         internal static string IndoFormat(decimal num)
         {
             var numRound = Math.Round(num);
-            var numberFormatInfo = new NumberFormatInfo();
-            numberFormatInfo.NumberDecimalSeparator = ",";
-            numberFormatInfo.NumberGroupSeparator = ".";
+            var numberFormatInfo = new NumberFormatInfo
+            {
+                NumberDecimalSeparator = ",",
+                NumberGroupSeparator = "."
+            };
             return numRound.ToString("N", numberFormatInfo);
         }
 
         // 1.000.000,12
         internal static string IndoFormatNoRound(decimal num)
         {
-            var numberFormatInfo = new NumberFormatInfo();
-            numberFormatInfo.NumberDecimalSeparator = ",";
-            numberFormatInfo.NumberGroupSeparator = ".";
+            var numberFormatInfo = new NumberFormatInfo
+            {
+                NumberDecimalSeparator = ",",
+                NumberGroupSeparator = "."
+            };
             return num.ToString("N", numberFormatInfo);
         }
 
@@ -36,8 +40,10 @@ namespace NUNA.Helpers
         internal static string IndoFormatWithoutTail(decimal num)
         {
             var numRound = Math.Round(num);
-            var numberFormatInfo = new NumberFormatInfo();
-            numberFormatInfo.NumberGroupSeparator = ".";
+            var numberFormatInfo = new NumberFormatInfo
+            {
+                NumberGroupSeparator = "."
+            };
             return numRound.ToString("N0", numberFormatInfo);
         }
 

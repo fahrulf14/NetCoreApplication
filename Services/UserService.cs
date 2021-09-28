@@ -16,7 +16,14 @@ namespace NUNA.Services
 
         public string GetUser()
         {
-            return _context.HttpContext.User?.Identity?.Name;
+            try
+            {
+                return _context.HttpContext.User?.Identity?.Name;
+            }
+            catch
+            {
+                return "admin";
+            }
         }
     }
 }

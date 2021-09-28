@@ -18,7 +18,7 @@ namespace NUNA.Components
         private readonly BaseApplicationContext _appContext;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly MenuService _menuService = new MenuService();
+        private readonly MenuService _menuService = new();
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ISession _session;
 
@@ -82,7 +82,7 @@ namespace NUNA.Components
                                   Nama = b.Menu
                               }).ToList();
 
-            List<string> parent = new List<string>(); 
+            List<string> parent = new(); 
             foreach(var item in menuAccess)
             {
                 var data = item.Nama.Split(".");

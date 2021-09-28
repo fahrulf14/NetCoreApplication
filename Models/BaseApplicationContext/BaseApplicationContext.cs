@@ -70,7 +70,6 @@ namespace NUNA.Models.BaseApplicationContext
             modelBuilder.Entity<AspNetRoles>(entity =>
             {
                 entity.HasIndex(e => e.NormalizedName)
-                    .HasName("RoleNameIndex")
                     .IsUnique();
             });
 
@@ -114,11 +113,9 @@ namespace NUNA.Models.BaseApplicationContext
 
             modelBuilder.Entity<AspNetUsers>(entity =>
             {
-                entity.HasIndex(e => e.NormalizedEmail)
-                    .HasName("EmailIndex");
+                entity.HasIndex(e => e.NormalizedEmail);
 
                 entity.HasIndex(e => e.NormalizedUserName)
-                    .HasName("UserNameIndex")
                     .IsUnique();
             });
 

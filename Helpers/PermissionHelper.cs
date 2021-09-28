@@ -13,7 +13,7 @@ namespace NUNA.Helpers
     {
         public static bool IsAuthorized(string permission)
         {
-            SessionHandler _session = new SessionHandler();
+            SessionHandler _session = new();
 
             var Username = _session.Get("Username");
             var listPermissionString = _session.Get("Permission");

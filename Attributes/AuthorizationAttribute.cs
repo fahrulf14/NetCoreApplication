@@ -18,7 +18,7 @@ namespace Attributes
         {
             bool isAuthorized = false;
 
-            SessionHandler _session = new SessionHandler();
+            SessionHandler _session = new();
             var listPermissionString = _session.Get("Permission");
             var rolePermissionString = _session.Get("RolePermission");
 

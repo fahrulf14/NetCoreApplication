@@ -55,7 +55,7 @@ namespace NUNA.Areas.Admin.Controllers
 
                 if (result.Succeeded)
                 {
-                    Personals personals = new Personals
+                    Personals personals = new()
                     {
                         UserName = UserName,
                         Gender = "L",
@@ -74,7 +74,7 @@ namespace NUNA.Areas.Admin.Controllers
 
                     var dataRole = _appContext.AspNetRoles.FirstOrDefault(d => d.Name == "Developers");
 
-                    AspNetUserRoles newRoles = new AspNetUserRoles
+                    AspNetUserRoles newRoles = new()
                     {
                         RoleId = dataRole.Id,
                         UserId = dataUser.Id

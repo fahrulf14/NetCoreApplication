@@ -17,15 +17,12 @@ namespace NUNA.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginPartialModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginPartialModel> _logger;
 
         public LoginPartialModel(SignInManager<IdentityUser> signInManager, 
-            ILogger<LoginPartialModel> logger,
-            UserManager<IdentityUser> userManager)
+            ILogger<LoginPartialModel> logger)
         {
-            _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
         }
@@ -61,7 +58,7 @@ namespace NUNA.Areas.Identity.Pages.Account
                 ModelState.AddModelError(string.Empty, ErrorMessage);
             }
 
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
 
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -73,7 +70,7 @@ namespace NUNA.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/Anggaran");
+            returnUrl ??= Url.Content("~/Anggaran");
 
             if (ModelState.IsValid)
             {
@@ -87,7 +84,7 @@ namespace NUNA.Areas.Identity.Pages.Account
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, Input.RememberMe });
                 }
                 if (result.IsLockedOut)
                 {

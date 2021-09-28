@@ -18,7 +18,7 @@ namespace NUNA.Components
         private readonly BaseApplicationContext _appContext;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly MenuService _menuService = new MenuService();
+        private readonly MenuService _menuService = new();
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ISession _session;
 
@@ -33,7 +33,7 @@ namespace NUNA.Components
 
         public async Task<IViewComponentResult> InvokeAsync(string controller, string action)
         {
-            List<Menu> Menu = new List<Menu>();
+            List<Menu> Menu = new();
 
             if (_signInManager.IsSignedIn(UserClaimsPrincipal))
             {
@@ -66,6 +66,11 @@ namespace NUNA.Components
 
                 var model = _appContext.Menu.Where(d => d.IsActive).OrderBy(d => d.NoUrut).ToList();
 
+                if (_session.GetString("Nama") == "Developer")
+                {
+                    return await Task.FromResult((IViewComponentResult)View("Default", model.Distinct().ToList()));
+                }
+
                 var menuList = (from a in model
                                 select new MenuAccessDto
                                 {
@@ -83,7 +88,7 @@ namespace NUNA.Components
                                       Nama = b.Menu
                                   }).ToList();
 
-                List<string> parent = new List<string>();
+                List<string> parent = new();
                 foreach (var item in menuAccess)
                 {
                     var data = item.Nama.Split(".");

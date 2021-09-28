@@ -26,7 +26,7 @@ namespace NUNA.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnGetAsync(string userId, string code, string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/Users");
+            returnUrl ??= Url.Content("~/Users");
             if (userId == null || code == null)
             {
                 return RedirectToPage("/Index");

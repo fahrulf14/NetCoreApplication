@@ -2,7 +2,7 @@
 {
     public class AppSettingHelper
     {
-        public static Appsettings GetValue { get; set; } = new Appsettings();
+        public static Appsettings GetValue { get; set; } = new();
     }
 
     public class Appsettings

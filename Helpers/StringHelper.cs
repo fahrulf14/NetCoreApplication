@@ -11,7 +11,7 @@ namespace NUNA.Helpers
             string finalpath = path;
             try
             {
-                Regex RegexObj = new Regex("[\\w\\W]*([\\/]Assets[\\w\\W\\s]*)");
+                Regex RegexObj = new("[\\w\\W]*([\\/]Assets[\\w\\W\\s]*)");
                 if (RegexObj.IsMatch(path))
                 {
                     finalpath = RegexObj.Match(path).Groups[1].Value;
@@ -33,7 +33,7 @@ namespace NUNA.Helpers
             else
             {
                 string tmphtmlContent = htmlContent;
-                Regex RegexObj = new Regex(@"[\{][\{]([a-zA-Z0-9\.]*)[\}][\}]");
+                Regex RegexObj = new(@"[\{][\{]([a-zA-Z0-9\.]*)[\}][\}]");
                 Match MatchResults = RegexObj.Match(htmlContent);
                 while (MatchResults.Success)
                 {

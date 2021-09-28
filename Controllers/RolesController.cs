@@ -24,8 +24,8 @@ namespace NUNA.Controllers
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly BaseApplicationContext _appContext;
-        private readonly MenuService _menuService = new MenuService();
-        private readonly JsonResultService _result = new JsonResultService();
+        private readonly MenuService _menuService = new();
+        private readonly JsonResultService _result = new();
         public RolesController(BaseApplicationContext context, RoleManager<IdentityRole> roleMgr)
         {
             _roleManager = roleMgr;
@@ -73,7 +73,7 @@ namespace NUNA.Controllers
                             User = Personal.Name
                         });
 
-            List<ListUserDto> listUser = new List<ListUserDto>();
+            List<ListUserDto> listUser = new();
 
             foreach (var item in data)
             {
@@ -247,7 +247,7 @@ namespace NUNA.Controllers
 
         public JsonResult GetMenuAccess()
         {
-            List<object> result = new List<object>();
+            List<object> result = new();
             List<MenuAccessDto> menuAccess = GetMenuList();
 
             var RoleId = TempData["RoleId"].ToString();
@@ -374,7 +374,7 @@ namespace NUNA.Controllers
                             Personal.Name
                         });
 
-            List<UserRoleEditDto> ListUser = new List<UserRoleEditDto>();
+            List<UserRoleEditDto> ListUser = new();
 
             foreach (var item in data)
             {

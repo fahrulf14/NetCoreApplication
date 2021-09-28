@@ -18,7 +18,7 @@ namespace NUNA.Components
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            List<SubheaderDto> PopularSearch = new List<SubheaderDto> 
+            List<SubheaderDto> PopularSearch = new()
             {
                 new SubheaderDto
                 {

@@ -8,7 +8,7 @@ namespace NUNA.Services
     {
         public MenuAccessDto GetMenuAccessName(string code, List<MenuAccessDto> menu)
         {
-            MenuAccessDto result = new MenuAccessDto();
+            MenuAccessDto result = new();
             if (code.Length == 2)
             {
                 result = (from a in menu

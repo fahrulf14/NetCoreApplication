@@ -10,8 +10,8 @@ namespace NUNA.Helpers
     {
         public IEnumerable<string> ExpandViewLocations(ViewLocationExpanderContext context, IEnumerable<string> viewLocations)
         {
-            if (context.ViewName.StartsWith("ViewComponents"))
-                return new string[] { "/{0}.cshtml" };
+            if (context.ViewName.StartsWith("Components"))
+                return new string[] { "ViewComponents/{0}" + RazorViewEngine.ViewExtension };
 
             return viewLocations;
         }

@@ -1,7 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <SatelliteResourceLanguages>es</SatelliteResourceLanguages>
     <ApplicationIcon>wwwroot\media\favicon\favicon.ico</ApplicationIcon>
     <UserSecretsId>911d815e-4516-4bc0-b3fd-826acd9a0533</UserSecretsId>
   </PropertyGroup>
@@ -22,8 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Areas\Admin\Views\Shared\Components\AsideIdentity\Default.cshtml" />
-    <Content Remove="Areas\Admin\Views\Shared\Components\Aside\Default.cshtml" />
     <Content Remove="Areas\Admin\Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Remove="Areas\Admin\Views\Shared\_aside-base.cshtml" />
     <Content Remove="Areas\Admin\Views\Shared\_aside-brand.cshtml" />
@@ -50,7 +49,9 @@
     <Content Remove="Areas\Admin\Views\Shared\_topbar-search.cshtml" />
     <Content Remove="Areas\Admin\Views\Shared\_topbar-user.cshtml" />
     <Content Remove="Areas\Admin\Views\Shared\_ValidationScriptsPartial.cshtml" />
-    <Content Remove="ViewComponents\Subheader\Default.cshtml" />
+    <Content Remove="ViewComponents\Components\AsideIdentity\Default.cshtml" />
+    <Content Remove="ViewComponents\Components\Aside\Default.cshtml" />
+    <Content Remove="ViewComponents\Components\Subheader\Default.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,15 +61,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.18" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
     <PackageReference Include="QRCoder" Version="1.4.1" />
@@ -77,8 +75,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Areas\Admin\Views\Shared\Components\AsideIdentity\Default.cshtml" />
-    <None Include="Areas\Admin\Views\Shared\Components\Aside\Default.cshtml" />
     <None Include="Areas\Admin\Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <None Include="Areas\Admin\Views\Shared\_aside-base.cshtml" />
     <None Include="Areas\Admin\Views\Shared\_aside-brand.cshtml" />
@@ -144,18 +140,18 @@
     <None Include="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\Identity\Pages\_ViewImports.cshtml" />
     <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
+    <None Include="ViewComponents\Components\AsideIdentity\Default.cshtml" />
+    <None Include="ViewComponents\Components\Aside\Default.cshtml" />
+    <None Include="ViewComponents\Components\Subheader\Default.cshtml" />
     <None Include="Views\Personal\Create.cshtml" />
     <None Include="Views\Personal\Edit.cshtml" />
     <None Include="Views\Personal\Index.cshtml" />
-    <None Include="ViewComponents\Aside\Default.cshtml" />
-    <None Include="ViewComponents\Subheader\Default.cshtml" />
     <None Include="Views\Shared\_aside-identity.cshtml" />
     <None Include="Views\Shared\_delete.cshtml" />
     <None Include="Views\Shared\_deletevalid.cshtml" />
     <None Include="Views\Shared\_header-base-mobile-public.cshtml" />
     <None Include="Views\Shared\_header-menu.cshtml" />
     <None Include="Views\Shared\_LoginPartial.cshtml" />
-    <None Include="ViewComponents\AsideIdentity\Default.cshtml" />
     <None Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <None Include="Views\Shared\_aside-base.cshtml" />
     <None Include="Views\Shared\_aside-brand.cshtml" />
@@ -260,7 +256,6 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Views\Shared\Components\" />
   </ItemGroup>
 
 </Project>

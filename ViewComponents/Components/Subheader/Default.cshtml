@@ -1,0 +1,20 @@
+@model IList<NUNA.ViewModels.Home.SubheaderDto>
+    <div class="kt-subheader kt-grid__item" id="kt_subheader">
+        <div class="kt-container  kt-container--fluid ">
+            <div class="kt-subheader__main public-subheader">
+                <h3 class="kt-subheader__title">
+                    Popular Search
+                </h3>
+                <span class="kt-subheader__separator kt-hidden"></span>
+                <div class="kt-subheader__breadcrumbs">
+                    <span class="kt-subheader__breadcrumbs-home pupular-search"><i class="flaticon2-search-1"></i></span>
+                    @foreach (var item in Model)
+                    {
+                        <a href="@item.Url" class="kt-subheader__breadcrumbs-link popular-search">
+                            @item.Name
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>

@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace SIP.Data
+namespace NUNA.Data
 {
-    public class SIPIdentityContext : IdentityDbContext<IdentityUser>
+    public class NUNAIdentityContext : IdentityDbContext<IdentityUser>
     {
-        public SIPIdentityContext(DbContextOptions<SIPIdentityContext> options)
+        public NUNAIdentityContext(DbContextOptions<NUNAIdentityContext> options)
             : base(options)
         {
         }

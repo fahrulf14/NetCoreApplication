@@ -61,36 +61,36 @@ function ShowLoading() {
 $(".check").change(function () {
     var id = event.srcElement.id;
     if ($('#' + id).is(":checked")) {
-        document.getElementById(id + "_Status").innerHTML = "Aktif";
+        document.getElementById(id + "_Status").innerHTML = "Active";
     }
     else {
-        document.getElementById(id + "_Status").innerHTML = "Non Aktif";
+        document.getElementById(id + "_Status").innerHTML = "Inactive";
     }
 });
 
 $(".check2").change(function () {
     var id = event.srcElement.id;
     if ($('#' + id).is(":checked")) {
-        document.getElementById(id + "_Status").innerHTML = "Ya";
+        document.getElementById(id + "_Status").innerHTML = "Yes";
     }
     else {
-        document.getElementById(id + "_Status").innerHTML = "Tidak";
+        document.getElementById(id + "_Status").innerHTML = "No";
     }
 });
 
 if (document.getElementById("datenow") != null) {
     var date = new Date(Date.now());
     var bulan = new Array();
-    bulan[0] = "Januari";
-    bulan[1] = "Februari";
+    bulan[0] = "January";
+    bulan[1] = "February";
     bulan[2] = "Maret";
     bulan[3] = "April";
-    bulan[4] = "Mei";
-    bulan[5] = "Juni";
-    bulan[6] = "Juli";
-    bulan[7] = "Agustus";
+    bulan[4] = "May";
+    bulan[5] = "Juny";
+    bulan[6] = "July";
+    bulan[7] = "August";
     bulan[8] = "September";
-    bulan[9] = "Oktober";
+    bulan[9] = "October";
     bulan[10] = "November";
     bulan[11] = "Desember";
 
@@ -115,3 +115,30 @@ toastr.options = {
     "showMethod": "slideDown",
     "hideMethod": "slideUp"
 };
+
+function showLoading() {
+    KTApp.blockPage({
+        overlayColor: '#000000',
+        type: 'v2',
+        state: 'success',
+        message: 'Please wait...'
+    });
+}
+
+$(window).on('beforeunload', function () {
+    showLoading();
+});
+
+$(document).ajaxStart(function () {
+    showLoading();
+});
+
+$(document).ajaxStop(function () {
+    KTApp.unblockPage();
+});
+
+$('.home-full-width').width($(window).width())
+
+$(window).resize(function () {
+    $('.home-full-width').width($(window).width())
+});

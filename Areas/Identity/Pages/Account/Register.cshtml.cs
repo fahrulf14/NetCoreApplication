@@ -17,9 +17,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SIP.Models.BaseApplicationContext;
+using NUNA.Models.BaseApplicationContext;
 
-namespace SIP.Areas.Identity.Pages.Account
+namespace NUNA.Areas.Identity.Pages.Account
 {
     [Auth(new string[] { "Developers", "Setting" })]
     public class RegisterModel : PageModel
@@ -51,6 +51,8 @@ namespace SIP.Areas.Identity.Pages.Account
         public PersonalModel Personals { get; set; }
 
         public string ReturnUrl { get; set; }
+        public List<SelectListItem> ListPersonal { get; set; }
+        public bool IsValid { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
@@ -58,7 +60,7 @@ namespace SIP.Areas.Identity.Pages.Account
         {
             [Required]
             [Display(Name = "Personal")]
-            public int Id { get; set; }
+            public int IdPersonal { get; set; }
            
             [Required]
             [EmailAddress]
@@ -93,8 +95,16 @@ namespace SIP.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+            IsValid = true;
 
-            ViewData["IdPersonal"] = new SelectList(_appContext.Personal.Where(d => d.Email == null), "IdPersonal", "Nama");
+            ListPersonal = (from a in _appContext.Personals
+                            where a.UserName == null
+                            select new SelectListItem
+                            {
+                                Value = a.Id.ToString(),
+                                Text = a.Name
+                            }).ToList();
+
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
@@ -104,7 +114,8 @@ namespace SIP.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var userName = Input.Email.Split("@")[0];
+                var user = new IdentityUser { UserName = userName, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -113,9 +124,9 @@ namespace SIP.Areas.Identity.Pages.Account
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-                    var Personal = _appContext.Personal.FirstOrDefault(p => p.Id == Input.Id);
-                    Personal.Email = Input.Email;
-                    _appContext.Personal.Update(Personal);
+                    var Personal = _appContext.Personals.FirstOrDefault(p => p.Id == Input.IdPersonal);
+                    Personal.UserName = userName;
+                    _appContext.Personals.Update(Personal);
 
                     var dataUser = _appContext.AspNetUsers.FirstOrDefault(d => d.Email == Input.Email);
                     dataUser.EmailConfirmed = true;
@@ -132,7 +143,7 @@ namespace SIP.Areas.Identity.Pages.Account
                 }
             }
 
-            // If we got this far, something failed, redisplay form
+            IsValid = false;
             return Page();
         }
     }

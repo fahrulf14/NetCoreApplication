@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using SIP.Models.BaseApplicationContext;
-using SIP.ViewModels.Personal;
+using NUNA.Models.BaseApplicationContext;
+using NUNA.ViewModels.Personal;
 
-namespace SIP.Areas.Identity.Pages.Account.Manage
+namespace NUNA.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
@@ -64,14 +64,13 @@ namespace SIP.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            ViewData["Personal"] = await (from a in _appContext.Personal
-                                          join b in _appContext.RF_Positions on a.PositionId equals b.Id
+            ViewData["Personal"] = await (from a in _appContext.Personals
+                                          where a.UserName == user.UserName
                                           select new ListAccountDto
                                           {
-                                              Nama = a.Nama,
-                                              Nip = a.Nip,
-                                              Email = a.Email,
-                                              Position = b.Position
+                                              Name = a.Name,
+                                              Username = a.UserName,
+                                              Email = user.Email
                                           }).ToListAsync();
 
             await LoadAsync(user);

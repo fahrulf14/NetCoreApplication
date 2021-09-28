@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace SIP.Areas.Identity.Pages.Account.Manage
+namespace NUNA.Areas.Identity.Pages.Account.Manage
 {
     public partial class EmailModel : PageModel
     {

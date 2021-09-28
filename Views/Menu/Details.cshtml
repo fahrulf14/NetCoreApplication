@@ -1,0 +1,32 @@
+﻿@model Menu
+
+<div class="kt-portlet__body">
+    <div class="row row-space">
+        <div asp-displayfor="IconClass" class="col-sm-4 display-list"></div>
+        <div class="col-sm-8 display-list">
+            <span class="kt-font-bold">
+                <i class="@Model.IconClass la-lg"></i>
+            </span>
+        </div>
+        <div asp-displayfor="Nama" class="col-sm-4 display-list"></div>
+        <div class="col-sm-8 display-list">
+            <span class="kt-font-bold">
+                @Model.Nama
+            </span>
+        </div>
+        <div asp-displayfor="Controller" class="col-sm-4 display-list"></div>
+        <div class="col-sm-8 display-list">
+            <span class="kt-font-bold">
+                @Model.Controller
+            </span>
+        </div>
+        <div asp-displayfor="ActionName" class="col-sm-4 display-list"></div>
+        <div class="col-sm-8 display-list">
+            <span class="kt-font-bold">
+                @Model.ActionName
+            </span>
+        </div>
+        <div asp-displayfor="IsActive" class="col-sm-4 display-list"></div>
+        <div asp-badge="IsActive" class="col-sm-8 display-list"></div>
+    </div>
+</div>

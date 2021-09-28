@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace SIP.Controllers
+namespace NUNA.Controllers
 {
     public class ErrorController : Controller
     {

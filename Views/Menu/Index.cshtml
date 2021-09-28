@@ -1,0 +1,164 @@
+﻿@model IEnumerable<Menu>
+
+@{
+    ViewBag.Title = "Master Menu";
+    ViewBag.SubHeaderTitle = "Master Menu";
+    ViewBag.S1 = "";
+    ViewBag.S2 = "";
+    ViewBag.S3 = "";
+    ViewBag.S4 = "";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-4">
+        <!--begin::Portlet-->
+        <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_menu">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Setting Menu Access
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-group">
+                        <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div id="menu_tree" class="tree-demo"></div>
+            </div>
+        </div>
+        <!--end::Portlet-->
+    </div>
+    <div class="col-lg-4">
+        <!--begin::Portlet-->
+        <div class="kt-portlet" data-ktportlet="true" id="kt_portlet_tools_1">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Menu Detail
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-group">
+                        <a data-modal id="create-botton" href="#" class="btn btn-bold btn-label-brand btn-sm disabled"><i class="la la-plus"></i> Create Menu</a>
+                        <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div id="menu-detail">
+
+            </div>
+            <div class="modal-footer">
+                <a id="edit-botton" href="#" data-modal class="btn btn-info disabled">Edit Menu</a>
+            </div>
+        </div>
+        <!--end::Portlet-->
+    </div>
+</div>
+
+<div class="modal fade" id="icon_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:1062">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <partial name="_IconModal" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        $(".icon-select").on('click', function (event) {
+            console.log(event.currentTarget.childNodes[3].textContent.trim());
+            $('#icon_modal').modal('toggle');
+            $('#IconClass').val("la " + event.currentTarget.childNodes[3].textContent.trim());
+        });
+
+        $(document).on('change', 'input[id="IsParent"]', function () {
+            if ($('#' + event.srcElement.id).is(":checked")) {
+                $('input[id="Controller"]').prop("disabled", true);
+                $('input[id="ActionName"]').prop("disabled", true);
+            }
+            else {
+                $('input[id="Controller"]').prop("disabled", false);
+                $('input[id="ActionName"]').prop("disabled", false);
+            }
+        });
+
+        var KTTreeview = function () {
+            var menu_tree = function (json) {
+                $('#menu_tree').jstree({
+                    'plugins': ["wholerow", "checkbox", "types"],
+                    'core': {
+                        "themes": {
+                            "responsive": false
+                        },
+                        'data': json
+                    },
+                    "types": {
+                        "default": {
+                            "icon": "fa fa-folder kt-font-warning"
+                        },
+                        "file": {
+                            "icon": "fa fa-file  kt-font-warning"
+                        }
+                    },
+                    "plugins": ["types"]
+                }).on('changed.jstree', function (e, data) {
+                    try {
+                        var id = data.node.id;
+                        if (id === "0") {
+                            $('#create-botton').removeClass("disabled").attr("href", "/Menu/Create/0");
+                            $('#edit-botton').addClass("disabled").attr("href", "#");
+                        }
+                        else {
+                            $('#create-botton').removeClass("disabled").attr("href", "/Menu/Create/" + id);
+                            $('#edit-botton').removeClass("disabled").attr("href", "/Menu/Edit/" + id);
+                            menu_data(id);
+                        }
+                    }
+                    catch {}
+                });
+            }
+
+            var menu_data = function (menu) {
+                $.get( '/Menu/Details?id=' + menu, function(data) {
+                    $('#menu-detail').html(data);
+                });
+            }
+
+            return {
+                //main function to initiate the module
+                init: function () {
+                    $(function () {
+                        $.ajax({
+                            async: true,
+                            type: "GET",
+                            url: "@Url.Action("GetMenuAccess", "Menu")",
+                            dataType: "json",
+
+                            success: function (json) {
+
+                                menu_tree(json);
+                            },
+
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                alert(xhr.status);
+                                alert(thrownError);
+                            }
+                        });
+                    });
+                }
+            };
+        }();
+
+        jQuery(document).ready(function () {
+            $('#permission_tree').jstree('destroy');
+            KTTreeview.init();
+        });
+
+    </script>
+}

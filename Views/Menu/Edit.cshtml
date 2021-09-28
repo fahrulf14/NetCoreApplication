@@ -1,0 +1,83 @@
+﻿@model Menu
+
+<form asp-action="Edit">
+    <div class="modal-header">
+        <h5 class="modal-title" id="ModalTitle">Edit Master Menu</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="la la-remove"></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" asp-for="Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="Nama" class="control-label"></label>
+                <input asp-for="Nama" class="form-control" required autofocus />
+                <span asp-validation-for="Nama" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="IconClass" class="control-label"></label>
+                @if (Model.Parent != "0")
+                {
+                    <div class="input-group">
+                        <input asp-for="IconClass" disabled class="form-control" aria-describedby="icon-addon">
+                        <div class="input-group-append">
+                            <button class="btn btn-info disabled" type="button">Search Icon</button>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group">
+                        <input asp-for="IconClass" class="form-control" aria-describedby="icon-addon">
+                        <div class="input-group-append">
+                            <button class="btn btn-info" data-toggle="modal" data-target="#icon_modal" type="button">Search Icon</button>
+                        </div>
+                    </div>
+                }
+                <span asp-validation-for="IconClass" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label asp-for="IsParent" class="control-label"></label>
+                <div class="kt-checkbox-inline">
+                    <label class="kt-checkbox">
+                        <input class="check2" asp-for="IsParent" /> <p id="@Html.IdFor(d => d.IsParent)_Status">@(Model.IsParent ? "Yes" : "No")</p>
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6 form-group">
+                <label asp-for="IsActive" class="control-label"></label>
+                <div class="kt-checkbox-inline">
+                    <label class="kt-checkbox">
+                        <input class="check" asp-for="IsActive" /> <p id="@Html.IdFor(model => model.IsActive)_Status">@(Model.IsActive ? "Active" : "Inactive")</p>
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="Controller" class="control-label"></label>
+                <input asp-for="Controller" class="form-control" required />
+                <span asp-validation-for="Controller" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label asp-for="ActionName" class="control-label"></label>
+                <input asp-for="ActionName" class="form-control" required />
+                <span asp-validation-for="ActionName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" value="Save" class="btn btn-success" />
+    </div>
+</form>

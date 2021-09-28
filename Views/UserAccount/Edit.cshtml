@@ -10,8 +10,8 @@
     <div class="modal-body">
         <input type="hidden" asp-for="Id" />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="frow">
-            <div class="col-md-12 orm-group">
+        <div class="row">
+            <div class="col-md-12 form-group">
                 <label asp-for="UserName" class="control-label required">Username</label>
                 <input asp-for="UserName" class="form-control" required autofocus />
                 <span asp-validation-for="UserName" class="text-danger"></span>

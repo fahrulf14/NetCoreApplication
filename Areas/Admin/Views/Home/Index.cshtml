@@ -1,0 +1,93 @@
+﻿@{
+    Layout = "/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="kt-portlet">
+    <div class="row">
+        <div class="owl-carousel owl-theme col-lg-12">
+            <div class="carousel">
+                <a href="#" class="kt-widget19">
+                    <div class="kt-widget19__pic" style="background-image: url(https://images.tokopedia.net/img/cache/1208/NsjrJu/2021/9/21/71b7ab54-e0ad-42aa-9334-d7f0f85c1e1a.jpg.webp?ect=3g)">
+                        <h6 class="kt-widget19__title kt-font-light">
+                            Introducing New Feature
+                        </h6>
+                        <div class="kt-widget19__labels">
+                            <span class="btn btn-light-o2 btn-bold">New</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @*<div class="carousel">
+                <a href="#" class="kt-widget19">
+                    <div class="kt-widget19__pic" style="background-image: url(https://images.tokopedia.net/img/cache/1208/NsjrJu/2021/9/21/235f6e84-b643-4bbb-bcc0-1266f9c5622f.jpg.webp?ect=3g)">
+                        <h6 class="kt-widget19__title kt-font-light">
+                            Introducing New Feature
+                        </h6>
+                        <div class="kt-widget19__labels">
+                            <span class="btn btn-light-o2 btn-bold">New</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="carousel">
+                <a href="#" class="kt-widget19">
+                    <div class="kt-widget19__pic" style="background-image: url(https://images.tokopedia.net/img/cache/1208/NsjrJu/2021/9/21/415a0035-c14b-47c9-8f1e-948ca82da6d1.jpg.webp?ect=3g)">
+                        <h6 class="kt-widget19__title kt-font-light">
+                            Introducing New Feature
+                        </h6>
+                        <div class="kt-widget19__labels">
+                            <span class="btn btn-light-o2 btn-bold">New</span>
+                        </div>
+                    </div>
+                </a>
+            </div>*@
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var Dashboard = function () {
+            var dashboardSlide = function () {
+                var carousel1 = $('.owl-carousel');
+
+                carousel1.find('.carousel').each(function (index) {
+                    $(this).attr('data-position', index);
+                });
+
+                carousel1.owlCarousel({
+                    rtl: KTUtil.isRTL(),
+                    center: true,
+                    autoplay: true,
+                    autoplayTimeout: 3000,
+                    autoplayHoverPause: true,
+                    smartSpeed: 450,
+                    margin: 10,
+                    loop: true,
+                    items: 1
+                });
+
+                $('.owl-dots').css('position', 'absolute').css('bottom', '10px').css('right', '20px');
+
+                var height = ($(window).width() / 5.2);
+                $('.kt-widget19__pic').height(height).css('border-radius', '10px');
+
+                $(window).resize(function () {
+                    var height = ($(window).width() / 5.2);
+                    $('.kt-widget19__pic').height(height);
+                });
+            }
+
+            return {
+                init: function () {
+                    dashboardSlide();
+                },
+            };
+
+        }();
+
+        jQuery(document).ready(function () {
+            Dashboard.init();
+        });
+    </script>
+}

@@ -13,7 +13,7 @@
 <head>
     <base href="../../../">
     <meta charset="utf-8" />
-    <title>Login | SIP</title>
+    <title>Login | NUNA</title>
     <meta name="description" content="Login page">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -22,7 +22,6 @@
     <link href="/lib/vendors.bundle.css" rel="stylesheet" type="text/css">
     <link href="/css/base/style.bundle.css" rel="stylesheet" type="text/css">
     <!--end::Fonts -->
-
     <!--begin::Page Custom Styles(used by this page) -->
     <link href="~/css/pages/login-6.css" rel="stylesheet" />
 
@@ -33,12 +32,22 @@
     <!--end::Global Theme Styles -->
     <!--end::Layout Skins -->
     <!--begin::Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="~/media/favicon/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="~/media/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="~/media/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/media/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/media/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/media/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/media/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="~/media/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/media/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/media/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/media/favicon/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="~/media/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="~/media/favicon/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="~/media/favicon/favicon-16x16.png">
-    <link rel="shortcut icon" href="~/media/favicon/favicon.ico">
-    <meta name="msapplication-TileColor" content="#2d89ef">
-    <meta name="msapplication-config" content="~/media/favicon/browserconfig.xml">
+    <link rel="manifest" href="~/media/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="~/media/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <!--end::Favicon -->
 </head>
@@ -56,12 +65,12 @@
                             <div class="kt-login__body">
                                 <div class="kt-login__logo kt-margin-b-10">
                                     <a href="#">
-                                        <img src="~/media/logos/logo.png" width="140" />
+                                        <img src="~/media/logos/Logo-Icon.png" width="120" />
                                     </a>
                                 </div>
                                 <div class="kt-login__signin">
                                     <div class="kt-login__head">
-                                        <h3 class="kt-login__title">Sistem Informasi Pendapatan</h3>
+                                        <h3 class="kt-login__title">NUNA - Net Core Web Application</h3>
                                     </div>
                                     <div class="kt-login__form">
                                         <form id="account" method="post" class="kt-form">
@@ -215,20 +224,14 @@
 
 
         var status = "@TempData["status"]";
-        if (status == "salah") {
-            toastr.error("Password Salah!");
+        if (status == "wrong") {
+            toastr.error("Wrong password! Please check again.");
         }
         else if (status == "lockout") {
-            toastr.error("Akun Anda Terkunci! Segera Hubungi Admin!");
+            toastr.error("You've exceeded the number of attempts. Please try again later.");
         }
         else if (status == "email") {
-            toastr.error("Email Tidak Terdaftar!");
-        }
-        else if (status == "akun") {
-            toastr.error("Akun Tidak Terdaftar!");
-        }
-        else if (status == "denyaccess") {
-            toastr.error("Anda Tidak Memiliki Hak Akses!");
+            toastr.error("Couldn't find your Account!");
         }
         else if (status == "hack") {
             toastr.error("Sorry You Cannot Hack Me!");

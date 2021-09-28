@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SIP.Models.BaseApplicationContext
+namespace NUNA.Models.BaseApplicationContext
 {
     public partial class AspNetUsers
     {
@@ -13,6 +13,8 @@ namespace SIP.Models.BaseApplicationContext
             AspNetUserLogins = new HashSet<AspNetUserLogins>();
             AspNetUserRoles = new HashSet<AspNetUserRoles>();
             AspNetUserTokens = new HashSet<AspNetUserTokens>();
+            AspNetUserPermissions = new HashSet<AspNetUserPermissions>();
+            AspNetUserMenus = new HashSet<AspNetUserMenus>();
         }
 
         [Key]
@@ -45,5 +47,8 @@ namespace SIP.Models.BaseApplicationContext
         public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
         [InverseProperty("User")]
         public virtual ICollection<AspNetUserTokens> AspNetUserTokens { get; set; }
+
+        public virtual ICollection<AspNetUserPermissions> AspNetUserPermissions { get; set; }
+        public virtual ICollection<AspNetUserMenus> AspNetUserMenus { get; set; }
     }
 }

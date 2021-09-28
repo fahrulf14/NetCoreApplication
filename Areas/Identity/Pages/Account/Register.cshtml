@@ -20,10 +20,10 @@
     <div class="modal-body">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="Input.Id"></label>
-            <select asp-for="Input.Id" class="form-control kt-selectpicker" required title="Pilih Personal..." data-live-search="true" asp-items="ViewBag.IdPersonal">
+            <label asp-for="Input.IdPersonal"></label>
+            <select asp-for="Input.IdPersonal" class="form-control kt-selectpicker" required title="Pilih Personal..." data-live-search="true" asp-items="Model.ListPersonal">
             </select>
-            <span asp-validation-for="Input.Id" class="text-danger"></span>
+            <span asp-validation-for="Input.IdPersonal" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Input.Email"></label>
@@ -40,6 +40,19 @@
             <input asp-for="Input.ConfirmPassword" class="form-control" />
             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
         </div>
+        <div class="form-group">
+            <div class="alert alert-danger" role="alert">
+                <div class="alert-text">Form invalid, please check again!</div>
+            </div>
+        </div>
+        @if (Model.IsValid == false)
+        {
+            <div class="form-group">
+                <div class="alert alert-danger" role="alert">
+                    <div class="alert-text">Form invalid, please check again!</div>
+                </div>
+            </div>
+        }
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -3,26 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Attributes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SIP.Models.BaseApplicationContext;
-using SIP.ViewModels;
+using NUNA.Helpers;
+using NUNA.Models.BaseApplicationContext;
+using NUNA.Services;
+using NUNA.ViewModels;
+using NUNA.ViewModels.Menu;
+using NUNA.ViewModels.Roles;
+using NUNA.ViewModels.Toastr;
+using NUNA.ViewModels.UserAccount;
 
-namespace SIP.Controllers
+namespace NUNA.Controllers
 {
+    [Authorize]
     public class RolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly BaseApplicationContext _appContext;
+        private readonly MenuService _menuService = new MenuService();
+        private readonly JsonResultService _result = new JsonResultService();
         public RolesController(BaseApplicationContext context, RoleManager<IdentityRole> roleMgr)
         {
             _roleManager = roleMgr;
             _appContext = context;
         }
 
-        [Auth(new string[] { "Developers", "Setting" })]
         public IActionResult Index()
         {
             //Link
@@ -32,39 +41,18 @@ namespace SIP.Controllers
             ViewBag.L3 = "";
 
             var data = (from role in _appContext.AspNetRoles
-                        join userrole in _appContext.AspNetUserRoles on role.Id equals userrole.RoleId
-                        join user in _appContext.AspNetUsers on userrole.UserId equals user.Id
-                        join Personal in _appContext.Personal on user.Email equals Personal.Email
                         where role.Name != "Developers"
-                        select new 
+                        select new ListRoleDto
                         {
-                            role.Id,
+                            Id = role.Id,
                             Role = role.Name,
-                            User = Personal.Nama
-                        });
+                            UserCount = _appContext.AspNetUserRoles.Where(d => d.RoleId == role.Id).Count(),
+                            AccessCount = _appContext.AspNetRolePermissions.Where(d => d.RoleId == role.Id).Count(),
+                        }).ToList();
 
-            List<ListRole> listRole = new List<ListRole>();
-
-            foreach (var item in data)
-            {
-                listRole.Add(new ListRole
-                {
-                    Id = item.Id,
-                    Role = item.Role,
-                    User = item.User
-                });
-            }
-
-            var subselect = (from d in listRole select d.Id).ToList();
-            var sisa = (from role in _appContext.AspNetRoles
-                       where !subselect.Contains(role.Id) && role.Name != "Developers"
-                       select role).ToList();
-            ViewBag.Sisa = sisa;
-
-            return View(listRole);
+            return View(data);
         }
 
-        [Auth(new string[] { "Developers", "Setting" })]
         public IActionResult Modul()
         {
             //Link
@@ -76,20 +64,20 @@ namespace SIP.Controllers
             var data = (from user in _appContext.AspNetUsers
                         join userrole in _appContext.AspNetUserRoles on user.Id equals userrole.UserId
                         join role in _appContext.AspNetRoles on userrole.RoleId equals role.Id
-                        join Personal in _appContext.Personal on user.Email equals Personal.Email
-                        where Personal.Nama != "Developers"
+                        join Personal in _appContext.Personals on user.UserName equals Personal.UserName
+                        where Personal.Name != "Developers"
                         select new
                         {
                             Personal.Id,
                             Role = role.Name,
-                            User = Personal.Nama
+                            User = Personal.Name
                         });
 
-            List<ListUser> listUser = new List<ListUser>();
+            List<ListUserDto> listUser = new List<ListUserDto>();
 
             foreach (var item in data)
             {
-                listUser.Add(new ListUser
+                listUser.Add(new ListUserDto
                 {
                     Id = item.Id,
                     Role = item.Role,
@@ -98,58 +86,14 @@ namespace SIP.Controllers
             }
 
             var subselect = (from d in listUser select d.Id).ToList();
-            var sisa = (from Personal in _appContext.Personal
-                        where Personal.Email != null && !subselect.Contains(Personal.Id) && Personal.Nama != "Developers"
+            var sisa = (from Personal in _appContext.Personals
+                        where Personal.UserName != null && !subselect.Contains(Personal.Id) && Personal.Name != "Developers"
                         select Personal).ToList();
             ViewBag.Sisa = sisa;
 
             return View(listUser);
         }
 
-        [HttpPost]
-        public JsonResult ChangeRoles(string user, string role, bool check)
-        {
-            if (check)
-            {
-                AspNetUserRoles aspNetUserRoles = new AspNetUserRoles
-                {
-                    RoleId = role,
-                    UserId = user
-                };
-                _appContext.AspNetUserRoles.Add(aspNetUserRoles);
-            }
-            else
-            {
-                var aspNetUserRoles = _appContext.AspNetUserRoles.FirstOrDefault(d => d.RoleId == role && d.UserId == user);
-                _appContext.Remove(aspNetUserRoles);
-            }
-            _appContext.SaveChanges();
-            return Json(new { success = true });
-        }
-
-        public JsonResult LoadUsers(string id)
-        {
-            var data = (from role in _appContext.AspNetUserRoles
-                        where role.RoleId == id && role.RoleId != "4ac0100f-3192-493b-92b5-3b3336f215ed"
-                        select new
-                        {
-                            iduser = role.UserId
-                        }).ToList();
-            return Json(data);
-        }
-
-        public JsonResult LoadRoles(string id)
-        {
-            var data = (from role in _appContext.AspNetUserRoles
-                        where role.UserId == id where role.RoleId != "4ac0100f-3192-493b-92b5-3b3336f215ed"
-                        select new
-                        {
-                            idrole = role.RoleId
-                        }).ToList();
-            return Json(data);
-        }
-
-        [Auth(new string[] { "Developers" })]
         [AjaxOnly]
         public IActionResult Create()
         {
@@ -173,7 +117,234 @@ namespace SIP.Controllers
             return PartialView(aspNetRoles);
         }
 
-        [Auth(new string[] { "Developers", "Setting" })]
+        public IActionResult Permission(string id)
+        {
+            var data = (from r in _appContext.AspNetRoles
+                        where r.Id == id
+                        select new RolePermissionDto
+                        {
+                            RoleId = r.Id,
+                            Role = r.Name,
+                            UserCount = _appContext.AspNetUserRoles.Where(d => d.RoleId == id).Count(),
+                            AccessCount = _appContext.AspNetRolePermissions.Where(d => d.RoleId == id).Count()
+                        }).FirstOrDefault();
+
+
+            TempData["RoleId"] = data.RoleId;
+
+            return View(data);
+        }
+
+        public JsonResult GetPermission()
+        {
+            List<string> permission = Models.Permission.AppPermission.ToList();
+
+            var RoleId = TempData["RoleId"].ToString();
+
+            var access = (from a in _appContext.AspNetRolePermissions
+                          where a.RoleId == RoleId
+                          select a).ToList();
+
+            var listPermission = (from a in permission
+                                  group a by a.Split(".")[0]
+                                  into G
+                                  select new
+                                  {
+                                      id = G.Key,
+                                      text = G.Key,
+                                      children = (from x in permission
+                                                  join y in access on x equals y.Permission into roles
+                                                  from y in roles.DefaultIfEmpty()
+                                                  where x.Split(".")[0] == G.Key
+                                                  select new
+                                                  {
+                                                      id = x,
+                                                      text = x.Split(".")[1],
+                                                      icon = x.Split(".")[1] == "Create" ? "fa fa-plus-square kt-font-default" :
+                                                                x.Split(".")[1] == "Edit" ? "fa fa-pen-square kt-font-default" :
+                                                                x.Split(".")[1] == "Delete" ? "fa fa-minus-square kt-font-default" : "fa fa-check-square kt-font-default",
+                                                      state = new
+                                                      {
+                                                          selected = y != null
+                                                      }
+                                                  })
+                                  }).ToList();
+
+            return Json(listPermission);
+        }
+
+        [HttpPost]
+        public IActionResult UpdatePermission([FromBody] PermissionInputDto input)
+        {
+
+            #region Permission
+            var permission = (from a in _appContext.AspNetRolePermissions
+                              where a.RoleId == input.id
+                              select a.Permission).ToList();
+
+            var deletePermission = (from a in permission
+                                    where !input.permission.Contains(a)
+                                    select new AspNetRolePermissions
+                                    {
+                                        RoleId = input.id,
+                                        Permission = a
+                                    }).ToList();
+
+            var insertPermission = (from a in input.permission
+                                    where !permission.Contains(a)
+                                    select new AspNetRolePermissions
+                                    {
+                                        RoleId = input.id,
+                                        Permission = a
+                                    }).ToList();
+
+            if (deletePermission.Count != 0)
+            {
+                _appContext.RemoveRange(deletePermission);
+            }
+            if (insertPermission.Count != 0)
+            {
+                _appContext.AddRange(insertPermission);
+            }
+
+            #endregion
+
+            #region Menu
+            var menu = (from a in _appContext.AspNetRoleMenus
+                        where a.RoleId == input.id
+                        select a.Menu).ToList();
+
+            var deleteMenu = (from a in menu
+                              where !input.menu.Contains(a)
+                              select new AspNetRoleMenus
+                              {
+                                  RoleId = input.id,
+                                  Menu = a
+                              }).ToList();
+
+            var insertMenu = (from a in input.menu
+                              where !menu.Contains(a)
+                              select new AspNetRoleMenus
+                              {
+                                  RoleId = input.id,
+                                  Menu = a
+                              }).ToList();
+
+            if (deleteMenu.Count != 0)
+            {
+                _appContext.RemoveRange(deleteMenu);
+            }
+            if (insertMenu.Count != 0)
+            {
+                _appContext.AddRange(insertMenu);
+            }
+
+            #endregion
+
+            _appContext.SaveChanges();
+            return Json(_result.Success(Url.Action("Index"))).WithSuccess(Message.Save);
+        }
+
+        public JsonResult GetMenuAccess()
+        {
+            List<object> result = new List<object>();
+            List<MenuAccessDto> menuAccess = GetMenuList();
+
+            var RoleId = TempData["RoleId"].ToString();
+
+            var access = (from a in _appContext.AspNetRoleMenus
+                          where a.RoleId == RoleId
+                          select a).ToList();
+
+            var listPermission = (from a in menuAccess.Where(d => d.Code.Length == 2)
+                                  join x in access on a.Nama equals x.Menu into xa
+                                  from x in xa.DefaultIfEmpty()
+                                  where a.Parent == "0"
+                                  select new
+                                  {
+                                      id = a.Nama,
+                                      text = a.Nama,
+                                      state = new
+                                      {
+                                          selected = x != null
+                                      },
+                                      children = (from b in menuAccess.Where(d => d.Code.Length == 4)
+                                                  join y in access on b.Nama equals y.Menu into yb
+                                                  from y in yb.DefaultIfEmpty()
+                                                  where b.Nama.Split(".")[0] == a.Nama
+                                                  select new
+                                                  {
+                                                      id = b.Nama,
+                                                      text = b.Nama.Split(".")[1],
+                                                      state = new
+                                                      {
+                                                          selected = y != null
+                                                      },
+                                                      children = (from c in menuAccess.Where(d => d.Code.Length == 6)
+                                                                  join z in access on c.Nama equals z.Menu into zc
+                                                                  from z in zc.DefaultIfEmpty()
+                                                                  where c.Nama.Split(".")[1] == b.Nama.Split(".")[1]
+                                                                  select new
+                                                                  {
+                                                                      id = c.Nama,
+                                                                      text = c.Nama.Split(".")[2],
+                                                                      state = new
+                                                                      {
+                                                                          selected = z != null
+                                                                      },
+                                                                      children = (from d in menuAccess.Where(d => d.Code.Length == 8)
+                                                                                  join v in access on d.Nama equals v.Menu into vd
+                                                                                  from v in vd.DefaultIfEmpty()
+                                                                                  where d.Nama.Split(".")[2] == c.Nama.Split(".")[2]
+                                                                                  select new
+                                                                                  {
+                                                                                      id = d.Nama,
+                                                                                      text = d.Nama.Split(".")[2],
+                                                                                      state = new
+                                                                                      {
+                                                                                          selected = v != null
+                                                                                      }
+                                                                                  }).ToList()
+                                                                  }).ToList()
+                                                  }).ToList()
+                                  }).ToList();
+
+            return Json(listPermission);
+        }
+
+        public List<MenuAccessDto> GetMenuList()
+        {
+            var menu = (from a in _appContext.Menu
+                        select new MenuAccessDto
+                        {
+                            Nama = a.Nama,
+                            Code = a.Code,
+                            Parent = a.Parent
+                        }).ToList();
+
+            var result = (from a in _appContext.Menu
+                          where a.Parent == "0" && a.IsActive
+                          select new MenuAccessDto
+                          {
+                              Nama = a.Nama,
+                              Code = a.Code,
+                              Parent = a.Parent
+                          }).ToList();
+
+            var data = (from a in _appContext.Menu
+                        where a.Parent != "0" && a.IsActive
+                        select new MenuAccessDto
+                        {
+                            Nama = _menuService.GetMenuAccessName(a.Code, menu).Nama,
+                            Code = a.Code,
+                            Parent = a.Parent
+                        }).ToList();
+
+            result.AddRange(data);
+
+            return result;
+        }
+
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -195,22 +366,22 @@ namespace SIP.Controllers
             ViewBag.L3 = "";
 
             var data = (from user in _appContext.AspNetUsers
-                        join Personal in _appContext.Personal on user.Email equals Personal.Email
-                        where Personal.Nama != "Developers"
+                        join Personal in _appContext.Personals on user.UserName equals Personal.UserName
+                        where Personal.Name != "Developers"
                         select new
                         {
                             UserId = user.Id,
-                            Personal.Nama
+                            Personal.Name
                         });
 
-            List<UserRoleEdit> ListUser = new List<UserRoleEdit>();
+            List<UserRoleEditDto> ListUser = new List<UserRoleEditDto>();
 
             foreach (var item in data)
             {
-                ListUser.Add(new UserRoleEdit
+                ListUser.Add(new UserRoleEditDto
                 {
                     UserId = item.UserId,
-                    Nama = item.Nama
+                    Nama = item.Name
                 });
 
             }
@@ -220,7 +391,6 @@ namespace SIP.Controllers
             return View(aspNetRoles);
         }
 
-        [Auth(new string[] { "Developers", "Setting" })]
         public async Task<IActionResult> Update(int id)
         {
             if (id == 0)
@@ -228,24 +398,22 @@ namespace SIP.Controllers
                 return NotFound();
             }
 
-            var Personal = await _appContext.Personal.FirstOrDefaultAsync(p => p.Id == id);
+            var Personal = await _appContext.Personals.FirstOrDefaultAsync(p => p.Id == id);
             if (Personal == null)
             {
                 return NotFound();
             }
 
             //Link
-            ViewBag.Title = "Ubah Akses " + Personal.Nama;
+            ViewBag.Title = "Ubah Akses " + Personal.Name;
             ViewBag.L = Url.Action("Modul");
             ViewBag.L1 = Url.Action("Update", new { id });
             ViewBag.L2 = "";
             ViewBag.L3 = "";
 
-            var user = _appContext.AspNetUsers.FirstOrDefault(d => d.Email == Personal.Email);
+            var user = _appContext.AspNetUsers.FirstOrDefault(d => d.UserName == Personal.UserName);
 
             var roles = _appContext.AspNetRoles.Where(d => d.Name != "Developers").ToList();
-
-            ViewBag.Position = _appContext.RF_Positions.Where(d => d.Id == Personal.PositionId).Select(d => d.Position).FirstOrDefault();
 
             ViewBag.IdUser = user.Id;
             ViewBag.Roles = roles;
@@ -253,7 +421,6 @@ namespace SIP.Controllers
             return View(Personal);
         }
 
-        [Auth(new string[] { "Developers" })]
         [AjaxOnly]
         public async Task<IActionResult> Delete(string id)
         {

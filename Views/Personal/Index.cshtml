@@ -1,8 +1,9 @@
-﻿@model IEnumerable<ListAccountDto>
+﻿@using NUNA.ViewModels.Personal
+@model IEnumerable<ListAccountDto>
 
 @{
-    ViewBag.Title = "Personal";
-    ViewBag.SubHeaderTitle = "Personal";
+    ViewBag.Title = "Personals";
+    ViewBag.SubHeaderTitle = "Personals";
     ViewBag.S1 = "";
     ViewBag.S2 = "";
     ViewBag.S3 = "";
@@ -21,7 +22,7 @@
                 </div>
                 <div class="kt-portlet__head-toolbar">
                     <div class="kt-portlet__head-group">
-                        <a data-modal asp-action="Create" class="btn btn-bold btn-label-brand btn-sm"><i class="la la-plus"></i> Tambah Data</a>
+                        <a data-modal asp-action="Create" class="btn btn-bold btn-label-brand btn-sm"><i class="la la-plus"></i> Create Personal</a>
                         <a href="#" data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md"><i class="la la-angle-down"></i></a>
                     </div>
                 </div>
@@ -31,39 +32,9 @@
                     <div class="row align-items-center">
                         <div class="col-xl-12">
                             <div class="row align-items-center">
-                                <div class="col-sm-2 col-1 kt-margin-b-10-mobile order-2 order-sm-1 length">
-                                    <div class="kt-form__group">
-                                        <select class="form-control kt-selectpicker" id="length">
-                                            <option value="10">10</option>
-                                            <option value="20">20</option>
-                                            <option value="30">30</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-auto order-3 order-sm-2 kt-margin-b-10-mobile">
-                                    <div class="kt-input-icon kt-input-icon--left">
-                                        <input type="text" class="form-control" placeholder="Search..." id="search">
-                                        <span class="kt-input-icon__icon kt-input-icon__icon--left">
-                                            <span><i class="la la-search"></i></span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-3 col-12 order-1 order-sm-3 kt-margin-b-10-mobile">
-                                    <div class="kt-form__group kt-form__group--inline">
-                                        <div class="kt-form__label">
-                                            <label>Status:</label>
-                                        </div>
-                                        <div class="kt-form__control">
-                                            <select class="form-control kt-selectpicker" id="status">
-                                                <option value=" ">Semua</option>
-                                                <option value="1">Aktif</option>
-                                                <option value="0">Non Aktif</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div class="col-sm-2 col-1 kt-margin-b-10-mobile order-2 order-sm-1 length" list-length="10,20,30,50,100"></div>
+                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-auto order-3 order-sm-2 kt-margin-b-10-mobile" list-search=""></div>
+                                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-3 col-12 order-1 order-sm-3 kt-margin-b-10-mobile" list-status="Status"></div>
                             </div>
                         </div>
                     </div>
@@ -75,16 +46,16 @@
                                 No
                             </th>
                             <th>
-                                Nama
+                                Name
+                            </th>
+                            <th>
+                                Username
                             </th>
                             <th>
                                 Email
                             </th>
                             <th>
-                                Position
-                            </th>
-                            <th>
-                                NIP
+                                Gender
                             </th>
                             <th>
                                 Status
@@ -92,37 +63,37 @@
                             <th>
                                 Status
                             </th>
-                            <th>Kelola</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td></td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Nama)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Position)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Nip)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.IsActive)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.IsActive)
-                            </td>
-                            <td nowrap>
-                                <a data-modal asp-action="Edit" asp-route-id="@item.PersonalId" class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Edit"><i class="la la-edit"></i></a>
-                                <a mini-modal asp-action="Delete" asp-route-id="@item.PersonalId" class="btn btn-sm btn-label-danger btn-icon btn-icon-md" title="Hapus"><i class="la la-trash-o"></i></a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Username)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Gender)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IsActive)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IsActive)
+                                </td>
+                                <td nowrap>
+                                    <a data-modal asp-action="Edit" asp-route-id="@item.PersonalId" asp-authorized="Personal.Edit" class="btn btn-sm btn-label-success btn-icon btn-icon-md" title="Edit"><i class="la la-edit"></i></a>
+                                    <a mini-modal asp-action="Delete" asp-route-id="@item.PersonalId" asp-authorized="Personal.Delete" class="btn btn-sm btn-label-danger btn-icon btn-icon-md" title="Delete"><i class="la la-trash-o"></i></a>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>

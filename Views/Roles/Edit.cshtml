@@ -1,4 +1,5 @@
-﻿@model AspNetRoles
+﻿@using NUNA.ViewModels.Roles
+@model AspNetRoles
 
 @{
     ViewBag.SubHeaderTitle = "Akses Role";
@@ -27,7 +28,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="kt-checkbox-list">
-                            @foreach (var item in (List<UserRoleEdit>)ViewBag.Personal)
+                            @foreach (var item in (List<UserRoleEditDto>)ViewBag.Personal)
                             {
                                 <label class="kt-checkbox">
                                     <input type="checkbox" id="R_@item.UserId" name="R_@item.Nama" /> @item.Nama

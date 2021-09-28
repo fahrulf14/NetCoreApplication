@@ -3,10 +3,10 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using NUNA.Models.BaseApplicationContext;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using SIP.Models.BaseApplicationContext;
 
-namespace SIP.Migrations
+namespace NUNA.Migrations
 {
     [DbContext(typeof(BaseApplicationContext))]
     partial class BaseApplicationContextModelSnapshot : ModelSnapshot
@@ -20,7 +20,7 @@ namespace SIP.Migrations
                 .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("SIP.Models.AspNetRoleClaims", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetRoleClaims", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,41 @@ namespace SIP.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("SIP.Models.AspNetRoles", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetRoleMenus", b =>
+                {
+                    b.Property<string>("RoleId")
+                        .HasColumnType("character varying(36)")
+                        .HasMaxLength(36);
+
+                    b.Property<string>("Menu")
+                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("RoleId", "Menu");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleMenus");
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetRolePermissions", b =>
+                {
+                    b.Property<string>("RoleId")
+                        .HasColumnType("character varying(36)")
+                        .HasMaxLength(36);
+
+                    b.Property<string>("Permission")
+                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("RoleId", "Permission");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRolePermissions");
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetRoles", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -69,7 +103,7 @@ namespace SIP.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("SIP.Models.AspNetUserClaims", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserClaims", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -93,7 +127,7 @@ namespace SIP.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("SIP.Models.AspNetUserLogins", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserLogins", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("character varying(128)")
@@ -117,7 +151,41 @@ namespace SIP.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("SIP.Models.AspNetUserRoles", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserMenus", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("character varying(36)")
+                        .HasMaxLength(36);
+
+                    b.Property<string>("Menu")
+                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("UserId", "Menu");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserMenus");
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserPermissions", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("character varying(36)")
+                        .HasMaxLength(36);
+
+                    b.Property<string>("Permission")
+                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("UserId", "Permission");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserPermissions");
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserRoles", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("text");
@@ -132,7 +200,7 @@ namespace SIP.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("SIP.Models.AspNetUserTokens", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserTokens", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("text");
@@ -153,7 +221,7 @@ namespace SIP.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SIP.Models.AspNetUsers", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUsers", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -216,86 +284,82 @@ namespace SIP.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("SIP.Models.Menu", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.ID_KabupatenKota", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("ActionName")
-                        .HasColumnType("character varying(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Code")
+                    b.Property<string>("KabupatenKota")
                         .HasColumnType("text");
 
-                    b.Property<string>("Controller")
-                        .HasColumnType("character varying(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("IconClass")
-                        .HasColumnType("character varying(75)")
-                        .HasMaxLength(75);
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsParent")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Nama")
-                        .HasColumnType("character varying(100)")
-                        .HasMaxLength(100);
-
-                    b.Property<int?>("NoUrut")
+                    b.Property<int>("ProvinsiId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Parent")
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProvinsiId");
+
+                    b.ToTable("ID_KabupatenKota");
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.ID_Kecamatan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("KabupatenKotaId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Kecamatan")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Menu");
+                    b.HasIndex("KabupatenKotaId");
+
+                    b.ToTable("ID_Kecamatan");
                 });
 
-            modelBuilder.Entity("SIP.Models.Personal", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.ID_Kelurahan", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("KecamatanId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("character varying(256)")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Nama")
-                        .HasColumnType("character varying(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Nip")
-                        .HasColumnName("NIP")
-                        .HasColumnType("character varying(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<int?>("PositionId")
-                        .HasColumnType("integer");
-
-                    b.Property<byte[]>("Signature")
-                        .HasColumnType("bytea");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("character varying(20)")
-                        .HasMaxLength(20);
+                    b.Property<string>("Kelurahan")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PositionId");
+                    b.HasIndex("KecamatanId");
 
-                    b.ToTable("Personal");
+                    b.ToTable("ID_Kelurahan");
                 });
 
-            modelBuilder.Entity("SIP.Models.RF_Position", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.ID_Provinsi", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Provinsi")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ID_Provinsi");
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.MS_Position", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -311,10 +375,260 @@ namespace SIP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RF_Position");
+                    b.ToTable("MS_Position");
                 });
 
-            modelBuilder.Entity("SIP.Models.UserSetting", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.Menu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("ActionName")
+                        .HasColumnType("character varying(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("character varying(12)")
+                        .HasMaxLength(12);
+
+                    b.Property<string>("Controller")
+                        .HasColumnType("character varying(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("IconClass")
+                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsParent")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Nama")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int?>("NoUrut")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Parent")
+                        .HasColumnType("character varying(10)")
+                        .HasMaxLength(10);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Menu");
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.Officer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreationUser")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("ModificationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("ModificationUser")
+                        .HasColumnType("text");
+
+                    b.Property<int>("PersonalId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PositionId")
+                        .HasColumnType("integer");
+
+                    b.Property<byte[]>("Signature")
+                        .HasColumnType("bytea")
+                        .HasMaxLength(75);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PositionId");
+
+                    b.ToTable("Officer");
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.Personals", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("BirthPlace")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreationUser")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("character varying(1)")
+                        .HasMaxLength(1);
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("ModificationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("ModificationUser")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("character varying(30)")
+                        .HasMaxLength(30);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Personals");
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.RF_IDType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Type")
+                        .HasColumnType("character varying(30)")
+                        .HasMaxLength(30);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RF_IDType");
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.TR_Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("character varying(150)")
+                        .HasMaxLength(150);
+
+                    b.Property<string>("ContactInfo")
+                        .HasColumnType("character varying(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("KabupatenKotaId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("KecamatanId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("KelurahanId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PersonalId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("character varying(15)")
+                        .HasMaxLength(15);
+
+                    b.Property<string>("PostCode")
+                        .HasColumnType("character varying(8)")
+                        .HasMaxLength(8);
+
+                    b.Property<int>("ProvinsiId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Tag")
+                        .HasColumnType("character varying(10)")
+                        .HasMaxLength(10);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KabupatenKotaId");
+
+                    b.HasIndex("KecamatanId");
+
+                    b.HasIndex("KelurahanId");
+
+                    b.HasIndex("PersonalId");
+
+                    b.HasIndex("ProvinsiId");
+
+                    b.ToTable("TR_Address");
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.TR_IDNumber", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreationUser")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModificationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("ModificationUser")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("character varying(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<int>("PersonalId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PersonalsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonalsId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("TR_IDNumber");
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.UserSetting", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -324,8 +638,8 @@ namespace SIP.Migrations
                         .HasMaxLength(50);
 
                     b.Property<string>("Email")
-                        .HasColumnType("character varying(256)")
-                        .HasMaxLength(256);
+                        .HasColumnType("character varying(75)")
+                        .HasMaxLength(75);
 
                     b.Property<string>("Theme")
                         .HasColumnType("character varying(50)")
@@ -336,54 +650,171 @@ namespace SIP.Migrations
                     b.ToTable("UserSetting");
                 });
 
-            modelBuilder.Entity("SIP.Models.AspNetRoleClaims", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetRoleClaims", b =>
                 {
-                    b.HasOne("SIP.Models.AspNetRoles", "Role")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetRoles", "Role")
                         .WithMany("AspNetRoleClaims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SIP.Models.AspNetUserClaims", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetRoleMenus", b =>
                 {
-                    b.HasOne("SIP.Models.AspNetUsers", "User")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetRoles", "Role")
+                        .WithMany("AspNetRoleMenus")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetRolePermissions", b =>
+                {
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetRoles", "Role")
+                        .WithMany("AspNetRolePermissions")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserClaims", b =>
+                {
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetUsers", "User")
                         .WithMany("AspNetUserClaims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SIP.Models.AspNetUserLogins", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserLogins", b =>
                 {
-                    b.HasOne("SIP.Models.AspNetUsers", "User")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetUsers", "User")
                         .WithMany("AspNetUserLogins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SIP.Models.AspNetUserRoles", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserMenus", b =>
                 {
-                    b.HasOne("SIP.Models.AspNetRoles", "Role")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetUsers", "User")
+                        .WithMany("AspNetUserMenus")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserPermissions", b =>
+                {
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetUsers", "User")
+                        .WithMany("AspNetUserPermissions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserRoles", b =>
+                {
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetRoles", "Role")
                         .WithMany("AspNetUserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SIP.Models.AspNetUsers", "User")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetUsers", "User")
                         .WithMany("AspNetUserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SIP.Models.AspNetUserTokens", b =>
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.AspNetUserTokens", b =>
                 {
-                    b.HasOne("SIP.Models.AspNetUsers", "User")
+                    b.HasOne("NUNA.Models.BaseApplicationContext.AspNetUsers", "User")
                         .WithMany("AspNetUserTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.ID_KabupatenKota", b =>
+                {
+                    b.HasOne("NUNA.Models.BaseApplicationContext.ID_Provinsi", "ID_Provinsi")
+                        .WithMany("ID_KabupatenKota")
+                        .HasForeignKey("ProvinsiId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.ID_Kecamatan", b =>
+                {
+                    b.HasOne("NUNA.Models.BaseApplicationContext.ID_KabupatenKota", "ID_KabupatenKota")
+                        .WithMany("ID_Kecamatan")
+                        .HasForeignKey("KabupatenKotaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.ID_Kelurahan", b =>
+                {
+                    b.HasOne("NUNA.Models.BaseApplicationContext.ID_Kecamatan", "ID_Kecamatan")
+                        .WithMany("ID_Kelurahan")
+                        .HasForeignKey("KecamatanId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.Officer", b =>
+                {
+                    b.HasOne("NUNA.Models.BaseApplicationContext.MS_Position", "MS_Position")
+                        .WithMany("Officer")
+                        .HasForeignKey("PositionId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.TR_Address", b =>
+                {
+                    b.HasOne("NUNA.Models.BaseApplicationContext.ID_KabupatenKota", "ID_KabupatenKota")
+                        .WithMany("TR_Address")
+                        .HasForeignKey("KabupatenKotaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("NUNA.Models.BaseApplicationContext.ID_Kecamatan", "ID_Kecamatan")
+                        .WithMany("TR_Address")
+                        .HasForeignKey("KecamatanId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("NUNA.Models.BaseApplicationContext.ID_Kelurahan", "ID_Kelurahan")
+                        .WithMany("TR_Address")
+                        .HasForeignKey("KelurahanId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("NUNA.Models.BaseApplicationContext.Personals", "Personals")
+                        .WithMany("TR_Address")
+                        .HasForeignKey("PersonalId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("NUNA.Models.BaseApplicationContext.ID_Provinsi", "ID_Provinsi")
+                        .WithMany("TR_Address")
+                        .HasForeignKey("ProvinsiId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("NUNA.Models.BaseApplicationContext.TR_IDNumber", b =>
+                {
+                    b.HasOne("NUNA.Models.BaseApplicationContext.Personals", "Personals")
+                        .WithMany("TR_IDNumber")
+                        .HasForeignKey("PersonalsId");
+
+                    b.HasOne("NUNA.Models.BaseApplicationContext.RF_IDType", "RF_IDType")
+                        .WithMany("TR_IDNumber")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

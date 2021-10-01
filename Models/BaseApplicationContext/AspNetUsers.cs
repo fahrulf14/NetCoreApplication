@@ -15,6 +15,7 @@ namespace NUNA.Models.BaseApplicationContext
             AspNetUserTokens = new HashSet<AspNetUserTokens>();
             AspNetUserPermissions = new HashSet<AspNetUserPermissions>();
             AspNetUserMenus = new HashSet<AspNetUserMenus>();
+            AspNetSecretTokens = new HashSet<AspNetSecretTokens>();
         }
 
         [Key]
@@ -50,5 +51,6 @@ namespace NUNA.Models.BaseApplicationContext
 
         public virtual ICollection<AspNetUserPermissions> AspNetUserPermissions { get; set; }
         public virtual ICollection<AspNetUserMenus> AspNetUserMenus { get; set; }
+        public virtual ICollection<AspNetSecretTokens> AspNetSecretTokens { get; set; }
     }
 }

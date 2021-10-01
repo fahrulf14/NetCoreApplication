@@ -1,0 +1,57 @@
+﻿@model NUNA.ViewModels.Account.LoginInputDto
+
+<form asp-action="RedirectUrl" id="RedirectUrl">
+    <input type="hidden" id="redirectUrl" value="@Model.ReturnUrl" />
+</form>
+<form asp-action="Login">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="la la-remove"></span>
+                </button>
+            </div>
+        </div>
+        <div class="row kt-margin-t-15 kt-margin-b-10">
+            <h4 class="col-sm-4 display-list">
+                Masuk
+            </h4>
+            <div class="col-sm-8 display-list kt-margin-t-5 kt-align-right">
+                <span>
+                    <span>Belum punya akun?</span>
+                    <a href="javascript:void(0)" class="kt-font-bold kt-link register">Daftar</a>
+                </span>
+            </div>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="ReturnUrl" type="hidden" value="@Model.ReturnUrl" />
+        <div class="row">
+            <div class="col-md-12 form-group login-form">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span class="text-black-50">Contoh: email@nuna.co.id</span>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group login-form">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row kt-margin-t-10 kt-align-center">
+            <div class="col">
+                <input type="submit" value="Masuk" class="btn btn-brand kt-padding-l-50 kt-padding-r-50" />
+            </div>
+        </div>
+        <div class="row justify-content-center kt-margin-t-30 kt-margin-b-30">
+            <span>
+                <span>Butuh bantuan?</span>
+                <a href="" class="kt-font-bold kt-link">
+                    Hubungin kami
+                </a>
+            </span>
+        </div>
+    </div>
+</form>

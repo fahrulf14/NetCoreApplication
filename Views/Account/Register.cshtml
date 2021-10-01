@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+@model NUNA.ViewModels.Account.RegisterInputDto
+@{
+    Layout = null;
+}
+
+<html lang="en">
+
+<!-- begin::Head -->
+<head>
+    <base href="../../../">
+    <meta charset="utf-8" />
+    <title>Register - NUNA</title>
+    <meta name="description" content="Register Account">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="~/lib/fonts/base-fonts.css" rel="stylesheet">
+    <link href="~/lib/vendors.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/base/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/style.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/css/pages/register.css" rel="stylesheet" type="text/css" />
+
+    <partial name="_favicon" />
+
+</head>
+
+<!-- end::Head -->
+<!-- begin::Body -->
+<body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--fixed kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
+
+    <!-- begin:: Page -->
+    <div class="kt-grid kt-grid--ver kt-grid--root">
+        <div class="kt-grid kt-grid--hor kt-grid--root kt-login kt-login--v3 kt-login--signin">
+            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+                <div class="kt-grid__item kt-grid__item--fluid register-container">
+                    <div class="kt-login__container">
+                        <div class="kt-portlet modal-dialog modal-md" role="document">
+                            <div class="modal-content position-absolute">
+                                <form asp-action="Register" enctype="multipart/form-data" method="post">
+                                    <div class="modal-body">
+                                        <div class="kt-margin-t-10 kt-margin-b-10 kt-align-center">
+                                            <img src="~/media/logos/nuna-logo.png" width="100">
+                                        </div>
+                                        <h4 class="kt-align-center">
+                                            Daftar Sekarang
+                                        </h4>
+                                        <div class="kt-align-center kt-margin-t-5 kt-margin-b-20">
+                                            <span>
+                                                <span>Sudah punya akun?</span>
+                                                <a href="" class="kt-font-bold kt-link">Login</a>
+                                            </span>
+                                        </div>
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <input asp-for="ReturnUrl" type="hidden" value="@Model.ReturnUrl" />
+                                        <div class="row">
+                                            <div class="col-md-12 form-group login-form">
+                                                <label asp-for="Name" class="control-label"></label>
+                                                <input asp-for="Name" class="form-control" />
+                                                <span asp-validation-for="Name" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 form-group login-form">
+                                                <label asp-for="Email" class="control-label"></label>
+                                                <input asp-for="Email" class="form-control" />
+                                                <span class="text-black-50">Contoh: email@nuna.co.id</span>
+                                                <span asp-validation-for="Email" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 form-group login-form">
+                                                <label asp-for="Password" class="control-label"></label>
+                                                <div class="input-group">
+                                                    <input asp-for="Password" class="form-control" />
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-outline-secondary btn-icon" type="button" onclick="display();"><i id="show" class="fa fa-eye"></i></button>
+                                                    </div>
+                                                </div>
+                                                <span asp-validation-for="Password" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row kt-margin-t-10 kt-align-center">
+                                            <div class="col">
+                                                <input type="submit" value="Daftar" class="btn btn-brand kt-padding-l-50 kt-padding-r-50" />
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center kt-margin-t-30 kt-margin-b-30">
+                                            <span>
+                                                <span>Butuh bantuan?</span>
+                                                <a href="" class="kt-font-bold kt-link">
+                                                    Hubungin kami
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="register-bg" src="~/media/bg/register-bg.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- end:: Page -->
+    <!-- begin::Global Config(global config for global JS sciprts) -->
+    <script>
+        var KTAppOptions = {
+            "colors": {
+                "state": {
+                    "brand": "#5d78ff",
+                    "dark": "#282a3c",
+                    "light": "#ffffff",
+                    "primary": "#5867dd",
+                    "success": "#34bfa3",
+                    "info": "#36a3f7",
+                    "warning": "#ffb822",
+                    "danger": "#fd3995"
+                },
+                "base": {
+                    "label": [
+                        "#c5cbe3",
+                        "#a1a8c3",
+                        "#3d4465",
+                        "#3e4466"
+                    ],
+                    "shape": [
+                        "#f0f3ff",
+                        "#d9dffa",
+                        "#afb4d4",
+                        "#646c9a"
+                    ]
+                }
+            }
+        };
+    </script>
+    <!-- end::Global Config -->
+    <script src="~/lib/vendors.bundle.js" type="text/javascript"></script>
+    <script src="~/js/base/scripts.bundle.js" type="text/javascript"></script>
+    <script src="~/js/script.js" type="text/javascript"></script>
+    <script>
+        var notification = "@TempData["_toastr"]";
+        var Toastr = function () {
+            return {
+                init: function () {
+                    if (notification != null) {
+                        var status = notification.split('|')[0];
+                        var message = notification.split('|')[1];
+
+                        switch (status) {
+                            case 'success':
+                                toastr.success(message);
+                                break;
+                            case 'info':
+                                toastr.info(message);
+                                break;
+                            case 'warning':
+                                toastr.warning(message);
+                                break;
+                            case 'error':
+                                toastr.error(message);
+                                break;
+                            default:
+                            // executed default
+                        }
+                    }
+                }
+            };
+        }();
+
+        jQuery(document).ready(function () {
+            Toastr.init();
+        });
+
+        function display() {
+            debugger
+            var x = $('#Password')
+            var o = $('#show')
+            if (x[0].type === "password") {
+                x.prop({ type: "text" })
+                o.removeClass().addClass('fa fa-eye-slash')
+            }
+            else {
+                x.prop({ type: "password" })
+                o.removeClass().addClass('fa fa-eye')
+            }
+
+        }
+    </script>
+</body>
+
+<!-- end::Body -->
+</html>

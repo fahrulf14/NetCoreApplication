@@ -1,110 +1,17 @@
 ﻿@{
-    Layout = null;
+    Layout = "_Layout-error";
 }
 
-<!DOCTYPE html>
-<html>
-<!-- begin::Head -->
-<head>
-    <meta charset="utf-8" />
-    <title>NUNA | Page Not Found</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!--begin::Fonts -->
-    <link href="~/lib/fonts/base-fonts.css" rel="stylesheet">
-
-    <!--end::Fonts -->
-    <!--begin::Page Custom Styles(used by this page) -->
-    <link href="~/css/pages/error-4.css" rel="stylesheet" />
-
-    <!--end::Page Custom Styles -->
-    <!--begin::Global Theme Styles(used by all pages) -->
-    <link href="~/css/base/style.bundle.css" rel="stylesheet" />
-
-    <!--end::Global Theme Styles -->
-    <!--end::Layout Skins -->
-    <!--begin::Favicon -->
-    <link rel="apple-touch-icon" sizes="57x57" href="~/media/favicon/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="~/media/favicon/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="~/media/favicon/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="~/media/favicon/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="~/media/favicon/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="~/media/favicon/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="~/media/favicon/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="~/media/favicon/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="~/media/favicon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="~/media/favicon/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="~/media/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="~/media/favicon/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="~/media/favicon/favicon-16x16.png">
-    <link rel="manifest" href="~/media/favicon/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="~/media/favicon/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    <!--end::Favicon -->
-</head>
-
-<!-- end::Head -->
-<!-- begin::Body -->
-<body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--fixed kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
-
-    <!-- begin:: Page -->
-    <div class="kt-grid kt-grid--ver kt-grid--root">
-        <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-error-v4-2 float-left">
-            <div class="kt-error_container">
-                <h1 class="kt-error_number">
-                    404
-                </h1>
-                <p class="kt-error_title">
-                    Page not found
-                </p>
-                <p class="kt-error_description">
-                    <a href="javascript: history.go(-1)">Kembali</a>
-                </p>
+<div class="kt-grid kt-grid--ver kt-grid--root">
+    <div class="kt-grid__item kt-grid__item--fluid kt-grid  kt-error" style="background-image: url(/media/error/notfound.jpg);">
+        <div class="kt-error_container">
+            <img src="~/media/logos/nuna-logo-white.png" width="120" />
+            <div class="kt-error_subtitle kt-font-light">
+                <h1>Oops...</h1>
             </div>
+            <p class="kt-error_description kt-font-light">
+                Halaman tidak dapat ditemukan
+            </p>
         </div>
     </div>
-
-    <!-- end:: Page -->
-    <!-- begin::Global Config(global config for global JS sciprts) -->
-    <script>
-        var KTAppOptions = {
-            "colors": {
-                "state": {
-                    "brand": "#5d78ff",
-                    "dark": "#282a3c",
-                    "light": "#ffffff",
-                    "primary": "#5867dd",
-                    "success": "#34bfa3",
-                    "info": "#36a3f7",
-                    "warning": "#ffb822",
-                    "danger": "#fd3995"
-                },
-                "base": {
-                    "label": [
-                        "#c5cbe3",
-                        "#a1a8c3",
-                        "#3d4465",
-                        "#3e4466"
-                    ],
-                    "shape": [
-                        "#f0f3ff",
-                        "#d9dffa",
-                        "#afb4d4",
-                        "#646c9a"
-                    ]
-                }
-            }
-        };</script>
-
-    <!-- end::Global Config -->
-    <!--begin::Global Theme Bundle(used by all pages) -->
-    <script src="~/js/base/scripts.bundle.js"></script>
-    <!--end::Global Theme Bundle -->
-    <!--begin::Page Scripts(used by this page) -->
-    <!--end::Page Scripts -->
-</body>
-
-<!-- end::Body -->
-</html>
+</div>

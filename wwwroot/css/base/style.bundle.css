@@ -4847,7 +4847,10 @@ a.close.disabled {
     .modal-dialog-centered::before {
       height: calc(100vh - 3.5rem); }
   .modal-sm {
-    max-width: 300px; } }
+    max-width: 300px; }
+  .modal-md {
+    max-width: 400px; }
+}
 
 @media (min-width: 1024px) {
   .modal-lg,

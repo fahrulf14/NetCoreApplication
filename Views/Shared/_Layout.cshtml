@@ -363,10 +363,16 @@
                     </div>
 
                     <!-- end:: Header Menu -->
-                    <!-- begin:: Header Topbar -->
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                        <partial name="_topbar-public" />
+                    }
+                    else
+                    {
+                        <partial name="_topbar-base" />
+                    }
 
-                    <partial name="_topbar-base" />
-                    <!-- end:: Header Topbar -->
+
                 </div>
 
                 <!-- end:: Header -->
@@ -374,15 +380,18 @@
                     @await Component.InvokeAsync("Subheader")
                     <!-- begin:: Content -->
                     <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
-                        @if (ViewBag.Ctrl != "Home")
-                        {
-                            <partial name="_subheader" />
-                        }
                         @RenderBody()
                         <div class="modal fade" id="minModal" role="dialog" aria-labelledby="" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div id='minModalContent'></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="medModal" role="dialog" aria-labelledby="" aria-hidden="true">
+                            <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div id='medModalContent'></div>
                                 </div>
                             </div>
                         </div>
@@ -545,6 +554,41 @@
     <!--begin::Page Scripts -->
     <script src="~/js/modals.js" type="text/javascript"></script>
     <script src="~/js/script.js" type="text/javascript"></script>
+    <script>
+    var notification = "@TempData["_toastr"]";
+    var Toastr = function () {
+        return {
+            init: function () {
+                if (notification != null) {
+                    var status = notification.split('|')[0];
+                    var message = notification.split('|')[1];
+
+                    switch (status) {
+                        case 'success':
+                            toastr.success(message);
+                            break;
+                        case 'info':
+                            toastr.info(message);
+                            break;
+                        case 'warning':
+                            toastr.warning(message);
+                            break;
+                        case 'error':
+                            toastr.error(message);
+                            break;
+                        default:
+                        // executed default
+                    }
+                }
+            }
+        };
+    }();
+
+    jQuery(document).ready(function () {
+        Toastr.init();
+    });
+    </script>
+
     @RenderSection("Scripts", required: false)
     <!--end::Page Scripts -->
 </body>

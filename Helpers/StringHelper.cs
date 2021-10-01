@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
@@ -64,7 +65,7 @@ namespace NUNA.Helpers
 
         private static Object GetPropValue(this Object obj, String name)
         {
-            foreach (String part in name.Split('.'))
+            foreach (string part in name.Split('.'))
             {
                 if (obj == null) { return null; }
 
@@ -75,6 +76,12 @@ namespace NUNA.Helpers
                 obj = info.GetValue(obj, null);
             }
             return obj;
+        }
+
+        public static string ReadFile(string path)
+        {
+            var fileText = File.ReadAllText(path);
+            return fileText;
         }
     }
 }

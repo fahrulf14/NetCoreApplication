@@ -23,5 +23,6 @@ namespace NUNA.Models.BaseApplicationContext
         public bool IsVerified { get; set; }
         public virtual ICollection<TR_Address> TR_Address { get; set; }
         public virtual ICollection<TR_IDNumber> TR_IDNumber { get; set; }
+        public virtual ICollection<TR_EmailNotification> TR_EmailNotification { get; set; }
     }
 }

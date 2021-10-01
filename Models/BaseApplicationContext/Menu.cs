@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NUNA.Models.BaseApplicationContext
 {
+    [Table("Menu")]
     public partial class Menu
     {
         [Key]

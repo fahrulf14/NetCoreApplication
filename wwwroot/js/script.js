@@ -140,5 +140,9 @@ $(document).ajaxStop(function () {
 $('.home-full-width').width($(window).width())
 
 $(window).resize(function () {
-    $('.home-full-width').width($(window).width())
+    var width = $(window).width();
+    $('.home-full-width').width(width)
+    if (width < 520) {
+        $('.register-bg').width(width - (width/5))
+    }
 });

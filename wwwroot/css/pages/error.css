@@ -1,0 +1,30 @@
+﻿.kt-error {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover; }
+  .kt-error .kt-error_container {
+    text-align: center; }
+    .kt-error .kt-error_container .kt-error_subtitle > h1 {
+      font-size: 8rem;
+      margin-top: 2rem;
+      font-weight: 700; }
+    .kt-error .kt-error_container .kt-error_description {
+      margin-top: 3rem;
+      font-size: 2rem;
+      font-weight: 500;
+      line-height: 3rem; }
+    .kt-error .kt-error_container > img {
+      margin-top: 20rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 768px) {
+        .kt-error .kt-error_container .kt-error_subtitle > h1 {
+    font-size: 4rem;
+    margin-top: 10rem; }
+  .kt-error .kt-error_container .kt-error_description {
+    font-size: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem; } }

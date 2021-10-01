@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace NUNA.Controllers
+namespace NUNA.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class SessionController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;

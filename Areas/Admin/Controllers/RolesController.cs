@@ -17,9 +17,10 @@ using NUNA.ViewModels.Roles;
 using NUNA.ViewModels.Toastr;
 using NUNA.ViewModels.UserAccount;
 
-namespace NUNA.Controllers
+namespace NUNA.Areas.Admin.Controllers
 {
     [Authorize]
+    [Area("Admin")]
     public class RolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

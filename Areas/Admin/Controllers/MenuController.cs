@@ -17,8 +17,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NUNA.Controllers
+namespace NUNA.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class MenuController : Controller
     {
         private readonly BaseApplicationContext _appContext;

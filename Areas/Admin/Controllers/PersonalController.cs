@@ -12,8 +12,9 @@ using NUNA.Services;
 using NUNA.ViewModels;
 using NUNA.ViewModels.Personal;
 
-namespace NUNA.Controllers
+namespace NUNA.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class PersonalController : Controller
     {
         private readonly BaseApplicationContext _appContext;

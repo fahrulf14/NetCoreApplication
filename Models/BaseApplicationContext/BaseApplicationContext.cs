@@ -24,6 +24,7 @@ namespace NUNA.Models.BaseApplicationContext
         public virtual DbSet<AspNetRoleMenus> AspNetRoleMenus { get; set; }
         public virtual DbSet<AspNetRolePermissions> AspNetRolePermissions { get; set; }
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetSecretTokens> AspNetSecretTokens { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserMenus> AspNetUserMenus { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
@@ -36,11 +37,17 @@ namespace NUNA.Models.BaseApplicationContext
         public virtual DbSet<ID_Kecamatan> ID_Kecamatan { get; set; }
         public virtual DbSet<ID_Kelurahan> ID_Kelurahan { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
+        public virtual DbSet<MenuTopbar> MenuTopbar { get; set; }
+        public virtual DbSet<MS_EmailSender> MS_EmailSender { get; set; }
+        public virtual DbSet<MS_NotificationType> MS_NotificationType { get; set; }
         public virtual DbSet<MS_Position> MS_Position { get; set; }
         public virtual DbSet<Officer> Officer { get; set; }
         public virtual DbSet<Personals> Personals { get; set; }
         public virtual DbSet<RF_IDType> RF_IDType { get; set; }
-        public virtual DbSet<TR_Address> TR_Addresse { get; set; }
+        public virtual DbSet<TR_Address> TR_Address { get; set; }
+        public virtual DbSet<TR_EmailAttachment> TR_EmailAttachment { get; set; }
+        public virtual DbSet<TR_EmailNotification> TR_EmailNotification { get; set; }
+        public virtual DbSet<TR_EmailStatus> TR_EmailStatus { get; set; }
         public virtual DbSet<TR_IDNumber> TR_IDNumber { get; set; }
         public virtual DbSet<UserSetting> UserSetting { get; set; }
 
@@ -71,6 +78,13 @@ namespace NUNA.Models.BaseApplicationContext
             {
                 entity.HasIndex(e => e.NormalizedName)
                     .IsUnique();
+            });
+
+            modelBuilder.Entity<AspNetSecretTokens>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.Token });
+
+                entity.HasIndex(e => e.UserId);
             });
 
             modelBuilder.Entity<AspNetUserClaims>(entity =>
@@ -151,6 +165,25 @@ namespace NUNA.Models.BaseApplicationContext
                 entity.Property(e => e.Id);
             });
 
+            modelBuilder.Entity<MenuTopbar>(entity =>
+            {
+                entity.Property(e => e.Id);
+            });
+
+            modelBuilder.Entity<MS_NotificationType>(entity =>
+            {
+                entity.Property(e => e.Id);
+                entity.HasOne(e => e.MS_EmailSender)
+                      .WithMany(e => e.MS_NotificationType)
+                      .HasForeignKey(e => e.SenderId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<MS_EmailSender>(entity =>
+            {
+                entity.Property(e => e.Id);
+            });
+
             modelBuilder.Entity<MS_Position>(entity =>
             {
                 entity.Property(e => e.Id);
@@ -197,6 +230,29 @@ namespace NUNA.Models.BaseApplicationContext
                 entity.HasOne(e => e.ID_Kelurahan)
                       .WithMany(e => e.TR_Address)
                       .HasForeignKey(e => e.KelurahanId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<TR_EmailAttachment>(entity =>
+            {
+                entity.Property(e => e.Id);
+                entity.HasOne(e => e.TR_EmailNotification)
+                      .WithMany(e => e.TR_EmailAttachment)
+                      .HasForeignKey(e => e.EmailId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<TR_EmailNotification>(entity =>
+            {
+                entity.Property(e => e.Id);
+            });
+
+            modelBuilder.Entity<TR_EmailStatus>(entity =>
+            {
+                entity.Property(e => e.Id);
+                entity.HasOne(e => e.TR_EmailNotification)
+                      .WithMany(e => e.TR_EmailStatus)
+                      .HasForeignKey(e => e.EmailId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
 

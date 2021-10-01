@@ -11,8 +11,9 @@ using NUNA.Helpers;
 using NUNA.Models.BaseApplicationContext;
 using NUNA.Services;
 
-namespace NUNA.Controllers
+namespace NUNA.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class PositionController : Controller
     {
         private readonly BaseApplicationContext _appContext;
